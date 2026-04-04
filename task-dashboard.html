@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Saika's Workstation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #faf9f5;
+            padding: 24px;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transform: scale(0.8);
+            transform-origin: top center;
+        }
+        .container {
+            max-width: 1100px; /* Narrower container to make all cards fit inside */
+            margin: 0 auto;
+        }
+        h1 {
+            color: #222;
+            margin-bottom: 12px;
+            font-size: 2.0rem; /* reduced from 2.5 to smaller as requested */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 .emoji {
+            font-size: 2.0rem;
+        }
+        .subtitle {
+            color: #555;
+            margin-bottom: 32px;
+            font-size: 1.0rem;
+        }
+        /* Top Summary Bar */
+        .top-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .summary-card {
+            background: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .summary-card.total {
+            border-color: #e8e4d6;
+        }
+        .summary-card.waiting {
+            background: #fce4ec;
+            border-color: #f8bbd0;
+        }
+        .summary-card.working {
+            background: #e3f2fd;
+            border-color: #bbdefb;
+        }
+        .summary-card.idle {
+            background: #fffde7;
+            border-color: #fff59d;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .summary-count {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #000;
+        }
+        /* Search Bar */
+        .search-bar {
+            background: #ffffff;
+            border: 2px solid #e8e4d6;
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            padding: 8px 12px;
+            background: transparent;
+        }
+        .search-tag {
+            background: #90caf9;
+            color: #0d47a1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        /* Section: stacked vertically: Active → Completed → Archived as requested */
+        .section {
+            background: #fcfaf5;
+            border: 2px solid #e8e4d6;
+            border-radius: 15px;
+            padding: 16px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        /* REDUCED font size for section titles (active/completed/archived) as requested */
+        .section-title {
+            font-size: 2.0rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title .emoji {
+            font-size: 2.0rem;
+        }
+        .section-desc {
+            color: #666;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        /* Tabs with reduced font size */
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab {
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.2rem; /* reduced from 1.4 to smaller as requested */
+            cursor: pointer;
+        }
+        .tab.working {
+            background: #e3f2fd;
+            border: 2px solid #bbdefb;
+        }
+        .tab.idle {
+            background: #fffde7;
+            border: 2px solid #fff59d;
+        }
+        .tab span.badge {
+            float: right;
+            background: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 28px;
+            margin-right: 4px;
+        }
+        /* Task Grid: 3 NARROW columns — cards are thinner like you asked */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .task-card {
+            background: #f8faf8;
+            border: 2px solid #e0e6dd;
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .task-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .task-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .task-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #222;
+            contenteditable: true;
+            word-wrap: break-word;
+        }
+        .task-status {
+            align-self: flex-start;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-badge.working {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .status-badge.done {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-badge.P0,
+        .status-badge.P0 {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .status-badge.P1,
+        .status-badge.P1 {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .status-badge.P2,
+        .status-badge.P2 {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .task-meta {
+            color: #444;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .context-link {
+            text-decoration: underline;
+            color: #1565c0;
+        }
+        .context-link a {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+        .task-section-title {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+        }
+        .task-section-list {
+            padding-left: 16px;
+            color: #444;
+            font-size: 0.8rem;
+        }
+        .task-updates {
+            background: #ffffff;
+            border: 2px solid #e8e4d6;
+            border-radius: 15px;
+            padding: 10px;
+            max-height: 180px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .update-item {
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            color: #444;
+        }
+        .update-time {
+            font-weight: 600;
+            color: #b95a39;
+        }
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .action-input {
+            flex: 1;
+            border: 2px solid #e8e4d6;
+            border-radius: 12px;
+            padding: 8px;
+            min-height: 48px;
+            font-size: 0.8rem;
+        }
+        .action-btn {
+            border: 2px solid #d8d2c0;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .archive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .archive-date-group {
+            background: #fff;
+            border: 1px solid #e8e4d6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .archive-date-header {
+            font-weight: 700;
+            color: #222;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 8px;
+        }
+        .archive-date-header::after {
+            content: "▶";
+            color: #999;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .archive-date-group.collapsed .archive-date-cards {
+            display: none;
+        }
+        .archive-date-group.expanded .archive-date-header::after {
+            transform: rotate(90deg);
+        }
+        .archive-count-badge {
+            background: #f0f0eb;
+            color: #555;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .archive-date-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .archive-task-item {
+            background: #f8faf8;
+            border: 1px solid #e0e6dd;
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .archive-task-name {
+            font-weight: 600;
+            color: #1565c0;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .archive-restore-btn {
+            border: 2px solid #d8d2c0;
+            background: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        footer {
+            text-align: right;
+            margin-top: 16px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Auto-sync status indicator */
+        .sync-status {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .sync-status.saving {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .sync-status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        /* MOBILE RESPONSIVE STYLES - for screens under 768px (phones) */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            h1 .emoji {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section-title .emoji {
+                font-size: 1.5rem;
+            }
+            
+            /* Stack summary bar vertically on mobile */
+            .top-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            /* Task grid becomes single column on mobile */
+            .task-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px;
+            }
+            
+            .section {
+                padding: 12px;
+            }
+            
+            /* Make archived task modal full-width on mobile */
+            .archive-modal-content {
+                max-width: 95vw;
+                margin-left: 2.5vw;
+            }
+            
+            .task-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+        }
+        
+        /* Archived task modal CSS — static in stylesheet so it loads immediately */
+        .task-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .task-modal-content {
+            background: #f5f1ea;
+            overflow-y: auto;
+            padding: 16px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .task-modal-content .task-card {
+            width: auto !important;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">🌸</span> Saika's Workstation</h1>
+        <p class="subtitle">🌸 Cute little task station for Saika to keep track of all work. Everything in one place.</p>
+
+        <!-- Top Summary Bar -->
+        <div class="top-summary">
+            <div class="summary-card total">
+                <span class="summary-label">Total Tasks</span>
+                <span class="summary-count" id="total-count">9</span>
+            </div>
+            <div class="summary-card waiting">
+                <span class="summary-label">Waiting</span>
+                <span class="summary-count" id="waiting-count">0</span>
+            </div>
+            <div class="summary-card working">
+                <span class="summary-label">Working</span>
+                <span class="summary-count" id="working-count">4</span>
+            </div>
+            <div class="summary-card idle">
+                <span class="summary-label">Idle</span>
+                <span class="summary-count" id="idle-count">0</span>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" class="search-input" placeholder="Search tasks by name, status, or keyword..." oninput="filterTasks()">
+            <div class="search-tag">local</div>
+        </div>
+
+        <!-- VERTICAL STACKING AS REQUESTED: 1. Active (top) → 2. Completed → 3. Archived (bottom) -->
+        <!-- 1. Active Tasks (first in the stack) -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🎯</span> Active Tasks
+            </div>
+            <p class="section-desc">Current open work you're actively working on or keeping an eye on.</p>
+
+            <!-- Tabs: Working + Idle with auto-updating badges -->
+            <div class="tabs">
+                <div class="tab working" onclick="switchTab('working')">
+                    Working <span class="badge" id="working-badge">4</span>
+                </div>
+                <div class="tab idle" onclick="switchTab('idle')">
+                    Idle <span class="badge" id="idle-badge">0</span>
+                </div>
+            </div>
+
+            <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
+            <div class="task-grid" id="active-grid">
+                <!-- P0 Priority (highest first, as requested) -->
+                <!-- 1. Book sushi cake -->
+                <div class="task-card" data-name="Book sushi cake" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">🍣</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Book sushi cake</div>
+                            <div class="task-status">
+                                <span class="status-badge P0">P0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P0 (High)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Need to book for upcoming event</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 2. Go to gym -->
+                <div class="task-card" data-name="go to gym" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">💪</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Go to gym</div>
+                            <div class="task-status">
+                                <span class="status-badge P0">P0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P0 (High)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Today's workout session</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- P1 Priority (next, as requested) -->
+                <!-- 3. Jeju island travel plan -->
+                <div class="task-card" data-name="Jeju island travel plan" data-status="idle">
+                    <div class="task-header">
+                        <div class="task-avatar">🏝️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Jeju island travel plan</div>
+                            <div class="task-status">
+                                <span class="status-badge P1">P1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Deadline:</strong> by next Saturday (2026-04-11)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Complete plan preparation before trip</li>
+                            <li>Deadline: next Saturday</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 4. Make 2 breads -->
+                <div class="task-card" data-name="making 2 breads" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">🍞</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Make 2 breads</div>
+                            <div class="task-status">
+                                <span class="status-badge P1">P1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Bake two homemade breads</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 5. Decide AI educational service purchase -->
+                <div class="task-card" data-name="Decide whether to purchase any AI educational service" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">🤔</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Decide AI educational service purchase</div>
+                            <div class="task-status">
+                                <span class="status-badge P1">P1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Evaluate options and make purchase decision</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 6. Bread-making video editing (NEW P1 task added per request) -->
+                <div class="task-card" data-name="bread-making video editing" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">✂️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Bread-making video editing</div>
+                            <div class="task-status">
+                                <span class="status-badge P1">P1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Added:</strong> 2026-04-04 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Edit the bread-making recording into final video</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">15:34 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">2</span> total)</span>
+            </div>
+            <p class="section-desc">All done here — press "Put Back" to move it back to active tasks.</p>
+
+            <!-- 3 narrow columns -->
+            <div class="task-grid" id="completed-grid">
+                <!-- a. Daily Newsletter -->
+                <div class="task-card" data-name="Daily AI Newsletter" data-status="done" data-completedDate="2026-04-04">
+                    <div class="task-header">
+                        <div class="task-avatar">📰</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Daily AI Newsletter</div>
+                            <div class="task-status">
+                                <span class="status-badge done">Done</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Completed:</strong> 2026-04-04 (today)</div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Completed:</div>
+                        <ul class="task-section-list">
+                            <li>Daily newsletter generated & published ✓</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Completed today ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+
+                <!-- b. AI Builder Digest -->
+                <div class="task-card" data-name="AI Builders Digest" data-status="done" data-completedDate="2026-04-04">
+                    <div class="task-header">
+                        <div class="task-avatar">📡</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">AI Builders Digest</div>
+                            <div class="task-status">
+                                <span class="status-badge done">Done</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Completed:</strong> 2026-04-04 (today)</div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Completed:</div>
+                        <ul class="task-section-list">
+                            <li>Daily digest updated & published ✓</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Completed today ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">9</span> total)</span>
+            </div>
+            <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
+            <div class="archive-list" id="archive-list">
+                <!-- Archived tasks from 2026-04-03 (yesterday) -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-03 <span class="archive-count-badge">9 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix Newsletter Rules&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🔧</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Fix Newsletter Rules</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title&quot;>Completed:</div><ul class=&quot;task-section-list&quot;><li>Fixed all the critical rules for daily newsletter ✓</li></ul></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix Newsletter Rules</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🔧</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Fix AI Builders Digest</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title&quot;>Completed:</div><ul class=&quot;task-section-list&quot;><li>Fixed workflow to use fresh Tavily search instead of stale feed ✓</li></ul></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix AI Builders Digest</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Coffee Chat with Lu Wang&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>☕</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Coffee Chat with Lu Wang</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Coffee Chat with Lu Wang</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;51min Audio Transcription&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;><div class=&quot;task-avatar&quot;>🎙️</div></div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>51min Audio Transcription</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">51min Audio Transcription</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Google AI Agent 7-Day Learning Plan&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📚</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Google AI Agent 7-Day Learning Plan</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Google AI Agent 7-Day Learning Plan</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Weekly Maintenance Check&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🧹</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Weekly Maintenance Check</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Weekly Maintenance Check</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter Automation&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📰</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Daily AI Newsletter Automation</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Daily AI Newsletter Automation</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Daily Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📡</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>AI Builders Daily Digest</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">AI Builders Daily Digest</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Cute Task Dashboard&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🌸</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Cute Task Dashboard</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-03</div></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Cute Task Dashboard</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sync Status Indicator -->
+        <div class="sync-status" id="sync-status">Auto-sync ready</div>
+
+        <footer>
+            Last generated: 02 April 2026, 23:55 PM (Asia/Shanghai)
+        </footer>
+    </div>
+<script>
+// --- AUTO-SAVE & AUTO-SYNC CONFIGURATION ---
+// After creating a gist at https://gist.github.com/, paste your gist ID here:
+const GIST_ID = 'c0032b7f6e49703241b7df59414de1f9'; // Leave empty for local-only auto-save
+const GIST_TOKEN = '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'; // Create a personal access token at https://github.com/settings/tokens with gist scope
+
+// Auto-save delay (wait 1 second after last edit before saving)
+const AUTO_SAVE_DELAY = 1000;
+let autoSaveTimer = null;
+
+// Get the entire document state for saving
+function getDocumentState() {
+    return {
+        activeGrid: document.getElementById('active-grid').innerHTML,
+        completedGrid: document.getElementById('completed-grid').innerHTML,
+        archiveList: document.getElementById('archive-list').innerHTML,
+        totalCounts: {
+            total: document.getElementById('total-count').textContent,
+            working: document.getElementById('working-count').textContent,
+            idle: document.getElementById('idle-count').textContent,
+            workingBadge: document.getElementById('working-badge').textContent,
+            idleBadge: document.getElementById('idle-badge').textContent,
+            completed: document.getElementById('completed-count').textContent,
+            archived: document.getElementById('archive-count').textContent
+        },
+        searchQuery: document.getElementById('search-input').value
+    };
+}
+
+// Set document state from loaded data
+function setDocumentState(state) {
+    if (!state) return;
+    
+    document.getElementById('active-grid').innerHTML = state.activeGrid;
+    document.getElementById('completed-grid').innerHTML = state.completedGrid;
+    document.getElementById('archive-list').innerHTML = state.archiveList;
+    document.getElementById('search-input').value = state.searchQuery || '';
+    
+    // Restore counts
+    document.getElementById('total-count').textContent = state.totalCounts.total;
+    document.getElementById('working-count').textContent = state.totalCounts.working;
+    document.getElementById('idle-count').textContent = state.totalCounts.idle;
+    document.getElementById('working-badge').textContent = state.totalCounts.workingBadge;
+    document.getElementById('idle-badge').textContent = state.totalCounts.idleBadge;
+    document.getElementById('completed-count').textContent = state.totalCounts.completed;
+    document.getElementById('archive-count').textContent = state.totalCounts.archived;
+    
+    // Rebind all event listeners after restoring content
+    rebindAllEventListeners();
+    filterTasks();
+}
+
+// Update sync status display
+function setSyncStatus(status, text) {
+    const el = document.getElementById('sync-status');
+    el.className = `sync-status ${status}`;
+    el.textContent = text;
+}
+
+// Save to localStorage (always, regardless of gist sync)
+function saveToLocal() {
+    const state = getDocumentState();
+    localStorage.setItem('taskDashboardState', JSON.stringify(state));
+}
+
+// Load from localStorage
+function loadFromLocal() {
+    const saved = localStorage.getItem('taskDashboardState');
+    if (saved) {
+        try {
+            return JSON.parse(saved);
+        } catch (e) {
+            console.error('Failed to parse local save:', e);
+            return null;
+        }
+    }
+    return null;
+}
+
+// Auto-save triggered after any change
+function scheduleAutoSave() {
+    setSyncStatus('saving', 'Saving...');
+    if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    
+    autoSaveTimer = setTimeout(() => {
+        saveToLocal();
+        
+        if (GIST_ID && GIST_TOKEN) {
+            saveToGist();
+        } else {
+            setSyncStatus('', 'Saved locally');
+            setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+        }
+    }, AUTO_SAVE_DELAY);
+}
+
+// Save to GitHub Gist for cross-device sync
+async function saveToGist() {
+    try {
+        const state = getDocumentState();
+        const content = JSON.stringify(state, null, 2);
+        
+        const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `token ${GIST_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                files: {
+                    'task-dashboard-state.json': {
+                        content: content
+                    }
+                }
+            })
+        });
+        
+        if (response.ok) {
+            setSyncStatus('', 'Synced to GitHub');
+            setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+        } else {
+            throw new Error(`GitHub API responded with ${response.status}`);
+        }
+    } catch (e) {
+        console.error('Gist sync failed:', e);
+        setSyncStatus('error', 'Sync failed - saved locally only');
+        setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
+    }
+}
+
+// Load from GitHub Gist
+async function loadFromGist() {
+    if (!GIST_ID || !GIST_TOKEN) return null;
+    
+    try {
+        const response = await fetch(`https://api.github.com/gists/${GIST_ID}`);
+        if (!response.ok) {
+            throw new Error(`GitHub API responded with ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const file = data.files['task-dashboard-state.json'];
+        if (!file) return null;
+        
+        return JSON.parse(file.content);
+    } catch (e) {
+        console.error('Failed to load from gist:', e);
+        setSyncStatus('error', 'Failed to load sync - using local');
+        return null;
+    }
+}
+
+// Rebind all event listeners after restoring content from save
+function rebindAllEventListeners() {
+    // Rebind action buttons for all active and completed cards
+    document.querySelectorAll('#active-grid .task-card .task-actions button:last-child').forEach(btn => {
+        const card = btn.parentElement.parentElement;
+        if (card.dataset.status === 'working' || card.dataset.status === 'idle') {
+            btn.textContent = 'Archive Done';
+            btn.onclick = function() { moveToCompleted(card); };
+        } else {
+            btn.textContent = 'Put Back';
+            btn.onclick = function() { putBackToActive(card); };
+        }
+    });
+    
+    document.querySelectorAll('#active-grid .task-card .task-actions button:first-child').forEach(btn => {
+        const card = btn.parentElement.parentElement;
+        btn.onclick = function() { addComment(card); };
+    });
+    
+    document.querySelectorAll('#completed-grid .task-card .task-actions button:last-child').forEach(btn => {
+        const card = btn.parentElement.parentElement;
+        btn.textContent = 'Put Back';
+        btn.onclick = function() { putBackToActive(card); };
+    });
+    
+    document.querySelectorAll('#completed-grid .task-card .task-actions button:first-child').forEach(btn => {
+        const card = btn.parentElement.parentElement;
+        btn.onclick = function() { addComment(card); };
+    });
+    
+    // Rebind archive date header clicks
+    document.querySelectorAll('.archive-date-header').forEach(header => {
+        header.onclick = function() { toggleArchiveDate(header.parentElement); };
+    });
+    
+    // Rebind archive restore buttons
+    document.querySelectorAll('.archive-restore-btn').forEach(btn => {
+        const item = btn.parentElement;
+        const date = item.parentElement.parentElement.querySelector('.archive-date-header').textContent.split(' ')[0];
+        btn.onclick = function() { restoreFromArchive(date, item.previousElementSibling, item); };
+    });
+    
+    // Rebind archived task name clicks
+    document.querySelectorAll('.archive-task-name').forEach(name => {
+        const item = name.parentElement;
+        name.onclick = function() { showArchivedTaskCard(item); };
+    });
+}
+
+// Poll for changes from other devices (every 5 seconds)
+function startSyncPolling() {
+    if (!GIST_ID || !GIST_TOKEN) return;
+    
+    setInterval(async () => {
+        const remoteState = await loadFromGist();
+        if (!remoteState) return;
+        
+        const localState = loadFromLocal();
+        if (!localState) {
+            // No local save, just use remote
+            setDocumentState(remoteState);
+            saveToLocal();
+            setSyncStatus('', 'Loaded remote state');
+            setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+            return;
+        }
+        
+        // Check if remote is different from local
+        const localJson = JSON.stringify(localState);
+        const remoteJson = JSON.stringify(remoteState);
+        
+        if (localJson !== remoteJson) {
+            // Remote is newer - update local
+            setDocumentState(remoteState);
+            saveToLocal();
+            setSyncStatus('', 'Synced changes from other device');
+            setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+        }
+    }, 5000); // Check every 5 seconds - near real-time!
+}
+
+// --- END AUTO-SYNC ---
+
+// Update all counts automatically (top summary, tab badges, completed count)
+function updateAllCounts() {
+    let working = 0;
+    let idle = 0;
+    document.querySelectorAll('#active-grid .task-card').forEach(card => {
+        if (card.style.display !== 'none') {
+            if (card.dataset.status === 'working') working++;
+            if (card.dataset.status === 'idle') idle++;
+        }
+    });
+    const totalWorking = document.querySelectorAll('#active-grid .task-card[data-status=\"working\"]').length;
+    const totalIdle = document.querySelectorAll('#active-grid .task-card[data-status=\"idle\"]').length;
+    const completed = document.querySelectorAll('#completed-grid .task-card').length;
+    const archived = document.querySelectorAll('#archive-list .archive-task-item').length;
+    const total = totalWorking + totalIdle + completed + archived;
+
+    // Update all displays
+    document.getElementById('total-count').textContent = total;
+    document.getElementById('working-count').textContent = totalWorking;
+    document.getElementById('idle-count').textContent = totalIdle;
+    document.getElementById('working-badge').textContent = totalWorking;
+    document.getElementById('idle-badge').textContent = totalIdle;
+    document.getElementById('completed-count').textContent = completed;
+    document.getElementById('archive-count').textContent = archived;
+}
+
+// Switch tab filtering
+function switchTab(status) {
+    document.querySelectorAll('#active-grid .task-card').forEach(card => {
+        if (card.dataset.status === status) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    filterTasks();
+    updateAllCounts();
+}
+
+// Search filter for all tasks across all sections
+function filterTasks() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+
+    // Filter active tasks
+    document.querySelectorAll('#active-grid .task-card').forEach(card => {
+        const name = card.querySelector('.task-name').textContent.toLowerCase();
+        const status = card.querySelector('.status-badge').textContent.toLowerCase();
+        if (!query || name.includes(query) || status.includes(query)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Filter completed tasks
+    document.querySelectorAll('#completed-grid .task-card').forEach(card => {
+        const name = card.querySelector('.task-name').textContent.toLowerCase();
+        const status = card.querySelector('.status-badge').textContent.toLowerCase();
+        if (!query || name.includes(query) || status.includes(query)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    updateAllCounts();
+}
+
+// Fully functional Add Comment
+function addComment(taskCard) {
+    const input = taskCard.querySelector('.action-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleString('zh-CN');
+    const updates = taskCard.querySelector('.task-updates');
+    const newUpdate = document.createElement('div');
+    newUpdate.className = 'update-item';
+    newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> ${text}`;
+    updates.appendChild(newUpdate);
+    input.value = '';
+    scheduleAutoSave();
+}
+
+// Move from Active → Completed
+function moveToCompleted(taskCard) {
+    const completedGrid = document.getElementById('completed-grid');
+    completedGrid.appendChild(taskCard);
+    // Change button from "Archive Done" to "Put Back"
+    const actionBtn = taskCard.querySelector('.task-actions button:last-child');
+    actionBtn.textContent = 'Put Back';
+    actionBtn.onclick = function() { putBackToActive(taskCard); };
+    // Update status badge to done
+    taskCard.dataset.status = 'done';
+    taskCard.querySelector('.status-badge').className = 'status-badge done';
+    taskCard.querySelector('.status-badge').textContent = 'Done';
+    // Add completion date to task data for archiving
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    taskCard.dataset.completedDate = today;
+    filterTasks();
+    updateAllCounts();
+    scheduleAutoSave();
+}
+
+// Move from Completed → Active (Working)
+function putBackToActive(taskCard) {
+    const activeGrid = document.getElementById('active-grid');
+    activeGrid.appendChild(taskCard);
+    // Change button from "Put Back" to "Archive Done"
+    const actionBtn = taskCard.querySelector('.task-actions button:last-child');
+    actionBtn.textContent = 'Archive Done';
+    actionBtn.onclick = function() { moveToCompleted(taskCard); };
+    // Update status badge back to working
+    taskCard.dataset.status = 'working';
+    taskCard.querySelector('.status-badge').className = 'status-badge working';
+    taskCard.querySelector('.status-badge').textContent = 'Working';
+    delete taskCard.dataset.completedDate;
+    filterTasks();
+    updateAllCounts();
+    scheduleAutoSave();
+}
+
+// Toggle expand/collapse archive date group
+function toggleArchiveDate(dateGroup) {
+    if (dateGroup.classList.contains('collapsed')) {
+        dateGroup.classList.remove('collapsed');
+        dateGroup.classList.add('expanded');
+    } else {
+        dateGroup.classList.remove('expanded');
+        dateGroup.classList.add('collapsed');
+    }
+}
+
+// Show full task card modal when clicking archived task name
+function showArchivedTaskCard(item) {
+    // Properly get full card HTML from dataset (fixes quote escaping issues)
+    const fullCardHtml = item.getAttribute('data-full-card');
+    if (!fullCardHtml || fullCardHtml.trim() === '') {
+        alert('Error: Could not load full task card data.');
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'task-modal-overlay';
+    modal.onclick = function() { document.body.removeChild(modal); };
+    
+    // Position modal near the clicked item instead of centered screen
+    const rect = item.getBoundingClientRect();
+    const modalContent = document.createElement('div');
+    modalContent.className = 'task-modal-content';
+    modalContent.onclick = function(e) { e.stopPropagation(); };
+    
+    // Position below the clicked item within the archive section
+    modalContent.style.position = 'fixed';
+    modalContent.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+    modalContent.style.left = rect.left + 'px';
+    modalContent.style.maxWidth = 'min(90vw, 500px)';
+    modalContent.style.maxHeight = '60vh';
+    
+    modalContent.innerHTML = fullCardHtml;
+    
+    // Add close button
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✖ Close';
+    closeBtn.style.cssText = 'position: sticky; top: 8px; left: 100%; width: auto; background: #f44336; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-bottom: 8px;';
+    closeBtn.onclick = function() { document.body.removeChild(modal); };
+    modalContent.insertBefore(closeBtn, modalContent.firstChild);
+    
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+}
+
+// Archive all completed tasks from today, grouped by date (called at midnight)
+function archiveTodaysCompleted() {
+    const archiveList = document.getElementById('archive-list');
+    const completedGrid = document.getElementById('completed-grid');
+    const completedCards = Array.from(completedGrid.querySelectorAll('.task-card'));
+    
+    if (completedCards.length === 0) return;
+    
+    // Group completed cards by completion date
+    const grouped = {};
+    completedCards.forEach(card => {
+        const date = card.dataset.completedDate || new Date().toISOString().split('T')[0];
+        if (!grouped[date]) grouped[date] = [];
+        grouped[date].push(card);
+    });
+    
+    // Move each group to archive
+    Object.keys(grouped).sort().reverse().forEach(date => {
+        // Create date group header in archive
+        const dateGroup = document.createElement('div');
+        dateGroup.className = 'archive-date-group collapsed';
+        dateGroup.innerHTML = `<div class=\"archive-date-header\" onclick=\"toggleArchiveDate(this.parentElement)\">${date} <span class=\"archive-count-badge\">${grouped[date].length} task${grouped[date].length !== 1 ? 's' : ''}</span></div><div class=\"archive-date-cards\"></div>`;
+        
+        // Move all cards for this date into the group
+        grouped[date].forEach(card => {
+            // We just keep the basic info in the archive list, linked to the original card
+            // Wait, no: the user wants the task cards archived here grouped by date
+            const archiveItem = document.createElement('div');
+            archiveItem.className = 'archive-task-item';
+            archiveItem.innerHTML = `
+                <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">${card.querySelector('.task-name').textContent}</div>
+                <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('${date}', this.parentNode.previousElementSibling, this)\">Restore</button>
+            `;
+            // Store the full card HTML as data so we can restore it
+            archiveItem.setAttribute('data-full-card', card.outerHTML);
+            dateGroup.querySelector('.archive-date-cards').appendChild(archiveItem);
+            // Remove from completed grid
+            card.remove();
+        });
+        
+        archiveList.appendChild(dateGroup);
+    });
+    
+    updateAllCounts();
+    scheduleAutoSave();
+}
+
+// Restore a task from archive back to completed grid
+function restoreFromArchive(date, header, item) {
+    const fullCardHtml = item.getAttribute('data-full-card');
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = fullCardHtml;
+    const card = tempDiv.firstChild;
+    
+    // Add back to completed grid
+    document.getElementById('completed-grid').appendChild(card);
+    
+    // Remove from archive
+    const dateGroup = item.parentElement.parentElement;
+    item.remove();
+    
+    // If date group is now empty, remove it
+    if (dateGroup.querySelectorAll('.archive-task-item').length === 0) {
+        dateGroup.remove();
+    }
+    
+    // Re-bind event listeners for the restored card
+    const actionBtn = card.querySelector('.task-actions button:last-child');
+    actionBtn.onclick = function() { putBackToActive(card); };
+    const addCommentBtn = card.querySelector('.task-actions button:first-child');
+    addCommentBtn.onclick = function() { addComment(card); };
+    
+    updateAllCounts();
+    filterTasks();
+    scheduleAutoSave();
+}
+
+// Initialize everything on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Try to load saved state
+    const loaded = loadFromLocal();
+    if (loaded) {
+        setDocumentState(loaded);
+    }
+    
+    filterTasks();
+    updateAllCounts();
+    
+    // Update last generated time
+    const now = new Date();
+    const timeStr = now.toLocaleString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)`;
+    
+    // Start polling for sync if configured
+    startSyncPolling();
+});
+</script>
+</body>
+</html>
