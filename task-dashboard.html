@@ -249,6 +249,22 @@
             background: #e8f5e9;
             color: #2e7d32;
         }
+        
+        /* Priority dropdown selector - matches badge style */
+        .priority-select {
+            border: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .priority-select::-ms-expand {
+            display: none;
+        }
+        
         .task-meta {
             color: #444;
             font-size: 0.85rem;
@@ -553,7 +569,11 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Book sushi cake</div>
                             <div class="task-status">
-                                <span class="status-badge P0" contenteditable="true" oninput="scheduleAutoSave()">P0</span>
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -586,7 +606,11 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Go to gym</div>
                             <div class="task-status">
-                                <span class="status-badge P0" contenteditable="true" oninput="scheduleAutoSave()">P0</span>
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -620,7 +644,11 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Jeju island travel plan</div>
                             <div class="task-status">
-                                <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
+                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -655,7 +683,11 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Make 2 breads</div>
                             <div class="task-status">
-                                <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
+                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -958,6 +990,27 @@ function loadFromLocal() {
         }
     }
     return null;
+}
+
+// Update priority text in meta when dropdown changes
+function updatePriorityText(selectElement) {
+    const priority = selectElement.value;
+    const taskCard = selectElement.closest('.task-card');
+    const priorityText = {
+        'P0': 'P0 (High)',
+        'P1': 'P1 (Medium)',
+        'P2': 'P2 (Low)'
+    };
+    
+    // Update the CSS class for color coding
+    selectElement.classList.remove('P0', 'P1', 'P2');
+    selectElement.classList.add(priority);
+    
+    // Update the text in the meta section
+    const metaDiv = taskCard.querySelector('.task-meta div:first-child span');
+    if (metaDiv) {
+        metaDiv.textContent = priorityText[priority];
+    }
 }
 
 // Auto-save triggered after any change
@@ -1384,12 +1437,16 @@ function addNewTask() {
             <div class="task-info">
                 <div class="task-name" contenteditable="true">New Task</div>
                 <div class="task-status">
-                    <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
+                    <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                        <option value="P0">P0</option>
+                        <option value="P1" selected>P1</option>
+                        <option value="P2">P2</option>
+                    </select>
                 </div>
             </div>
         </div>
         <div class="task-meta">
-            <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+            <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
             <div><strong>Added:</strong> ${today} (today)</div>
             <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
         </div>
@@ -1407,6 +1464,7 @@ function addNewTask() {
             <input type="text" class="action-input" placeholder="Add a comment...">
             <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
             <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+            <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
         </div>
     `;
     
@@ -1425,6 +1483,32 @@ function addNewTask() {
     }, 100);
 }
 
+// Delete a task card completely
+function deleteTask(taskCard) {
+    if (confirm('Are you sure you want to delete this task permanently?')) {
+        taskCard.remove();
+        updateAllCounts();
+        filterTasks();
+        scheduleAutoSave();
+    }
+}
+
+// Add delete button to all existing tasks (for upgrade)
+function addDeleteButtonToExistingTasks() {
+    document.querySelectorAll('.task-card:not(.has-delete-button)').forEach(card => {
+        card.classList.add('has-delete-button');
+        const actions = card.querySelector('.task-actions');
+        if (actions && !actions.querySelector('.delete-btn')) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'action-btn delete-btn';
+            deleteBtn.style.cssText = 'background: #ffebee; border-color: #ffcdd2; color: #c62828;';
+            deleteBtn.innerHTML = '🗑️ Delete';
+            deleteBtn.onclick = () => deleteTask(card);
+            actions.appendChild(deleteBtn);
+        }
+    });
+}
+
 // Initialize everything on page load
 document.addEventListener('DOMContentLoaded', () => {
     // Try to load saved state
@@ -1432,6 +1516,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loaded) {
         setDocumentState(loaded);
     }
+    
+    // Add delete button to all existing tasks
+    addDeleteButtonToExistingTasks();
     
     filterTasks();
     updateAllCounts();
