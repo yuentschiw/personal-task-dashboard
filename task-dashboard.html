@@ -720,14 +720,18 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Decide AI educational service purchase</div>
                             <div class="task-status">
-                                <span class="status-badge P1">P1</span>
+                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -743,6 +747,7 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -753,14 +758,18 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Bread-making video editing</div>
                             <div class="task-status">
-                                <span class="status-badge P1">P1</span>
+                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -776,6 +785,7 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
             </div>
@@ -1494,11 +1504,15 @@ function deleteTask(taskCard) {
 }
 
 // Add delete button to all existing tasks (for upgrade)
+// Force-add to EVERY task to guarantee it's there, fix duplicates from cached loads
 function addDeleteButtonToExistingTasks() {
-    document.querySelectorAll('.task-card:not(.has-delete-button)').forEach(card => {
+    document.querySelectorAll('.task-card').forEach(card => {
         card.classList.add('has-delete-button');
         const actions = card.querySelector('.task-actions');
-        if (actions && !actions.querySelector('.delete-btn')) {
+        if (actions) {
+            // Remove any existing delete buttons first to prevent duplicates
+            actions.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+            
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'action-btn delete-btn';
             deleteBtn.style.cssText = 'background: #ffebee; border-color: #ffcdd2; color: #c62828;';
