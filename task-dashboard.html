@@ -526,9 +526,11 @@
         <!-- VERTICAL STACKING AS REQUESTED: 1. Active (top) → 2. Completed → 3. Archived (bottom) -->
         <!-- 1. Active Tasks (first in the stack) -->
         <section class="section">
-            <div class="section-title">
-                <span class="emoji">🎯</span> Active Tasks
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span><span class="emoji">🎯</span> Active Tasks</span>
+                <button class="action-btn" style="font-size: 0.95rem; padding: 8px 16px; background: #e3f2fd; border-color: #bbdefb; color: #1565c0;" onclick="addNewTask()">➕ Add New Task</button>
             </div>
+            
             <p class="section-desc">Current open work you're actively working on or keeping an eye on.</p>
 
             <!-- Tabs: Working + Idle with auto-updating badges -->
@@ -551,14 +553,14 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Book sushi cake</div>
                             <div class="task-status">
-                                <span class="status-badge P0">P0</span>
+                                <span class="status-badge P0" contenteditable="true" oninput="scheduleAutoSave()">P0</span>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P0 (High)</div>
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -584,14 +586,14 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Go to gym</div>
                             <div class="task-status">
-                                <span class="status-badge P0">P0</span>
+                                <span class="status-badge P0" contenteditable="true" oninput="scheduleAutoSave()">P0</span>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P0 (High)</div>
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -618,15 +620,15 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Jeju island travel plan</div>
                             <div class="task-status">
-                                <span class="status-badge P1">P1</span>
+                                <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P1 (Medium)</div>
-                        <div><strong>Deadline:</strong> by next Saturday (2026-04-11)</div>
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+                        <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">by next Saturday (2026-04-11)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -653,14 +655,14 @@
                         <div class="task-info">
                             <div class="task-name" contenteditable="true">Make 2 breads</div>
                             <div class="task-status">
-                                <span class="status-badge P1">P1</span>
+                                <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> P1 (Medium)</div>
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
                         <div><strong>Added:</strong> 2026-04-04 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -1362,6 +1364,65 @@ function restoreFromArchive(date, header, item) {
     updateAllCounts();
     filterTasks();
     scheduleAutoSave();
+}
+
+// Add a brand new blank task card to Active Tasks (Working status)
+function addNewTask() {
+    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const timeStr = now.toLocaleString('zh-CN');
+    
+    // Create new blank task card HTML
+    const newTask = document.createElement('div');
+    newTask.className = 'task-card';
+    newTask.dataset.name = 'New Task';
+    newTask.dataset.status = 'working';
+    
+    newTask.innerHTML = `
+        <div class="task-header">
+            <div class="task-avatar">✨</div>
+            <div class="task-info">
+                <div class="task-name" contenteditable="true">New Task</div>
+                <div class="task-status">
+                    <span class="status-badge P1" contenteditable="true" oninput="scheduleAutoSave()">P1</span>
+                </div>
+            </div>
+        </div>
+        <div class="task-meta">
+            <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+            <div><strong>Added:</strong> ${today} (today)</div>
+            <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+        </div>
+        <div>
+            <div class="task-section-title">Details:</div>
+            <ul class="task-section-list">
+                <li>Add your task details here</li>
+            </ul>
+        </div>
+        <div class="task-updates">
+            <div class="task-section-title">Recent updates:</div>
+            <div class="update-item"><span class="update-time">${timeStr}:</span> Added to active tasks ✓</div>
+        </div>
+        <div class="task-actions">
+            <input type="text" class="action-input" placeholder="Add a comment...">
+            <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+            <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+        </div>
+    `;
+    
+    // Add to active grid
+    const activeGrid = document.getElementById('active-grid');
+    activeGrid.appendChild(newTask);
+    
+    // Update counts and rebind events
+    updateAllCounts();
+    rebindAllEventListeners();
+    scheduleAutoSave();
+    
+    // Focus the task name so user can start typing immediately
+    setTimeout(() => {
+        newTask.querySelector('.task-name').focus();
+    }, 100);
 }
 
 // Initialize everything on page load
