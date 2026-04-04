@@ -517,7 +517,7 @@
         <div class="top-summary">
             <div class="summary-card total">
                 <span class="summary-label">Total Tasks</span>
-                <span class="summary-count" id="total-count">9</span>
+                <span class="summary-count" id="total-count">16</span>
             </div>
             <div class="summary-card waiting">
                 <span class="summary-label">Waiting</span>
@@ -529,7 +529,7 @@
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
-                <span class="summary-count" id="idle-count">0</span>
+                <span class="summary-count" id="idle-count">1</span>
             </div>
         </div>
 
@@ -555,7 +555,7 @@
                     Working <span class="badge" id="working-badge">4</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
-                    Idle <span class="badge" id="idle-badge">0</span>
+                    Idle <span class="badge" id="idle-badge">1</span>
                 </div>
             </div>
 
@@ -794,83 +794,36 @@
         <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">2</span> total)</span>
+                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">0</span> total)</span>
             </div>
             <p class="section-desc">All done here — press "Put Back" to move it back to active tasks.</p>
 
             <!-- 3 narrow columns -->
             <div class="task-grid" id="completed-grid">
-                <!-- a. Daily Newsletter -->
-                <div class="task-card" data-name="Daily AI Newsletter" data-status="done" data-completedDate="2026-04-04">
-                    <div class="task-header">
-                        <div class="task-avatar">📰</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true">Daily AI Newsletter</div>
-                            <div class="task-status">
-                                <span class="status-badge done">Done</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Completed:</strong> 2026-04-04 (today)</div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Completed:</div>
-                        <ul class="task-section-list">
-                            <li>Daily newsletter generated & published ✓</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Completed today ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                    </div>
-                </div>
-
-                <!-- b. AI Builder Digest -->
-                <div class="task-card" data-name="AI Builders Digest" data-status="done" data-completedDate="2026-04-04">
-                    <div class="task-header">
-                        <div class="task-avatar">📡</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true">AI Builders Digest</div>
-                            <div class="task-status">
-                                <span class="status-badge done">Done</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Completed:</strong> 2026-04-04 (today)</div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Completed:</div>
-                        <ul class="task-section-list">
-                            <li>Daily digest updated & published ✓</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Completed today ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">9</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">11</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
+                <!-- Archived tasks from 2026-04-04 (today) -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-04 <span class="archive-count-badge">2 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📰</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Daily AI Newsletter</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=&quot;task-section-title&quot;>Completed:</div><ul class=&quot;task-section-list&quot;><li>Daily newsletter generated & published ✓</li></ul></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>07:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Daily AI Newsletter</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📡</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>AI Builders Digest</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=&quot;task-section-title&quot;>Completed:</div><ul class=&quot;task-section-list&quot;><li>Daily digest updated & published ✓</li></ul></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title&quot;>Recent updates:</div><div class=&quot;update-item&quot;><span class=&quot;update-time&quot;>07:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions&quot;><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)&quot;>Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)&quot;>Put Back</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">AI Builders Digest</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
+                        </div>
+                    </div>
+                </div>
                 <!-- Archived tasks from 2026-04-03 (yesterday) -->
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-03 <span class="archive-count-badge">9 tasks</span></div>
