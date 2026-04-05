@@ -1762,6 +1762,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const loaded = loadFromLocal();
     if (loaded) {
         setDocumentState(loaded);
+    } else {
+        // No saved state, add delete buttons to initial static tasks
+        rebindAllEventListeners();
     }
     
     sortTasksByPriority(); // Sort on initial load
