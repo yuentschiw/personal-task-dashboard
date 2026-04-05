@@ -1448,7 +1448,13 @@ function updateAllCounts() {
     });
     
     // Count archived tasks for today
-    const todayArchiveGroup = document.querySelector(`.archive-date-header:contains('${TODAY_DATE}')`);
+    const archiveHeaders = document.querySelectorAll('.archive-date-header');
+    let todayArchiveGroup = null;
+    archiveHeaders.forEach(header => {
+        if (header.textContent.includes(TODAY_DATE)) {
+            todayArchiveGroup = header;
+        }
+    });
     if (todayArchiveGroup) {
         const countBadge = todayArchiveGroup.querySelector('.archive-count-badge');
         if (countBadge) {
