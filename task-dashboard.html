@@ -602,7 +602,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -642,7 +641,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -680,7 +678,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -719,7 +716,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -757,7 +753,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -796,7 +791,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -837,7 +831,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
             </div>
@@ -888,7 +881,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -927,7 +919,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -966,7 +957,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -1005,7 +995,6 @@
                         <input type="text" class="action-input" placeholder="Add a comment...">
                         <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
                         <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
                     </div>
                 </div>
             </div>
@@ -1356,19 +1345,15 @@ async function loadFromGist() {
 
 // Rebind all event listeners after restoring content from save
 function rebindAllEventListeners() {
-    // Remove all delete buttons first to avoid duplicates
-    document.querySelectorAll('.task-actions button').forEach(btn => {
-        if (btn.style.background.includes('ffebee') && btn.innerHTML.includes('Delete')) {
-            btn.remove();
-        }
-    });
+    // Remove ALL delete buttons first to completely eliminate duplicates
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
     
-    // Add delete button to every task (ONE PER TASK ONLY)
+    // Add exactly ONE delete button to every task (no more duplicates!)
     document.querySelectorAll('.task-card').forEach(card => {
         const actions = card.querySelector('.task-actions');
         if (actions) {
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'action-btn';
+            deleteBtn.className = 'action-btn delete-btn'; // Add unique class for easy selection
             deleteBtn.style.cssText = 'background: #ffebee; border-color: #ffcdd2; color: #c62828;';
             deleteBtn.innerHTML = '🗑️ Delete';
             deleteBtn.onclick = () => deleteTask(card);
