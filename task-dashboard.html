@@ -457,7 +457,7 @@
                 gap: 8px;
             }
             
-            /* Task grid becomes single column on mobile */
+            /* Task grid becomes single column on mobile for ALL sections */
             .task-grid {
                 grid-template-columns: 1fr !important;
                 gap: 12px;
@@ -525,7 +525,7 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">9</span>
+                <span class="summary-count" id="working-count">5</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
@@ -552,7 +552,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">9</span>
+                    Working <span class="badge" id="working-badge">5</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -638,123 +638,7 @@
                     </div>
                 </div>
 
-                <!-- P0 (new April 5 tasks highest first) -->
-                <!-- 3. (New April 5) Go for lunch -->
-                <div class="task-card" data-name="Go for lunch" data-status="working">
-                    <div class="task-header">
-                        <div class="task-avatar">🍽️</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true">Go for lunch</div>
-                            <div class="task-status">
-                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Today's lunch outing</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
-                    </div>
-                </div>
-
-                <!-- 4. (New April 5) Exercise today -->
-                <div class="task-card" data-name="Exercise today" data-status="working">
-                    <div class="task-header">
-                        <div class="task-avatar">🏃</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true">Exercise today</div>
-                            <div class="task-status">
-                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Complete today's exercise routine</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
-                    </div>
-                </div>
-
-                <!-- P1 (next priority for new April 5 tasks) -->
-                <!-- 5. (New April 5) Make rose pretzel bread -->
-                <div class="task-card" data-name="Make rose pretzel bread" data-status="working">
-                    <div class="task-header">
-                        <div class="task-avatar">🥨</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true">Make rose pretzel bread</div>
-                            <div class="task-status">
-                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Bake rose-shaped pretzel bread</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
-                    </div>
-                </div>
-
-                <!-- 6. (New April 5) Learn Anthropic Claude harness concept -->
+                <!-- 3. (New April 5) Learn Anthropic Claude harness concept -->
                 <div class="task-card" data-name="Learn Anthropic Claude harness concept" data-status="working">
                     <div class="task-header">
                         <div class="task-avatar">📚</div>
@@ -793,7 +677,7 @@
                     </div>
                 </div>
 
-                <!-- 7. (New April 5) Do quarterly review draw board -->
+                <!-- 4. (New April 5) Do quarterly review draw board -->
                 <div class="task-card" data-name="Do quarterly review draw board" data-status="working">
                     <div class="task-header">
                         <div class="task-avatar">📊</div>
@@ -831,7 +715,7 @@
                     </div>
                 </div>
 
-                <!-- 8. (New April 5) Fix workflow schedule -->
+                <!-- 5. (New April 5) Fix workflow schedule -->
                 <div class="task-card" data-name="Fix workflow schedule" data-status="working">
                     <div class="task-header">
                         <div class="task-avatar">🔧</div>
@@ -870,7 +754,7 @@
                     </div>
                 </div>
 
-                <!-- 9. (New April 5) Plan Vladivostok May Day travel itinerary -->
+                <!-- 6. (New April 5) Plan Vladivostok May Day travel itinerary -->
                 <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working">
                     <div class="task-header">
                         <div class="task-avatar">✈️</div>
@@ -956,12 +840,167 @@
         <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">0</span> total)</span>
+                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">4</span> total)</span>
             </div>
             <p class="section-desc">All done here — press "Put Back" to move it back to active tasks.</p>
 
             <!-- 3 narrow columns -->
             <div class="task-grid" id="completed-grid">
+                <!-- Task 1: Book sushi cake -->
+                <div class="task-card" data-name="Book sushi cake" data-status="done">
+                    <div class="task-header">
+                        <div class="task-avatar">🍣</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Book sushi cake</div>
+                            <div class="task-status">
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Need to book for upcoming event</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <!-- Task 2: Go for lunch -->
+                <div class="task-card" data-name="Go for lunch" data-status="done">
+                    <div class="task-header">
+                        <div class="task-avatar">🍽️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Go for lunch</div>
+                            <div class="task-status">
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Today's lunch outing</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <!-- Task 3: Make rose pretzel bread -->
+                <div class="task-card" data-name="Make rose pretzel bread" data-status="done">
+                    <div class="task-header">
+                        <div class="task-avatar">🥨</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Make rose pretzel bread</div>
+                            <div class="task-status">
+                                <select class="priority-select status-badge P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Bake rose-shaped pretzel bread</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <!-- Task 4: Exercise today -->
+                <div class="task-card" data-name="Exercise today" data-status="done">
+                    <div class="task-header">
+                        <div class="task-avatar">🏃</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Exercise today</div>
+                            <div class="task-status">
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Complete today's exercise routine</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -976,17 +1015,17 @@
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-05 <span class="archive-count-badge">3 tasks</span></div>
                     <div class="archive-date-cards">
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Go to gym&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>💪</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Go to gym</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Today's workout session completed</li></ul></div><div class=&quot;task-updates&quot;><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Go to gym&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>💪</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Go to gym</div><div class=&quot;task-status&quot;><select class=&quot;priority-select status-badge P0&quot; onchange=&quot;updatePriorityText(this); scheduleAutoSave()&quot;><option value=&quot;P0&quot; selected>P0</option><option value=&quot;P1&quot;>P1</option><option value=&quot;P2&quot;>P2</option></select></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Today's workout session completed</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=&quot;action-btn&quot; style=&quot;background: #ffebee; border-color: #ffcdd2; color: #c62828;&quot; onclick=&quot;deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Go to gym</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-05', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Make 2 breads&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🍞</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Make 2 breads</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Two homemade breads baked completed</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Make 2 breads&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🍞</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Make 2 breads</div><div class=&quot;task-status&quot;><select class=&quot;priority-select status-badge P1&quot; onchange=&quot;updatePriorityText(this); scheduleAutoSave()&quot;><option value=&quot;P0&quot;>P0</option><option value=&quot;P1&quot; selected>P1</option><option value=&quot;P2&quot;>P2</option></select></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Two homemade breads baked completed</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=&quot;action-btn&quot; style=&quot;background: #ffebee; border-color: #ffcdd2; color: #c62828;&quot; onclick=&quot;deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Make 2 breads</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-05', this.parentNode.previousElementSibling, this)\">Restore</button>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-05', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Bread-making video editing&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>✂️</div><div class=&quot;task-info&quot;><div class=&quot;task-name\" contenteditable=&quot;true\">Bread-making video editing</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Bread-making recording edited into final video</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class="archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Bread-making video editing</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-05', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Bread-making video editing&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-05&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>✂️</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Bread-making video editing</div><div class=&quot;task-status&quot;><select class=&quot;priority-select status-badge P1&quot; onchange=&quot;updatePriorityText(this); scheduleAutoSave()&quot;><option value=&quot;P0&quot;>P0</option><option value=&quot;P1&quot; selected>P1</option><option value=&quot;P2&quot;>P2</option></select></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Bread-making recording edited into final video</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:20 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=&quot;action-btn&quot; style=&quot;background: #ffebee; border-color: #ffcdd2; color: #c62828;&quot; onclick=&quot;deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Bread-making video editing</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-05', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
                     </div>
                 </div>
@@ -994,38 +1033,38 @@
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-04 <span class="archive-count-badge">8 tasks</span></div>
                     <div class="archive-date-cards">
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📰</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Daily AI Newsletter</div><div class=&quot;task-status&quot;><span class=&quot;status-badge done&quot;>Done</span></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily newsletter generated & published ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...\"><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📰</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Daily AI Newsletter</div><div class=&quot;task-status&quot;><select class=&quot;priority-select status-badge done&quot;><option value=&quot;done&quot; selected>Done</option></select></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily newsletter generated & published ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=&quot;action-btn&quot; style=&quot;background: #ffebee; border-color: #ffcdd2; color: #c62828;&quot; onclick=&quot;deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Daily AI Newsletter</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar&quot;>📡</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">AI Builders Digest</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily digest updated & published ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class="archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">AI Builders Digest</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar\">📡</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=&quot;true\">AI Builders Digest</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done&quot; selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily digest updated & published ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">AI Builders Digest</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Correct active task count&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🔧</div><div class=&quot;task-info&quot;><div class=&quot;task-name\" contenteditable=\"true\">Correct active task count</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Fixed the mistake where too many old tasks were kept active</li></ul></div><div class=&quot;task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Correct active task count</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Correct active task count&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Correct active task count</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done&quot; selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Fixed the mistake where too many old tasks were kept active</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=&quot;update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Correct active task count</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix priority dropdown migration&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=&quot;true\">Fix priority dropdown migration</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Migrated all existing tasks from text input to dropdown selector</li><li>Fixed duplicate archive buttons bug</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Fix priority dropdown migration</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix priority dropdown migration&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Fix priority dropdown migration</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done&quot; selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Migrated all existing tasks from text input to dropdown selector</li><li>Fixed duplicate archive buttons bug</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix priority dropdown migration</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix GitHub push&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=\"task-avatar\">🔧</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Fix GitHub push</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Fixed wrong file location issue and pushed to GitHub successfully</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Fix GitHub push</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix GitHub push&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Fix GitHub push</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-04</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Fixed wrong file location issue and pushed to GitHub successfully</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">08:30 AM 2026-04-05:</span> Archived ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix GitHub push</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
                         <!-- Moved from 2026-04-05 → these were completed today (April 5) but belong to April 4 work -->
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter (April 5)&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>📰</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true&quot;>Daily AI Newsletter (April 5)</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta&quot;><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily newsletter for April 5 generated & published successfully ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Daily AI Newsletter (April 5)</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter (April 5)&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📰</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Daily AI Newsletter (April 5)</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily newsletter for April 5 generated & published successfully ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Daily AI Newsletter (April 5)</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Digest (April 5)&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📡</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">AI Builders Digest (April 5)</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Daily AI Builders digest for April 5 updated & published to Feishu doc ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=&quot;update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">AI Builders Digest (April 5)</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Digest (April 5)&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📡</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">AI Builders Digest (April 5)</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily AI Builders digest for April 5 updated & published to Feishu doc ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">AI Builders Digest (April 5)</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class=\"archive-task-item\" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Final archive &amp; count correction&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=\"task-name\" contenteditable=\"true\">Final archive & count correction</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Moved ALL 3 completed April 5 tasks that belong to April 4 into 2026-04-04 archive group</li><li>Corrected all archive counts to match request</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
-                            <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">Final archive & count correction</div>
-                            <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)\">Restore</button>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Final archive &amp; count correction&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-04&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Final archive & count correction</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-05 (for April 4 work)</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Moved ALL 3 completed April 5 tasks that belong to April 4 into 2026-04-04 archive group</li><li>Corrected all archive counts to match request</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">20:45 PM 2026-04-05:</span> Moved to 2026-04-04 archive as requested ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Final archive & count correction</div>
+                            <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-04', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
                     </div>
                 </div>
@@ -1033,40 +1072,40 @@
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-03 <span class="archive-count-badge">9 tasks</span></div>
                     <div class="archive-date-cards">
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix Newsletter Rules&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar&quot;>🔧</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Fix Newsletter Rules</div><div class=&quot;task-status\"><span class=&quot;status-badge done\">Done</span></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Fixed all the critical rules for daily newsletter ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix Newsletter Rules&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info&quot;><div class=&quot;task-name&quot; contenteditable=&quot;true\">Fix Newsletter Rules</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done&quot; selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Fixed all the critical rules for daily newsletter ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions\"><input type=&quot;text&quot; class=&quot;action-input&quot; placeholder=&quot;Add a comment...&quot;><button class=&quot;action-btn&quot; onclick=&quot;addComment(this.parentElement.parentElement)\">Add Comment</button><button class=&quot;action-btn&quot; onclick=&quot;putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=&quot;action-btn&quot; style=&quot;background: #ffebee; border-color: #ffcdd2; color: #c62828;&quot; onclick=&quot;deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix Newsletter Rules</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar\">🔧</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Fix AI Builders Digest</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Fixed workflow to use fresh Tavily search instead of stale feed ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Fix AI Builders Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🔧</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Fix AI Builders Digest</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Fixed workflow to use fresh Tavily search instead of stale feed ✓</li></ul></div><div class=&quot;task-updates\"><div class=&quot;task-section-title\">Recent updates:</div><div class=&quot;update-item\"><span class=&quot;update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=&quot;task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Fix AI Builders Digest</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Coffee Chat with Lu Wang&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header&quot;><div class=&quot;task-avatar\">☕</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Coffee Chat with Lu Wang</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Coffee chat completed</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Coffee Chat with Lu Wang&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">☕</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Coffee Chat with Lu Wang</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>Coffee chat completed</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Coffee Chat with Lu Wang</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;51min Audio Transcription&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=\"task-header\"><div class=\"task-avatar\">🎙️</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">51min Audio Transcription</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>51 minute audio transcription completed</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;51min Audio Transcription&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🎙️</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">51min Audio Transcription</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>51 minute audio transcription completed</li></ul></div><div class=&quot;task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">51min Audio Transcription</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Google AI Agent 7-Day Learning Plan&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=\"task-header\"><div class=\"task-avatar\">📚</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Google AI Agent 7-Day Learning Plan</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>7-day learning plan created ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Google AI Agent 7-Day Learning Plan&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📚</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Google AI Agent 7-Day Learning Plan</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=&quot;task-section-list\"><li>7-day learning plan created ✓</li></ul></div><div class=&quot;task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Google AI Agent 7-Day Learning Plan</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Weekly Maintenance Check&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=\"task-header\"><div class=\"task-avatar\">🧹</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Weekly Maintenance Check</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Weekly maintenance completed ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Weekly Maintenance Check&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🧹</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Weekly Maintenance Check</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Weekly maintenance completed ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Weekly Maintenance Check</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter Automation&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=\"task-header\"><div class=\"task-avatar\">📰</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">Daily AI Newsletter Automation</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily newsletter automation setup completed ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Daily AI Newsletter Automation&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📰</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Daily AI Newsletter Automation</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily newsletter automation setup completed ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Daily AI Newsletter Automation</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Daily Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=\"task-header\"><div class=\"task-avatar\">📡</div><div class=\"task-info\"><div class=\"task-name\" contenteditable=\"true\">AI Builders Daily Digest</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily digest updated & published ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;AI Builders Daily Digest&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">📡</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">AI Builders Daily Digest</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Daily digest updated & published ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">AI Builders Daily Digest</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
 
-                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Cute Task Dashboard&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🌸</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Cute Task Dashboard</div><div class=\"task-status\"><span class=\"status-badge done\">Done</span></div></div></div><div class=\"task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=\"task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Created cute task dashboard with all requested design ✓</li></ul></div><div class=\"task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button></div></div>'>
+                        <div class="archive-task-item" data-full-card='<div class=&quot;task-card&quot; data-name=&quot;Cute Task Dashboard&quot; data-status=&quot;done&quot; data-completedDate=&quot;2026-04-03&quot;><div class=&quot;task-header\"><div class=&quot;task-avatar\">🌸</div><div class=&quot;task-info\"><div class=&quot;task-name\" contenteditable=\"true\">Cute Task Dashboard</div><div class=&quot;task-status\"><select class=&quot;priority-select status-badge done\"><option value=&quot;done\" selected>Done</option></select></div></div></div><div class=&quot;task-meta\"><div><strong>Completed:</strong> 2026-04-03</div></div><div><div class=&quot;task-section-title\">Completed:</div><ul class=\"task-section-list\"><li>Created cute task dashboard with all requested design ✓</li></ul></div><div class=&quot;task-updates\"><div class=\"task-section-title\">Recent updates:</div><div class=\"update-item\"><span class=\"update-time\">14:26 2026-04-03:</span> Completed ✓</div></div><div class=\"task-actions\"><input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\"/><button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button><button class=\"action-btn\" onclick=\"putBackToActive(this.parentElement.parentElement)\">Put Back</button><button class=\"action-btn\" style=\"background: #ffebee; border-color: #ffcdd2; color: #c62828;\" onclick=\"deleteTask(this.parentElement.parentElement)\">🗑️ Delete</button></div></div>'>
                             <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">Cute Task Dashboard</div>
                             <button class="archive-restore-btn" onclick="restoreFromArchive('2026-04-03', this.parentNode.previousElementSibling, this)">Restore</button>
                         </div>
@@ -1079,7 +1118,7 @@
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
         <footer>
-            Last updated: 05 April 2026, 20:45 PM (Asia/Shanghai)
+            Last updated: 05 April 2026, 20:58 PM (Asia/Shanghai)
         </footer>
     </div>
 <script>
@@ -1180,6 +1219,8 @@ function updatePriorityText(selectElement) {
     if (metaDiv) {
         metaDiv.textContent = priorityText[priority];
     }
+    
+    scheduleAutoSave();
 }
 
 // Auto-save triggered after any change
@@ -1399,18 +1440,37 @@ function addComment(taskCard) {
 // Move from Active → Completed
 function moveToCompleted(taskCard) {
     const completedGrid = document.getElementById('completed-grid');
-    completedGrid.appendChild(taskCard);
-    // Change button from "Archive Done" to "Put Back"
-    const actionBtn = taskCard.querySelector('.task-actions button:last-child');
+    
+    // Clone the entire card to preserve the priority dropdown
+    const cardClone = taskCard.cloneNode(true);
+    
+    // Change status to done, but KEEP the priority dropdown with its current selection
+    cardClone.dataset.status = 'done';
+    
+    // Update button text and functionality - preserve the priority dropdown
+    const actionBtn = cardClone.querySelector('.task-actions button:last-child');
     actionBtn.textContent = 'Put Back';
-    actionBtn.onclick = function() { putBackToActive(taskCard); };
-    // Update status badge to done
-    taskCard.dataset.status = 'done';
-    taskCard.querySelector('.status-badge').className = 'status-badge done';
-    taskCard.querySelector('.status-badge').textContent = 'Done';
+    actionBtn.onclick = function() { putBackToActive(cardClone); };
+    
     // Add completion date to task data for archiving
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    taskCard.dataset.completedDate = today;
+    cardClone.dataset.completedDate = today;
+    
+    // Add a comment about the move
+    const updates = cardClone.querySelector('.task-updates');
+    const now = new Date();
+    const timeStr = now.toLocaleString('zh-CN');
+    const newUpdate = document.createElement('div');
+    newUpdate.className = 'update-item';
+    newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> Moved to Completed ✓</div>`;
+    updates.appendChild(newUpdate);
+    
+    // Append to completed grid
+    completedGrid.appendChild(cardClone);
+    
+    // Remove from active grid
+    taskCard.remove();
+    
     filterTasks();
     updateAllCounts();
     scheduleAutoSave();
@@ -1419,17 +1479,14 @@ function moveToCompleted(taskCard) {
 // Move from Completed → Active (Working)
 function putBackToActive(taskCard) {
     const activeGrid = document.getElementById('active-grid');
-    activeGrid.appendChild(taskCard);
     // Change button from "Put Back" to "Archive Done"
     const actionBtn = taskCard.querySelector('.task-actions button:last-child');
     actionBtn.textContent = 'Archive Done';
     actionBtn.onclick = function() { moveToCompleted(taskCard); };
-    // Update status badge back to working
+    // Update status badge back to working (keep dropdown intact with existing priority)
     taskCard.dataset.status = 'working';
-    const priority = taskCard.querySelector('.status-badge').textContent.split(' ')[0];
-    taskCard.querySelector('.status-badge').className = `status-badge ${priority}`;
-    taskCard.querySelector('.status-badge').textContent = priority;
     delete taskCard.dataset.completedDate;
+    activeGrid.appendChild(taskCard);
     filterTasks();
     updateAllCounts();
     scheduleAutoSave();
@@ -1608,14 +1665,19 @@ function deleteTask(taskCard) {
 // Force-add to EVERY task to guarantee it's there, fix duplicates from cached loads
 function addDeleteButtonToExistingTasks() {
     document.querySelectorAll('.task-card').forEach(card => {
-        card.classList.add('has-delete-button');
         const actions = card.querySelector('.task-actions');
         if (actions) {
-            // Remove any existing delete buttons first to prevent duplicates
-            actions.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+            // Remove ALL existing delete buttons first to PREVENT DUPLICATES
+            // This is what fixes the issue you saw (multiple delete buttons)
+            actions.querySelectorAll('button').forEach(btn => {
+                if (btn.innerHTML.includes('Delete') && btn.style.background.includes('ffebee')) {
+                    btn.remove();
+                }
+            });
             
+            // Add exactly ONE delete button
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'action-btn delete-btn';
+            deleteBtn.className = 'action-btn';
             deleteBtn.style.cssText = 'background: #ffebee; border-color: #ffcdd2; color: #c62828;';
             deleteBtn.innerHTML = '🗑️ Delete';
             deleteBtn.onclick = () => deleteTask(card);
@@ -1641,7 +1703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update last generated time
     const now = new Date();
     const timeStr = now.toLocaleString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)';
+    document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)`;
     
     // Start polling for sync if configured
     startSyncPolling();
