@@ -525,7 +525,7 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">8</span>
+                <span class="summary-count" id="working-count">9</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
@@ -552,7 +552,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">8</span>
+                    Working <span class="badge" id="working-badge">9</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -861,6 +861,46 @@
                     <div class="task-updates">
                         <div class="task-section-title">Recent updates:</div>
                         <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                        <button class="action-btn" style="background: #ffebee; border-color: #ffcdd2; color: #c62828;" onclick="deleteTask(this.parentElement.parentElement)">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <!-- 9. (New April 5) Plan Vladivostok May Day travel itinerary -->
+                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working">
+                    <div class="task-header">
+                        <div class="task-avatar">✈️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true">Plan Vladivostok May Day travel itinerary</div>
+                            <div class="task-status">
+                                <select class="priority-select status-badge P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf">Vladivostok travel plan doc</a></span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Create 4-day travel itinerary for May 1-4</li>
+                            <li>With parents + Roy Li, 4 people total</li>
+                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
                     </div>
                     <div class="task-actions">
                         <input type="text" class="action-input" placeholder="Add a comment...">
