@@ -1621,6 +1621,7 @@
         }
 
         // Show full task card modal when clicking archived task name (POSITIONED NEXT TO CLICK)
+        // Show full task card modal when clicking archived task name (POSITIONED NEXT TO CLICK)
         function showArchivedTaskCard(item, event) {
             // Get task name and date
             const taskName = item.querySelector('.archive-task-name').textContent;
@@ -1638,42 +1639,7 @@
             modalContent.style.maxHeight = '70vh';
             modalContent.style.position = 'fixed';
             
-            // Position modal next to click event
-            if (event) {
-                const clickX = event.clientX;
-                const clickY = event.clientY;
-                const modalWidth = 600;
-                const modalHeight = window.innerHeight * 0.7;
-                const padding = 12;
-                
-                // Calculate position: right of click, same vertical level
-                let left = clickX + padding + 20;
-                let top = clickY - (modalHeight / 2);
-                
-                // Prevent going off right edge
-                if (left + modalWidth > window.innerWidth - padding) {
-                    left = clickX - modalWidth - padding - 20;
-                }
-                
-                // Prevent going off bottom edge
-                if (top + modalHeight > window.innerHeight - padding) {
-                    top = window.innerHeight - modalHeight - padding;
-                }
-                
-                // Prevent going off top edge
-                if (top < padding) {
-                    top = padding;
-                }
-                
-                modalContent.style.left = left + 'px';
-                modalContent.style.top = top + 'px';
-            } else {
-                // Fallback to centered if no event
-                modalContent.style.left = '50%';
-                modalContent.style.top = '50%';
-                modalContent.style.transform = 'translate(-50%, -50%)';
-            }
-            
+            // First set the modal content!
             modalContent.innerHTML = `
                 <button style="position: sticky; top: 8px; left: 100%; width: auto; background: #f44336; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-bottom: 8px;" onclick="document.body.removeChild(this.parentElement.parentElement)">✖ Close</button>
                 
@@ -1702,22 +1668,45 @@
                 </div>
             `;
             
+            // Position modal next to click event - MUST BE AFTER setting innerHTML!
+            if (event) {
+                const clickX = event.clientX;
+                const clickY = event.clientY;
+                const modalWidth = 600;
+                const modalHeight = window.innerHeight * 0.7;
+                const padding = 12;
+                
+                // Calculate position: right of click, same vertical level!
+                let left = clickX + padding + 20;
+                let top = clickY - (modalHeight / 2);
+                
+                // Prevent going off right edge
+                if (left + modalWidth > window.innerWidth - padding) {
+                    left = clickX - modalWidth - padding - 20;
+                }
+                
+                // Prevent going off bottom edge
+                if (top + modalHeight > window.innerHeight - padding) {
+                    top = window.innerHeight - modalHeight - padding;
+                }
+                
+                // Prevent going off top edge
+                if (top < padding) {
+                    top = padding;
+                }
+                
+                modalContent.style.left = left + 'px';
+                modalContent.style.top = top + 'px';
+            } else {
+                // Fallback to centered if no event
+                modalContent.style.left = '50%';
+                modalContent.style.top = '50%';
+                modalContent.style.transform = 'translate(-50%, -50%)';
+            }
+            
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
-        }
-        
-        // Restore an archived task back to Completed section
-        function restoreArchivedTask(taskName, archiveDate, item) {
-            const completedGrid = document.getElementById('completed-grid');
-            
-            // Create new task card
-            const newCard = document.createElement('div');
-            newCard.className = 'task-card';
-            newCard.dataset.name = taskName;
-            newCard.dataset.status = 'done';
-            newCard.dataset.priority = 'P1'; // Default priority for restored tasks
-            newCard.dataset.completedDate = archiveDate;
-            
+        }            
             newCard.innerHTML = `
                 <div class="task-header">
                     <div class="task-avatar">✨</div>
