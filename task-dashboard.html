@@ -1231,7 +1231,7 @@
                     const item = document.createElement('div');
                     item.className = 'archive-task-item';
                     item.innerHTML = `
-                        <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement)">${task.name}</div>
+                        <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${task.name}</div>
                         <button class="archive-restore-btn" onclick="restoreFromArchive('${dateGroup.date}', this.parentNode.previousElementSibling, this)">Restore</button>
                     `;
                     cardsContainer.appendChild(item);
@@ -1432,7 +1432,7 @@
             // Rebind archived task name clicks
             document.querySelectorAll('.archive-task-name').forEach(name => {
                 const item = name.parentElement;
-                name.onclick = function() { showArchivedTaskCard(item); };
+                name.onclick = function(e) { showArchivedTaskCard(item, e); };
             });
         }
 
@@ -1802,7 +1802,7 @@
                     const archiveItem = document.createElement('div');
                     archiveItem.className = 'archive-task-item';
                     archiveItem.innerHTML = `
-                        <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement)\">${card.querySelector('.task-name').textContent}</div>
+                        <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement, event)\">${card.querySelector('.task-name').textContent}</div>
                         <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('${date}', this.parentNode.previousElementSibling, this)\">Restore</button>
                     `;
                     // Store the full card HTML as data so we can restore it
