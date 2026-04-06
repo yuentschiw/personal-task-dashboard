@@ -1703,7 +1703,7 @@
                 modalContent.style.transform = 'translate(-50%, -50%)';
                 modal.appendChild(modalContent);
                 document.body.appendChild(modal);
-                return;
+                // return; // <-- AUTO-SYNC IS NOW ENABLED!
             }
             
             const modalWidth = 300;
@@ -1946,7 +1946,7 @@
         // Poll for changes from other devices (every 5 seconds) - DISABLED to prevent overwriting local changes
         function startSyncPolling() {
             // Disabled by default to prevent overwriting local edits
-            return;
+            // return; // <-- AUTO-SYNC IS NOW ENABLED!
             if (!GITHUB_TOKEN) return;
             
             setInterval(async () => {
@@ -1960,7 +1960,7 @@
                     saveToLocal();
                     setSyncStatus('', 'Loaded remote content');
                     setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
-                    return;
+                    // return; // <-- AUTO-SYNC IS NOW ENABLED!
                 }
                 
                 // Compare remote and local
