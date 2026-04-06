@@ -1706,7 +1706,20 @@
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
-        }            
+        }
+        
+        // Restore an archived task back to Completed section
+        function restoreArchivedTask(taskName, archiveDate, item) {
+            const completedGrid = document.getElementById('completed-grid');
+            
+            // Create new task card
+            const newCard = document.createElement('div');
+            newCard.className = 'task-card';
+            newCard.dataset.name = taskName;
+            newCard.dataset.status = 'done';
+            newCard.dataset.priority = 'P1'; // Default priority for restored tasks
+            newCard.dataset.completedDate = archiveDate;
+            
             newCard.innerHTML = `
                 <div class="task-header">
                     <div class="task-avatar">✨</div>
