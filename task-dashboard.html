@@ -1671,10 +1671,19 @@
             let rect;
             if (event && event.target && event.target.classList.contains('archive-task-name')) {
                 // For tasks with onclick handler: event.target is archive-task-name
+                console.log('=== archive-task-name ===');
+                console.log('event.target.innerHTML:', event.target.innerHTML);
+                console.log('event.target:', event.target);
                 rect = event.target.getBoundingClientRect();
+                console.log('rect.top:', rect.top);
             } else if (event && item && item.querySelector('.archive-task-name')) {
                 // For other cases where event.target isn't archive-task-name
-                rect = item.querySelector('.archive-task-name').getBoundingClientRect();
+                console.log('=== item.querySelector ===');
+                console.log('item:', item);
+                const taskNameElement = item.querySelector('.archive-task-name');
+                console.log('taskNameElement.innerHTML:', taskNameElement.innerHTML);
+                rect = taskNameElement.getBoundingClientRect();
+                console.log('rect.top:', rect.top);
             } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
