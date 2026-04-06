@@ -1697,21 +1697,26 @@
             }
             
             const modalWidth = 300;
-            const modalHeight = 500;
+            const modalHeight = 400;
             const padding = 10;
             
-            // Calculate position: right of task, align with top of task name
+            // Calculate position: right of task, align with top of task name. Account for body transform: scale(0.8)
+            const scale = 0.8;
             let left = rect.right + padding;
             let top = rect.top;
             
+            // Scale back positions to account for body's transform: scale(0.8)
+            left /= scale;
+            top /= scale;
+            
             // Prevent going off right edge
-            if (left + modalWidth > window.innerWidth - padding) {
-                left = rect.left - modalWidth - padding;
+            if (left + modalWidth > (window.innerWidth / scale) - padding) {
+                left = (rect.left / scale) - modalWidth - padding;
             }
             
             // Prevent going off bottom edge
-            if (top + modalHeight > window.innerHeight - padding) {
-                top = window.innerHeight - modalHeight - padding;
+            if (top + modalHeight > (window.innerHeight / scale) - padding) {
+                top = (window.innerHeight / scale) - modalHeight - padding;
             }
             
             // Prevent going off top edge
@@ -1727,7 +1732,7 @@
             modalContent.style.top = top + 'px';
             modalContent.style.transform = '';
             modalContent.style.width = '300px';
-            modalContent.style.height = '500px';
+            modalContent.style.height = '400px';
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
