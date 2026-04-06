@@ -1667,41 +1667,10 @@
                 </div>
             `;
             
-            // Position modal next to click event - MUST BE AFTER setting innerHTML!
-            if (event) {
-                const clickX = event.clientX;
-                const clickY = event.clientY;
-                const modalWidth = 600;
-                const modalHeight = window.innerHeight * 0.7;
-                const padding = 12;
-                
-                // Calculate position: right of click, same vertical level!
-                let left = clickX + padding + 20;
-                let top = clickY - (modalHeight / 2);
-                
-                // Prevent going off right edge
-                if (left + modalWidth > window.innerWidth - padding) {
-                    left = clickX - modalWidth - padding - 20;
-                }
-                
-                // Prevent going off bottom edge
-                if (top + modalHeight > window.innerHeight - padding) {
-                    top = window.innerHeight - modalHeight - padding;
-                }
-                
-                // Prevent going off top edge
-                if (top < padding) {
-                    top = padding;
-                }
-                
-                modalContent.style.left = left + 'px';
-                modalContent.style.top = top + 'px';
-            } else {
-                // Fallback to centered if no event
-                modalContent.style.left = '50%';
-                modalContent.style.top = '50%';
-                modalContent.style.transform = 'translate(-50%, -50%)';
-            }
+            // Position modal in center always!
+            modalContent.style.left = '50%';
+            modalContent.style.top = '50%';
+            modalContent.style.transform = 'translate(-50%, -50%)';
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
