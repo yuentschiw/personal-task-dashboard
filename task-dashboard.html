@@ -1693,14 +1693,11 @@
                     top = padding;
                 }
                 
-                console.log('=== Modal Position ===');
-                console.log('rect:', rect);
-                console.log('Calculated:', left, 'px,', top, 'px');
-                
                 modalContent.style.left = left + 'px';
                 modalContent.style.top = top + 'px';
                 modalContent.style.transform = '';
-            } else {
+                modalContent.style.width = '300px';
+                modalContent.style.height = '200px';
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
                 modalContent.style.top = '50%';
