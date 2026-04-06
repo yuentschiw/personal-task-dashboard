@@ -1668,9 +1668,12 @@
             `;
             
             // Position modal in center always!
-            modalContent.style.left = '50%';
-            modalContent.style.top = '50%';
-            modalContent.style.transform = 'translate(-50%, -50%)';
+            const left = window.innerWidth / 2 - 300;
+            const top = window.innerHeight / 2 - 150;
+            
+            modalContent.style.left = left + 'px';
+            modalContent.style.top = top + 'px';
+            modalContent.style.transform = '';
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
