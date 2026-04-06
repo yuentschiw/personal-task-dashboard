@@ -1668,42 +1668,51 @@
             `;
             
             // Position modal next to the clicked task name
-            if (event && event.target) {
-                const rect = event.target.getBoundingClientRect();
-                const modalWidth = 300;
-                const modalHeight = 200;
-                const padding = 10;
-                
-                // Calculate position: right of task, align with top of task name
-                let left = rect.right + padding;
-                let top = rect.top;
-                
-                // Prevent going off right edge
-                if (left + modalWidth > window.innerWidth - padding) {
-                    left = rect.left - modalWidth - padding;
-                }
-                
-                // Prevent going off bottom edge
-                if (top + modalHeight > window.innerHeight - padding) {
-                    top = window.innerHeight - modalHeight - padding;
-                }
-                
-                // Prevent going off top edge
-                if (top < padding) {
-                    top = padding;
-                }
-                
-                modalContent.style.left = left + 'px';
-                modalContent.style.top = top + 'px';
-                modalContent.style.transform = '';
-                modalContent.style.width = '300px';
-                modalContent.style.height = '200px';
+            let rect;
+            if (event && event.target && event.target.classList.contains('archive-task-name')) {
+                // For tasks with onclick handler: event.target is archive-task-name
+                rect = event.target.getBoundingClientRect();
+            } else if (event && item && item.querySelector('.archive-task-name')) {
+                // For other cases where event.target isn't archive-task-name
+                rect = item.querySelector('.archive-task-name').getBoundingClientRect();
             } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
                 modalContent.style.top = '50%';
                 modalContent.style.transform = 'translate(-50%, -50%)';
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                return;
             }
+            
+            const modalWidth = 300;
+            const modalHeight = 200;
+            const padding = 10;
+            
+            // Calculate position: right of task, align with top of task name
+            let left = rect.right + padding;
+            let top = rect.top;
+            
+            // Prevent going off right edge
+            if (left + modalWidth > window.innerWidth - padding) {
+                left = rect.left - modalWidth - padding;
+            }
+            
+            // Prevent going off bottom edge
+            if (top + modalHeight > window.innerHeight - padding) {
+                top = window.innerHeight - modalHeight - padding;
+            }
+            
+            // Prevent going off top edge
+            if (top < padding) {
+                top = padding;
+            }
+            
+            modalContent.style.left = left + 'px';
+            modalContent.style.top = top + 'px';
+            modalContent.style.transform = '';
+            modalContent.style.width = '300px';
+            modalContent.style.height = '200px';
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
