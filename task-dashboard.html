@@ -1667,7 +1667,7 @@
                 </div>
             `;
             
-            // Position modal next to the clicked task name
+            // Position modal next to the clicked task name, account for scroll offsets
             let rect;
             if (event && event.target && event.target.classList.contains('archive-task-name')) {
                 // For tasks with onclick handler: event.target is archive-task-name
@@ -1676,6 +1676,7 @@
                 console.log('event.target:', event.target);
                 rect = event.target.getBoundingClientRect();
                 console.log('rect.top:', rect.top);
+                console.log('window.pageYOffset:', window.pageYOffset);
             } else if (event && item && item.querySelector('.archive-task-name')) {
                 // For other cases where event.target isn't archive-task-name
                 console.log('=== item.querySelector ===');
@@ -1684,6 +1685,7 @@
                 console.log('taskNameElement.innerHTML:', taskNameElement.innerHTML);
                 rect = taskNameElement.getBoundingClientRect();
                 console.log('rect.top:', rect.top);
+                console.log('window.pageYOffset:', window.pageYOffset);
             } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
@@ -1698,24 +1700,28 @@
             const modalHeight = 200;
             const padding = 10;
             
-            // Calculate position: right of task, align with top of task name
-            let left = rect.right + padding;
-            let top = rect.top;
+            // Calculate position: right of task, align with top of task name + scroll offset
+            let left = rect.right + window.pageXOffset + padding;
+            let top = rect.top + window.pageYOffset;
             
             // Prevent going off right edge
-            if (left + modalWidth > window.innerWidth - padding) {
-                left = rect.left - modalWidth - padding;
+            if (left + modalWidth > window.innerWidth + window.pageXOffset - padding) {
+                left = rect.left + window.pageXOffset - modalWidth - padding;
             }
             
             // Prevent going off bottom edge
-            if (top + modalHeight > window.innerHeight - padding) {
-                top = window.innerHeight - modalHeight - padding;
+            if (top + modalHeight > window.innerHeight + window.pageYOffset - padding) {
+                top = window.innerHeight + window.pageYOffset - modalHeight - padding;
             }
             
             // Prevent going off top edge
-            if (top < padding) {
-                top = padding;
+            if (top < window.pageYOffset + padding) {
+                top = window.pageYOffset + padding;
             }
+            
+            console.log('=== Final Position ===');
+            console.log('left:', left, 'px');
+            console.log('top:', top, 'px');
             
             modalContent.style.left = left + 'px';
             modalContent.style.top = top + 'px';
