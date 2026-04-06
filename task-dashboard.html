@@ -1667,13 +1667,45 @@
                 </div>
             `;
             
-            // Position modal in center always!
-            const left = window.innerWidth / 2 - 300;
-            const top = window.innerHeight / 2 - 150;
-            
-            modalContent.style.left = left + 'px';
-            modalContent.style.top = top + 'px';
-            modalContent.style.transform = '';
+            // Position modal next to the clicked task name
+            if (event && item) {
+                const rect = item.querySelector('.archive-task-name').getBoundingClientRect();
+                const modalWidth = 300;
+                const modalHeight = 200;
+                const padding = 10;
+                
+                // Calculate position: right of task, align with top of task name
+                let left = rect.right + padding;
+                let top = rect.top;
+                
+                // Prevent going off right edge
+                if (left + modalWidth > window.innerWidth - padding) {
+                    left = rect.left - modalWidth - padding;
+                }
+                
+                // Prevent going off bottom edge
+                if (top + modalHeight > window.innerHeight - padding) {
+                    top = window.innerHeight - modalHeight - padding;
+                }
+                
+                // Prevent going off top edge
+                if (top < padding) {
+                    top = padding;
+                }
+                
+                console.log('=== Modal Position ===');
+                console.log('rect:', rect);
+                console.log('Calculated:', left, 'px,', top, 'px');
+                
+                modalContent.style.left = left + 'px';
+                modalContent.style.top = top + 'px';
+                modalContent.style.transform = '';
+            } else {
+                // Fallback to centered if no event
+                modalContent.style.left = '50%';
+                modalContent.style.top = '50%';
+                modalContent.style.transform = 'translate(-50%, -50%)';
+            }
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
