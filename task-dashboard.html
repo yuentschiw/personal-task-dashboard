@@ -1127,7 +1127,7 @@
         
         // GitHub sync configuration - user's repository
         const GITHUB_REPO = 'https://github.com/yuentschiw/personal-task-dashboard.git';
-        const GITHUB_TOKEN = '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';
+        const GITHUB_TOKEN = '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';
         const GITHUB_BRANCH = 'main';
         const GITHUB_FILE = 'task-dashboard.html';
         
@@ -1325,7 +1325,9 @@
                     headers: {
                         'Authorization': `token ${GITHUB_TOKEN}`,
                         'Accept': 'application/json'
-                    }
+                    },
+                    mode: 'cors',
+                    cache: 'no-cache'
                 });
                 
                 if (!response1.ok) { throw new Error(`Failed to get current file: ${response1.status}`); }
@@ -1366,15 +1368,20 @@
         // Load from GitHub repository for cross-device sync
         async function loadFromGitHub() {
             try {
-                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}?cache=${new Date().getTime()}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `token ${GITHUB_TOKEN}`,
                         'Accept': 'application/vnd.github.v3.raw'
-                    }
+                    },
+                    mode: 'cors',
+                    cache: 'no-cache'
                 });
                 
-                if (!response.ok) { return null; }
+                if (!response.ok) { 
+                    console.error('Failed to load from GitHub:', response.status, response.statusText);
+                    return null;
+                }
                 
                 const content = await response.text();
                 return content;
@@ -1550,7 +1557,7 @@
             if (!text) return;
 
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             const updates = taskCard.querySelector('.task-updates');
             const newUpdate = document.createElement('div');
             newUpdate.className = 'update-item';
@@ -1582,7 +1589,7 @@
             // Add a comment about the move
             const updates = cardClone.querySelector('.task-updates');
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             const newUpdate = document.createElement('div');
             newUpdate.className = 'update-item';
             newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> Moved to Completed ✓</div>`;
@@ -1643,9 +1650,10 @@
             const modalContent = document.createElement('div');
             modalContent.className = 'task-modal-content';
             modalContent.onclick = function(e) { e.stopPropagation(); };
-            modalContent.style.maxWidth = '600px';
-            modalContent.style.maxHeight = '70vh';
+            modalContent.style.width = '300px';
+            modalContent.style.height = '400px';
             modalContent.style.position = 'fixed';
+            modalContent.style.padding = '16px';
             
             // First set the modal content!
             modalContent.innerHTML = `
@@ -1680,21 +1688,11 @@
             let rect;
             if (event && event.target && event.target.classList.contains('archive-task-name')) {
                 // For tasks with onclick handler: event.target is archive-task-name
-                console.log('=== archive-task-name ===');
-                console.log('event.target.innerHTML:', event.target.innerHTML);
-                console.log('event.target:', event.target);
                 rect = event.target.getBoundingClientRect();
-                console.log('rect.top:', rect.top);
-                console.log('window.pageYOffset:', window.pageYOffset);
             } else if (event && item && item.querySelector('.archive-task-name')) {
                 // For other cases where event.target isn't archive-task-name
-                console.log('=== item.querySelector ===');
-                console.log('item:', item);
                 const taskNameElement = item.querySelector('.archive-task-name');
-                console.log('taskNameElement.innerHTML:', taskNameElement.innerHTML);
                 rect = taskNameElement.getBoundingClientRect();
-                console.log('rect.top:', rect.top);
-                console.log('window.pageYOffset:', window.pageYOffset);
             } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
@@ -1737,15 +1735,17 @@
                 top = padding;
             }
             
-            console.log('=== Final Position ===');
-            console.log('left:', left, 'px');
-            console.log('top:', top, 'px');
+            // Fallback to centered if completely off screen
+            if (left < padding || left > window.innerWidth / scale - modalWidth - padding) {
+                left = (window.innerWidth / scale - modalWidth) / 2;
+            }
+            if (top < padding || top > window.innerHeight / scale - modalHeight - padding) {
+                top = (window.innerHeight / scale - modalHeight) / 2;
+            }
             
             modalContent.style.left = left + 'px';
             modalContent.style.top = top + 'px';
             modalContent.style.transform = '';
-            modalContent.style.width = '300px';
-            modalContent.style.height = '400px';
             
             modal.appendChild(modalContent);
             document.body.appendChild(modal);
@@ -1784,7 +1784,7 @@
                 </div>
                 <div class="task-updates">
                     <div class="task-section-title">Recent updates:</div>
-                    <div class="update-item"><span class="update-time">${new Date().toLocaleString('zh-CN')}:</span> Restored from archive ✓</div>
+                    <div class="update-item"><span class="update-time">${new Date().toLocaleString('en-US')}:</span> Restored from archive ✓</div>
                 </div>
                 <div class="task-actions">
                     <input type="text" class="action-input" placeholder="Add a comment...">
@@ -1872,7 +1872,7 @@
         function addNewTask() {
             const today = new Date().toISOString().split('T')[0];
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             
             // Create new blank task card HTML
             const newTask = document.createElement('div');
@@ -1935,17 +1935,15 @@
             
             // Update last generated time
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const timeStr = now.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
             document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)`;
             
             // Start polling for sync if configured
             startSyncPolling();
         });
 
-        // Poll for changes from other devices (every 5 seconds) - DISABLED to prevent overwriting local changes
+        // Poll for changes from other devices (every 15 minutes) - ENABLED for auto-sync
         function startSyncPolling() {
-            // Disabled by default to prevent overwriting local edits
-            return;
             if (!GITHUB_TOKEN) return;
             
             setInterval(async () => {
@@ -1972,7 +1970,7 @@
                     setSyncStatus('', 'Synced changes from other device');
                     setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
                 }
-            }, 5000); // Check every 5 seconds
+            }, 900000); // Check every 15 minutes
         }
     </script>
 </body>
