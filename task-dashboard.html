@@ -1124,9 +1124,11 @@
         const priorityWeight = { 'P0': 0, 'P1': 1, 'P2': 2 };
         let autoSaveTimer = null;
         
-        // Gist sync configuration - replace with your own Gist ID and token to enable cross-device sync
-        const GIST_ID = 'c0032b7f6e49703241b7df59414de1f9';
-        const GIST_TOKEN = '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';
+        // GitHub sync configuration - user's repository
+        const GITHUB_REPO = 'https://github.com/yuentschiw/personal-task-dashboard.git';
+        const GITHUB_TOKEN = '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';
+        const GITHUB_BRANCH = 'main';
+        const GITHUB_FILE = 'task-dashboard.html';
         
         // Save/Load from browser localStorage
         function saveToLocal() {
@@ -1301,8 +1303,8 @@
                 sortTasksByPriority(); // Sort before saving
                 saveToLocal();
                 
-                if (GIST_ID && GIST_TOKEN) {
-                    saveToGist();
+                if (GITHUB_TOKEN) {
+                    saveToGitHub();
                 } else {
                     setSyncStatus('', 'Saved locally');
                     setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
@@ -1310,67 +1312,73 @@
             }, AUTO_SAVE_DELAY);
         }
 
-        // Save to GitHub Gist for cross-device sync
-        async function saveToGist() {
+        // Save to GitHub repository for cross-device sync
+        async function saveToGitHub() {
             try {
-                const state = getDocumentState();
-                const content = JSON.stringify(state, null, 2);
+                const content = document.documentElement.outerHTML;
+                const base64Content = btoa(unescape(encodeURIComponent(content)));
                 
-                const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `token ${GIST_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        files: {
-                            'task-dashboard-state.json': {
-                                content: content
-                            }
-                        }
-                    })
-                });
-                
-                if (response.ok) {
-                    setSyncStatus('', 'Synced to GitHub');
-                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
-                } else {
-                    throw new Error(`GitHub API responded with ${response.status}`);
-                }
-            } catch (e) {
-                console.error('Gist sync failed:', e);
-                setSyncStatus('error', 'Sync failed - saved locally only');
-                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
-                }
-        }
-
-        // Load from GitHub Gist
-        async function loadFromGist() {
-            if (!GIST_ID || !GIST_TOKEN) return null;
-            
-            try {
-                const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+                // Get current file SHA to update
+                const response1 = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
                     method: 'GET',
                     headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
                         'Accept': 'application/json'
                     }
                 });
-                if (!response.ok) {
-                    throw new Error(`GitHub API responded with ${response.status}`);
-                }
                 
-                const data = await response.json();
-                const file = data.files['task-dashboard-state.json'];
-                if (!file) return null;
+                if (!response1.ok) { throw new Error(`Failed to get current file: ${response1.status}`); }
+                const currentData = await response1.json();
+                const currentSHA = currentData.sha;
                 
-                const state = JSON.parse(file.content);
-                if (state.version === APP_VERSION) {
-                    return state;
+                // Update file in GitHub
+                const response2 = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Auto-save: update task dashboard',
+                        content: base64Content,
+                        sha: currentSHA,
+                        branch: GITHUB_BRANCH
+                    })
+                });
+                
+                if (response2.ok) {
+                    setSyncStatus('', 'Synced to GitHub');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
                 } else {
-                    return null;
+                    const errorText = await response2.text();
+                    throw new Error(`Failed to update file: ${response2.status} - ${errorText}`);
                 }
+                
             } catch (e) {
-                console.error('Failed to load from gist:', e);
+                console.error('GitHub sync failed:', e);
+                setSyncStatus('error', 'Sync failed - saved locally only');
+                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
+            }
+        }
+        
+        // Load from GitHub repository for cross-device sync
+        async function loadFromGitHub() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3.raw'
+                    }
+                });
+                
+                if (!response.ok) { return null; }
+                
+                const content = await response.text();
+                return content;
+            } catch (e) {
+                console.error('Failed to load from GitHub:', e);
                 setSyncStatus('error', 'Failed to load sync - using local');
                 return null;
             }
@@ -1937,34 +1945,33 @@
         function startSyncPolling() {
             // Disabled by default to prevent overwriting local edits
             return;
-            if (!GIST_ID || !GIST_TOKEN) return;
+            if (!GITHUB_TOKEN) return;
             
             setInterval(async () => {
-                const remoteState = await loadFromGist();
-                if (!remoteState) return;
+                const remoteContent = await loadFromGitHub();
+                if (!remoteContent) return;
                 
                 const localState = loadFromLocal();
                 if (!localState) {
-                    // No local save, just use remote
-                    setDocumentState(remoteState);
+                    // No local save, use remote
+                    document.documentElement.outerHTML = remoteContent;
                     saveToLocal();
-                    setSyncStatus('', 'Loaded remote state');
+                    setSyncStatus('', 'Loaded remote content');
                     setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
                     return;
                 }
                 
-                // Check if remote is different from local
-                const localJson = JSON.stringify(localState);
-                const remoteJson = JSON.stringify(remoteState);
+                // Compare remote and local
+                const remoteState = remoteContent;
+                const localHTML = document.documentElement.outerHTML;
                 
-                if (localJson !== remoteJson) {
-                    // Remote is newer - update local
-                    setDocumentState(remoteState);
+                if (remoteState !== localHTML) {
+                    document.documentElement.outerHTML = remoteState;
                     saveToLocal();
                     setSyncStatus('', 'Synced changes from other device');
                     setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
                 }
-            }, 5000); // Check every 5 seconds - near real-time!
+            }, 5000); // Check every 5 seconds
         }
     </script>
 </body>
