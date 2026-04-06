@@ -1429,12 +1429,10 @@
                 btn.onclick = function() { restoreFromArchive(date, item.previousElementSibling, item); };
             });
             
+            // Rebind archived task name clicks
             document.querySelectorAll('.archive-task-name').forEach(name => {
                 const item = name.parentElement;
                 name.onclick = function(e) {
-                    console.log('=== click on:', item.querySelector('.archive-task-name').textContent);
-                    console.log('e.clientX:', e.clientX);
-                    console.log('e.clientY:', e.clientY);
                     showArchivedTaskCard(item, e);
                 };
             });
@@ -1673,22 +1671,13 @@
             
             // Position modal next to click event - MUST BE AFTER setting innerHTML!
             if (event) {
-                console.log('=== showArchivedTaskCard ===');
-                console.log('item:', item);
-                console.log('event:', event);
-                if(event.clientX && event.clientY) {
-                    console.log('clientX, clientY:', event.clientX, event.clientY);
-                } else {
-                    console.log('No clientX/clientY!');
-                }
-                
                 const clickX = event.clientX;
                 const clickY = event.clientY;
                 const modalWidth = 600;
-                const modalHeight = window.innerHeight * 0.7;
+                const modalHeight = 400; // Fixed height
                 const padding = 12;
                 
-                // Calculate position: right of click, same vertical level!
+                // Calculate position: right of click, center vertically with click point!
                 let left = clickX + padding + 20;
                 let top = clickY - (modalHeight / 2);
                 
@@ -1707,10 +1696,9 @@
                     top = padding;
                 }
                 
-                console.log('Set modal content style to:', left, 'px,', top, 'px');
+                // Apply the styles after content has been set
                 modalContent.style.left = left + 'px';
                 modalContent.style.top = top + 'px';
-                // Remove any transform!
                 modalContent.style.transform = '';
             } else {
                 // Fallback to centered if no event
