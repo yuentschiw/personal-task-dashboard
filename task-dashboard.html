@@ -1669,6 +1669,10 @@
             
             // Position modal next to the clicked task name
             if (event && item) {
+                console.log('=== DEBUG ===');
+                console.log('item:', item);
+                console.log('item.querySelector(".archive-task-name"):', item.querySelector('.archive-task-name'));
+                
                 const rect = item.querySelector('.archive-task-name').getBoundingClientRect();
                 const modalWidth = 300;
                 const modalHeight = 200;
