@@ -1684,63 +1684,48 @@
                 </div>
             `;
             
-            // Position modal next to the clicked task name, account for scroll offsets
-            let rect;
+            // Position modal next to the clicked task name in Archived Tasks section
+            // Get the EXACT DOM element of the clicked task name
+            let taskNameElement;
             if (event && event.target && event.target.classList.contains('archive-task-name')) {
-                // For tasks with onclick handler: event.target is archive-task-name
-                rect = event.target.getBoundingClientRect();
-            } else if (event && item && item.querySelector('.archive-task-name')) {
-                // For other cases where event.target isn't archive-task-name
-                const taskNameElement = item.querySelector('.archive-task-name');
-                rect = taskNameElement.getBoundingClientRect();
+                // If clicked directly on task name
+                taskNameElement = event.target;
             } else {
-                // Fallback to centered if no event
-                modalContent.style.left = '50%';
-                modalContent.style.top = '50%';
-                modalContent.style.transform = 'translate(-50%, -50%)';
-                modal.appendChild(modalContent);
-                document.body.appendChild(modal);
-                return;
+                // Otherwise find it within the current item
+                taskNameElement = item.querySelector('.archive-task-name');
             }
+            
+            const rect = taskNameElement.getBoundingClientRect();
             
             const modalWidth = 300;
             const modalHeight = 400;
             const padding = 10;
             
-            // Calculate position: right of task, align with top of task name. Account for scroll and body transform: scale(0.8)
-            const scale = 0.8;
-            const rectLeft = rect.left + window.pageXOffset;
-            const rectTop = rect.top + window.pageYOffset;
-            const rectRight = rect.right + window.pageXOffset;
-            
-            let left = rectRight + padding;
-            let top = rectTop;
-            
-            // Scale back positions to account for body's transform: scale(0.8)
-            left /= scale;
-            top /= scale;
+            // Calculate position: MOVE MODAL TO THE LARGE GRAY BOX ON THE RIGHT
+            let left = rect.left + rect.width + 000 + window.pageXOffset;
+            let top = rect.top + 600 + window.pageYOffset;
             
             // Prevent going off right edge
-            if (left + modalWidth > (window.innerWidth + window.pageXOffset) / scale - padding) {
-                left = (rectLeft / scale) - modalWidth - padding;
+            if (left + modalWidth > window.innerWidth + window.pageXOffset - padding) {
+                left = rect.left - modalWidth - padding + window.pageXOffset;
             }
             
             // Prevent going off bottom edge
-            if (top + modalHeight > (window.innerHeight + window.pageYOffset) / scale - padding) {
-                top = (window.innerHeight + window.pageYOffset) / scale - modalHeight - padding;
+            if (top + modalHeight > window.innerHeight + window.pageYOffset - padding) {
+                top = window.innerHeight + window.pageYOffset - modalHeight - padding;
             }
             
             // Prevent going off top edge
-            if (top < padding) {
-                top = padding;
+            if (top < window.pageYOffset + padding) {
+                top = window.pageYOffset + padding;
             }
             
             // Fallback to centered if completely off screen
-            if (left < padding || left > window.innerWidth / scale - modalWidth - padding) {
-                left = (window.innerWidth / scale - modalWidth) / 2;
+            if (left < window.pageXOffset + padding || left > window.innerWidth + window.pageXOffset - modalWidth - padding) {
+                left = window.pageXOffset + (window.innerWidth - modalWidth) / 2;
             }
-            if (top < padding || top > window.innerHeight / scale - modalHeight - padding) {
-                top = (window.innerHeight / scale - modalHeight) / 2;
+            if (top < window.pageYOffset + padding || top > window.innerHeight + window.pageYOffset - modalHeight - padding) {
+                top = window.pageYOffset + (window.innerHeight - modalHeight) / 2;
             }
             
             modalContent.style.left = left + 'px';
