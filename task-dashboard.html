@@ -39,6 +39,7 @@
             margin-bottom: 32px;
             font-size: 1.0rem;
         }
+        /* Top Summary Bar */
         .top-summary {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -54,12 +55,32 @@
             justify-content: space-between;
             align-items: center;
         }
-        .summary-card.total { border-color: #e8e4d6; }
-        .summary-card.waiting { background: #fce4ec; border-color: #f8bbd0; }
-        .summary-card.working { background: #e3f2fd; border-color: #bbdefb; }
-        .summary-card.idle { background: #fffde7; border-color: #fff59d; }
-        .summary-label { font-weight: 600; color: #333; font-size: 1.1rem; }
-        .summary-count { font-weight: 700; font-size: 1.5rem; color: #000; }
+        .summary-card.total {
+            border-color: #e8e4d6;
+        }
+        .summary-card.waiting {
+            background: #fce4ec;
+            border-color: #f8bbd0;
+        }
+        .summary-card.working {
+            background: #e3f2fd;
+            border-color: #bbdefb;
+        }
+        .summary-card.idle {
+            background: #fffde7;
+            border-color: #fff59d;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .summary-count {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #000;
+        }
+        /* Search Bar */
         .search-bar {
             background: #ffffff;
             border: 2px solid #e8e4d6;
@@ -71,122 +92,426 @@
             align-items: center;
         }
         .search-input {
-            flex: 1; border: none; outline: none; font-size: 1.1rem;
-            padding: 8px 12px; background: transparent;
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            padding: 8px 12px;
+            background: transparent;
         }
-        .search-tag { background: #90caf9; color: #0d47a1; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; }
+        .search-tag {
+            background: #90caf9;
+            color: #0d47a1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        /* Section: stacked vertically: Active → Completed → Archived as requested */
         .section {
-            background: #fcfaf5; border: 2px solid #e8e4d6; border-radius: 15px;
-            padding: 16px; margin-bottom: 24px; overflow: hidden;
+            background: #fcfaf5;
+            border: 2px solid #e8e4d6;
+            border-radius: 15px;
+            padding: 16px;
+            margin-bottom: 24px;
+            overflow: hidden;
         }
         .section-title {
-            font-size: 2.0rem; font-weight: 700; color: #222; margin-bottom: 8px;
-            display: flex; align-items: center; gap: 8px;
+            font-size: 2.0rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .section-title .emoji { font-size: 2.0rem; }
-        .section-desc { color: #666; margin-bottom: 16px; font-size: 1.1rem; }
-        .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-        .tab { text-align: center; padding: 8px; border-radius: 10px; font-weight: 600; font-size: 1.2rem; cursor: pointer; }
-        .tab.working { background: #e3f2fd; border: 2px solid #bbdefb; }
-        .tab.idle { background: #fffde7; border: 2px solid #fff59d; }
+        .section-title .emoji {
+            font-size: 2.0rem;
+        }
+        .section-desc {
+            color: #666;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        /* Tabs */
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab {
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .tab.working {
+            background: #e3f2fd;
+            border: 2px solid #bbdefb;
+        }
+        .tab.idle {
+            background: #fffde7;
+            border: 2px solid #fff59d;
+        }
         .tab span.badge {
-            float: right; background: #fff; border-radius: 50%;
-            width: 28px; height: 28px; text-align: center; font-weight: 700; line-height: 28px; margin-right: 4px;
+            float: right;
+            background: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 28px;
+            margin-right: 4px;
         }
-        .task-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        /* Task Grid: 3 NARROW columns */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
         .task-card {
-            background: #f8faf8; border: 2px solid #e0e6dd; border-radius: 15px;
-            padding: 12px; display: flex; flex-direction: column; gap: 12px; width: 100%;
+            background: #f8faf8;
+            border: 2px solid #e0e6dd;
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
         }
-        .task-header { display: flex; align-items: center; gap: 12px; }
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
         .task-avatar {
-            width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 3px solid #333;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
         }
-        .task-info { flex: 1; display: flex; justify-content: space-between; align-items: start; flex-direction: column; gap: 4px; }
-        .task-name { font-size: 1.4rem; font-weight: 700; color: #222; contenteditable: true; word-wrap: break-word; outline: none; }
-        .task-status { align-self: flex-start; }
-        .status-badge { display: inline-block; padding: 2px 10px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; }
-        .status-badge.working { background: #e3f2fd; color: #1565c0; }
-        .status-badge.done { background: #e8f5e9; color: #2e7d32; }
-        .status-badge.P0 { background: #ffebee; color: #c62828; }
-        .status-badge.P1 { background: #fff3e0; color: #ef6c00; }
-        .status-badge.P2 { background: #e8f5e9; color: #2e7d32; }
+        .task-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .task-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #222;
+            contenteditable: true;
+            word-wrap: break-word;
+            outline: none;
+        }
+        .task-status {
+            align-self: flex-start;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-badge.working {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .status-badge.done {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-badge.P0 {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .status-badge.P1 {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .status-badge.P2 {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        /* Priority dropdown selector - matches badge style */
         .priority-select {
-            border: none; cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            padding-right: 20px; position: relative; font-weight: 600; border-radius: 15px; font-size: 0.85rem; padding: 2px 10px;
+            border: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 20px;
+            position: relative;
+            font-weight: 600;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            padding: 2px 10px;
         }
         .priority-select.P0 { background: #ffebee; color: #c62828; }
         .priority-select.P1 { background: #fff3e0; color: #ef6c00; }
         .priority-select.P2 { background: #e8f5e9; color: #2e7d32; }
-        .task-meta { color: #444; font-size: 0.85rem; line-height: 1.6; }
-        .context-link { text-decoration: underline; color: #1565c0; contenteditable: true; outline: none; }
-        .context-link a { color: #1565c0; text-decoration: underline; }
-        .task-section-title { font-weight: 600; color: #555; margin-bottom: 3px; font-size: 0.85rem; }
-        .task-section-list { padding-left: 16px; color: #444; font-size: 0.8rem; }
+        
+        .priority-select::-ms-expand {
+            display: none;
+        }
+        
+        .task-meta {
+            color: #444;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .context-link {
+            text-decoration: underline;
+            color: #1565c0;
+            contenteditable: true;
+            outline: none;
+        }
+        .context-link a {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+        .task-section-title {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+        }
+        .task-section-list {
+            padding-left: 16px;
+            color: #444;
+            font-size: 0.8rem;
+        }
         .task-updates {
-            background: #ffffff; border: 2px solid #e8e4d6; border-radius: 15px;
-            padding: 10px; max-height: 180px; overflow-y: auto; overflow-x: hidden;
+            background: #ffffff;
+            border: 2px solid #e8e4d6;
+            border-radius: 15px;
+            padding: 10px;
+            max-height: 180px;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
-        .update-item { font-size: 0.8rem; margin-bottom: 6px; color: #444; }
-        .update-time { font-weight: 600; color: #b95a39; }
-        .task-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-        .action-input { flex: 1; border: 2px solid #e8e4d6; border-radius: 12px; padding: 8px; min-height: 48px; font-size: 0.8rem; }
+        .update-item {
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            color: #444;
+        }
+        .update-time {
+            font-weight: 600;
+            color: #b95a39;
+        }
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .action-input {
+            flex: 1;
+            border: 2px solid #e8e4d6;
+            border-radius: 12px;
+            padding: 8px;
+            min-height: 48px;
+            font-size: 0.8rem;
+        }
         .action-btn {
-            border: 2px solid #d8d2c0; background: #fff; padding: 8px 16px;
-            border-radius: 16px; font-size: 0.9rem; font-weight: 500; cursor: pointer; white-space: nowrap;
+            border: 2px solid #d8d2c0;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
         }
-        .archive-list { display: flex; flex-direction: column; gap: 8px; }
+        .archive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
         .archive-date-group {
-            background: #fff; border: 1px solid #e8e4d6; border-radius: 8px;
-            padding: 12px; margin-bottom: 12px;
+            background: #fff;
+            border: 1px solid #e8e4d6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
         }
         .archive-date-header {
-            font-weight: 700; color: #222; font-size: 1.1rem; display: flex;
-            justify-content: space-between; align-items: center; cursor: pointer; user-select: none; margin-bottom: 8px;
+            font-weight: 700;
+            color: #222;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 8px;
         }
-        .archive-date-header::after { content: "▶"; color: #999; font-size: 0.9rem; transition: transform 0.2s; }
-        .archive-date-group.collapsed .archive-date-cards { display: none; }
-        .archive-date-group.expanded .archive-date-header::after { transform: rotate(90deg); }
-        .archive-count-badge { background: #f0f0eb; color: #555; padding: 2px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; }
-        .archive-date-cards { display: flex; flex-direction: column; gap: 6px; }
+        .archive-date-header::after {
+            content: "▶";
+            color: #999;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .archive-date-group.collapsed .archive-date-cards {
+            display: none;
+        }
+        .archive-date-group.expanded .archive-date-header::after {
+            transform: rotate(90deg);
+        }
+        .archive-count-badge {
+            background: #f0f0eb;
+            color: #555;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .archive-date-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
         .archive-task-item {
-            background: #f8faf8; border: 1px solid #e0e6dd; border-radius: 6px;
-            padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;
+            background: #f8faf8;
+            border: 1px solid #e0e6dd;
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .archive-task-name { font-weight: 600; color: #1565c0; text-decoration: underline; cursor: pointer; }
+        .archive-task-name {
+            font-weight: 600;
+            color: #1565c0;
+            text-decoration: underline;
+            cursor: pointer;
+        }
         .archive-restore-btn {
-            border: 2px solid #d8d2c0; background: #fff; padding: 4px 12px;
-            border-radius: 12px; font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            border: 2px solid #d8d2c0;
+            background: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
         }
-        footer { text-align: right; margin-top: 16px; color: #666; font-size: 0.9rem; }
+        footer {
+            text-align: right;
+            margin-top: 16px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Auto-sync status indicator */
         .sync-status {
-            position: fixed; top: 12px; right: 12px; padding: 6px 12px; border-radius: 12px;
-            font-size: 0.8rem; font-weight: 600; background: #e8f5e9; color: #2e7d32;
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #e8f5e9;
+            color: #2e7d32;
         }
-        .sync-status.saving { background: #fff3e0; color: #ef6c00; }
-        .sync-status.error { background: #ffebee; color: #c62828; }
+        .sync-status.saving {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .sync-status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        /* MOBILE RESPONSIVE STYLES - for screens under 768px (phones) */
         @media (max-width: 768px) {
-            .container { max-width: 100%; padding: 0 12px; }
-            h1 { font-size: 1.6rem; }
-            h1 .emoji { font-size: 1.6rem; }
-            .section-title { font-size: 1.5rem; }
-            .section-title .emoji { font-size: 1.5rem; }
-            .top-summary { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .task-grid { grid-template-columns: 1fr !important; gap: 12px; }
-            .section { padding: 12px; }
-            .task-actions { flex-direction: column; }
-            .action-btn { width: 100%; }
+            .container {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            h1 .emoji {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section-title .emoji {
+                font-size: 1.5rem;
+            }
+            
+            /* Stack summary bar vertically on mobile */
+            .top-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            /* Task grid becomes single column on mobile for ALL sections */
+            .task-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px;
+            }
+            
+            .section {
+                padding: 12px;
+            }
+            
+            /* Make archived task modal full-width on mobile */
+            .archive-modal-content {
+                max-width: 95vw;
+                margin-left: 2.5vw;
+            }
+            
+            .task-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
         }
+        
+        /* Archived task modal CSS — static in stylesheet so it loads immediately */
         .task-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); z-index: 9999; padding: 0; box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 0;
+            box-sizing: border-box;
         }
         .task-modal-content {
-            background: #f5f1ea; overflow-y: auto; padding: 16px; border-radius: 12px;
-            box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background: #f5f1ea;
+            overflow-y: auto;
+            padding: 16px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .task-modal-content .task-card { width: auto !important; margin-bottom: 0; }
+        .task-modal-content .task-card {
+            width: auto !important;
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -194,321 +519,1461 @@
         <h1><span class="emoji">🌸</span> Saika's Workstation</h1>
         <p class="subtitle">🌸 Cute little task station for Saika to keep track of all work. Everything in one place.</p>
 
+        <!-- Top Summary Bar -->
         <div class="top-summary">
-            <div class="summary-card total"><span class="summary-label">Today's Tasks</span><span class="summary-count" id="total-count">0</span></div>
-            <div class="summary-card waiting"><span class="summary-label">Waiting</span><span class="summary-count" id="waiting-count">0</span></div>
-            <div class="summary-card working"><span class="summary-label">Working</span><span class="summary-count" id="working-count">0</span></div>
-            <div class="summary-card idle"><span class="summary-label">Idle</span><span class="summary-count" id="idle-count">0</span></div>
+            <div class="summary-card total">
+                <span class="summary-label">Today's Tasks</span>
+                <span class="summary-count" id="total-count">10</span>
+            </div>
+            <div class="summary-card waiting">
+                <span class="summary-label">Waiting</span>
+                <span class="summary-count" id="waiting-count">0</span>
+            </div>
+            <div class="summary-card working">
+                <span class="summary-label">Working</span>
+                <span class="summary-count" id="working-count">5</span>
+            </div>
+            <div class="summary-card idle">
+                <span class="summary-label">Idle</span>
+                <span class="summary-count" id="idle-count">1</span>
+            </div>
         </div>
 
+        <!-- Search Bar -->
         <div class="search-bar">
-            <input type="text" id="search-input" class="search-input" placeholder="Search tasks..." oninput="filterTasks()">
-            <div class="search-tag">cloud-sync</div>
+            <input type="text" id="search-input" class="search-input" placeholder="Search tasks by name, status, or keyword..." oninput="filterTasks()">
+            <div class="search-tag">local</div>
         </div>
 
+        <!-- VERTICAL STACKING AS REQUESTED: 1. Active (top) → 2. Completed → 3. Archived (bottom) -->
+        <!-- 1. Active Tasks (first in the stack) -->
         <section class="section">
-            <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                 <span><span class="emoji">🎯</span> Active Tasks</span>
-                <button class="action-btn" style="background:#e3f2fd;border-color:#bbdefb;color:#1565c0" onclick="addNewTask()">➕ Add New Task</button>
+                <button class="action-btn" style="font-size: 0.95rem; padding: 8px 16px; background: #e3f2fd; border-color: #bbdefb; color: #1565c0;" onclick="addNewTask()">➕ Add New Task</button>
             </div>
-            <p class="section-desc">Current open work you're actively working on.</p>
+            
+            <p class="section-desc">Current open work you're actively working on or keeping an eye on.</p>
+
+            <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
-                <div class="tab working" onclick="switchTab('working')">Working <span class="badge" id="working-badge">0</span></div>
-                <div class="tab idle" onclick="switchTab('idle')">Idle <span class="badge" id="idle-badge">0</span></div>
+                <div class="tab working" onclick="switchTab('working')">
+                    Working <span class="badge" id="working-badge">5</span>
+                </div>
+                <div class="tab idle" onclick="switchTab('idle')">
+                    Idle <span class="badge" id="idle-badge">1</span>
+                </div>
             </div>
-            <div class="task-grid" id="active-grid"></div>
+
+            <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
+            <div class="task-grid" id="active-grid">
+                <!-- P0 Priority (highest first, as requested) -->
+                <!-- 1. (Kept from yesterday) Book sushi cake -->
+                <div class="task-card" data-name="Book sushi cake" data-status="working" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🍣</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Book sushi cake</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Need to book for upcoming event</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 2. (New April 5) Plan Vladivostok May Day travel itinerary -->
+                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">✈️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf">Vladivostok travel plan doc</a></span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Create 4-day travel itinerary for May 1-4</li>
+                            <li>With parents + Roy Li, 4 people total</li>
+                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 3. (Kept from yesterday) Decide AI educational service purchase -->
+                <div class="task-card" data-name="Decide whether to purchase any AI educational service" data-status="working" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">🤔</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Decide AI educational service purchase</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Evaluate options and make purchase decision</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 4. (New April 5) Learn Anthropic Claude harness concept -->
+                <div class="task-card" data-name="Learn Anthropic Claude harness concept" data-status="working" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">📚</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Learn Anthropic Claude harness concept</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(need help downloading article)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Study and understand the Anthropic Claude harness concept</li>
+                            <li>Need to download the article first</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 5. (New April 5) Do quarterly review draw board -->
+                <div class="task-card" data-name="Do quarterly review draw board" data-status="working" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">📊</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Do quarterly review draw board</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Create quarterly review drawing board</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- 6. (New April 5) Fix workflow schedule -->
+                <div class="task-card" data-name="Fix workflow schedule" data-status="working" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">🔧</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Fix workflow schedule</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Fix and adjust the automated workflow schedule</li>
+                            <li>Tune timing for daily tasks</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- Idle (stays from yesterday: Jeju island travel plan) -->
+                <!-- 9. (Idle, kept from yesterday) Jeju island travel plan -->
+                <div class="task-card" data-name="Jeju island travel plan" data-status="idle" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">🏝️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Jeju island travel plan</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+                        <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">by next Saturday (2026-04-11)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Complete plan preparation before trip</li>
+                            <li>Deadline: next Saturday</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
         <section class="section">
-            <div class="section-title"><span class="emoji">✅</span> Completed Tasks <span style="font-size:1.2rem;color:#666">(<span id="completed-count">0</span> total)</span></div>
+            <div class="section-title">
+                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">4</span> total)</span>
+            </div>
             <p class="section-desc">All done here — press "Put Back" to move it back to active tasks.</p>
-            <div class="task-grid" id="completed-grid"></div>
+
+            <!-- 3 narrow columns -->
+            <div class="task-grid" id="completed-grid">
+                <!-- P0 first -->
+                <!-- Task 1: Book sushi cake -->
+                <div class="task-card" data-name="Book sushi cake" data-status="done" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🍣</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Book sushi cake</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Need to book for upcoming event</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+
+                <!-- Task 2: Go for lunch -->
+                <div class="task-card" data-name="Go for lunch" data-status="done" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🍽️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Go for lunch</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Today's lunch outing</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+
+                <!-- Task 3: Exercise today -->
+                <div class="task-card" data-name="Exercise today" data-status="done" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🏃</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Exercise today</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Complete today's exercise routine</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+
+                <!-- Task 4: Make rose pretzel bread (P1) -->
+                <div class="task-card" data-name="Make rose pretzel bread" data-status="done" data-priority="P1">
+                    <div class="task-header">
+                        <div class="task-avatar">🥨</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Make rose pretzel bread</div>
+                            <div class="task-status">
+                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0">P0</option>
+                                    <option value="P1" selected>P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Bake rose pretzel bread for tomorrow's breakfast</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">20:52 PM 2026-04-05:</span> Moved to Completed ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
-            <div class="section-title"><span class="emoji">📦</span> Archived Tasks <span style="font-size:1.2rem;color:#666">(<span id="archive-count">0</span> total)</span></div>
-            <p class="section-desc">Completed tasks are archived here — still searchable.</p>
-            <div class="archive-list" id="archive-list"></div>
+            <div class="section-title">
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">20</span> total)</span>
+            </div>
+            <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
+            <div class="archive-list" id="archive-list">
+                <!-- 2026-04-05 -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-05 <span class="archive-count-badge">3 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Go to gym</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Make 2 breads</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Bread-making video editing</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-04-04 -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-04 <span class="archive-count-badge">8 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Digest</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Correct active task count</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix priority dropdown migration</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix GitHub push</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter (April 5)</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Digest (April 5)</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Final archive & count correction</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-04-03 -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-03 <span class="archive-count-badge">9 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix Newsletter Rules</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix AI Builders Digest</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Coffee Chat with Lu Wang</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">51min Audio Transcription</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Google AI Agent 7-Day Learning Plan</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Weekly Maintenance Check</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter Automation</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Daily Digest</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Cute Task Dashboard</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <div class="sync-status" id="sync-status">Connecting to GitHub...</div>
-        <footer>Last updated ———</footer>
+        <!-- Sync Status Indicator -->
+        <div class="sync-status" id="sync-status">Auto-sync ready</div>
+
+        <footer>
+            Last updated: 05 April 2026, 23:20 PM (Asia/Beijing)
+        </footer>
     </div>
-
     <script>
-        // ==============================================
-        // 你的配置（已经帮你填好，直接可用）
-        // ==============================================
-        const USER = "yuentschiw"
-        const REPO = "personal-task-dashboard"
-        const BRANCH = "main"
-        const FILE = "task-dashboard.html"
-        const TOKEN = "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"
-
-        const AUTO_SAVE_DELAY = 1000
-        let saveTimer = null
-        let currentSha = null
-
-        // ==============================================
-        // 1. 打开页面 → 先从 GitHub 拉最新版
-        // ==============================================
-        document.addEventListener("DOMContentLoaded", async () => {
-            setSync("saving", "Loading latest from GitHub...")
-            try {
-                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
-                    headers: { Authorization: `token ${TOKEN}`, Accept: "application/vnd.github.v3.raw" }
-                })
-                if (!res.ok) throw new Error("fetch failed")
-                const html = await res.text()
-                const doc = document.createElement("html")
-                doc.innerHTML = html
-
-                const taskData = extractTaskData(doc)
-                if (taskData) {
-                    applyTaskData(taskData)
-                    setSync("", "Synced ✅")
-                } else {
-                    initDefaultTasks()
-                    setSync("", "Initialized new tasks")
-                }
-            } catch (e) {
-                console.error(e)
-                setSync("error", "Load failed — using local")
-                initDefaultTasks()
-            }
-            rebindAll()
-            updateAllCounts()
-            startPullLoop()
-        })
-
-        // ==============================================
-        // 2. 任何修改 → 自动上传 GitHub
-        // ==============================================
-        function scheduleSave() {
-            setSync("saving", "Saving...")
-            clearTimeout(saveTimer)
-            saveTimer = setTimeout(async () => {
+        // --- AUTO-SAVE & AUTO-SYNC CONFIGURATION ---
+        // VERSION 2.3 - Force clear all old cache to fix leftover garbled characters
+        const APP_VERSION = '2.3.0';
+        const AUTO_SAVE_DELAY = 1000; // 1 second after last keystroke
+        const TODAY_DATE = new Date().toISOString().split('T')[0];
+        const priorityWeight = { 'P0': 0, 'P1': 1, 'P2': 2 };
+        let autoSaveTimer = null;
+        
+        // GitHub sync configuration - user's repository
+        const GITHUB_REPO = 'https://github.com/yuentschiw/personal-task-dashboard.git';
+        const GITHUB_TOKEN = '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';
+        const GITHUB_BRANCH = 'main';
+        const GITHUB_FILE = 'task-dashboard.html';
+        
+        // Save/Load from browser localStorage
+        function saveToLocal() {
+            const state = getDocumentState();
+            localStorage.setItem('taskDashboardState', JSON.stringify(state));
+        }
+        
+        function loadFromLocal() {
+            const saved = localStorage.getItem('taskDashboardState');
+            if (saved) {
                 try {
-                    const fullHtml = document.documentElement.outerHTML
-                    const base64 = btoa(unescape(encodeURIComponent(fullHtml)))
-
-                    if (!currentSha) {
-                        const info = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
-                            headers: { Authorization: `token ${TOKEN}` }
-                        })
-                        const data = await info.json()
-                        currentSha = data.sha
+                    const state = JSON.parse(saved);
+                    if (state.version === APP_VERSION) {
+                        return state;
                     }
-
-                    await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
-                        method: "PUT",
-                        headers: { Authorization: `token ${TOKEN}`, "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            message: "auto-save from web",
-                            content: base64,
-                            sha: currentSha,
-                            branch: BRANCH
-                        })
-                    })
-
-                    setSync("", "Synced ✅")
                 } catch (e) {
-                    console.error(e)
-                    setSync("error", "Save failed")
+                    console.error('Failed to parse saved state:', e);
+                    localStorage.removeItem('taskDashboardState');
                 }
-            }, AUTO_SAVE_DELAY)
+            }
+            return null;
+        }
+        
+        // Get full current document state as JSON
+        function getDocumentState() {
+            const state = {
+                version: APP_VERSION,
+                activeTasks: [],
+                completedTasks: [],
+                archivedDates: []
+            };
+            
+            // Get active tasks
+            document.querySelectorAll('#active-grid .task-card').forEach(card => {
+                state.activeTasks.push({
+                    name: card.querySelector('.task-name').textContent,
+                    status: card.dataset.status,
+                    priority: card.dataset.priority,
+                    html: card.outerHTML
+                });
+            });
+            
+            // Get completed tasks
+            document.querySelectorAll('#completed-grid .task-card').forEach(card => {
+                state.completedTasks.push({
+                    name: card.querySelector('.task-name').textContent,
+                    completedDate: card.dataset.completedDate,
+                    priority: card.dataset.priority,
+                    html: card.outerHTML
+                });
+            });
+            
+            // Get archived dates
+            document.querySelectorAll('.archive-date-group').forEach(group => {
+                const date = group.querySelector('.archive-date-header').textContent.split(' ')[0];
+                const tasks = [];
+                group.querySelectorAll('.archive-task-item').forEach(item => {
+                    tasks.push({
+                        name: item.querySelector('.archive-task-name').textContent
+                    });
+                });
+                state.archivedDates.push({
+                    date: date,
+                    tasks: tasks
+                });
+            });
+            
+            return state;
+        }
+        
+        // Restore document from saved state
+        function setDocumentState(state) {
+            if (!state || state.version !== APP_VERSION) return;
+            
+            // Clear existing content
+            document.getElementById('active-grid').innerHTML = '';
+            document.getElementById('completed-grid').innerHTML = '';
+            document.getElementById('archive-list').innerHTML = '';
+            
+            // Restore active tasks
+            state.activeTasks.forEach(task => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = task.html;
+                document.getElementById('active-grid').appendChild(tempDiv.firstChild);
+            });
+            
+            // Restore completed tasks
+            state.completedTasks.forEach(task => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = task.html;
+                document.getElementById('completed-grid').appendChild(tempDiv.firstChild);
+            });
+            
+            // Restore archived dates
+            state.archivedDates.forEach(dateGroup => {
+                const group = document.createElement('div');
+                group.className = 'archive-date-group collapsed';
+                group.innerHTML = `<div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${dateGroup.date} <span class="archive-count-badge">${dateGroup.tasks.length} tasks</span></div><div class="archive-date-cards"></div>`;
+                const cardsContainer = group.querySelector('.archive-date-cards');
+                
+                dateGroup.tasks.forEach(task => {
+                    const item = document.createElement('div');
+                    item.className = 'archive-task-item';
+                    item.innerHTML = `
+                        <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${task.name}</div>
+                        <button class="archive-restore-btn" onclick="restoreFromArchive('${dateGroup.date}', this.parentNode.previousElementSibling, this)">Restore</button>
+                    `;
+                    cardsContainer.appendChild(item);
+                });
+                
+                document.getElementById('archive-list').appendChild(group);
+            });
+            
+            // Rebind all event listeners
+            rebindAllEventListeners();
+        }
+        
+        function setSyncStatus(type, message) {
+            const statusEl = document.getElementById('sync-status');
+            statusEl.className = `sync-status ${type}`;
+            statusEl.textContent = message;
         }
 
-        // ==============================================
-        // 3. 每 5 秒自动拉取云端最新（实现多端实时同步）
-        // ==============================================
-        function startPullLoop() {
-            setInterval(async () => {
-                try {
-                    const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}?t=${Date.now()}`, {
-                        headers: { Authorization: `token ${TOKEN}`, Accept: "application/vnd.github.v3.raw" }
-                    })
-                    if (!res.ok) return
-                    const html = await res.text()
-                    const doc = document.createElement("html")
-                    doc.innerHTML = html
-                    const remote = extractTaskData(doc)
-                    const local = extractTaskData(document)
-                    if (remote && JSON.stringify(remote) !== JSON.stringify(local)) {
-                        applyTaskData(remote)
-                        rebindAll()
-                        updateAllCounts()
-                        setSync("", "Updated from cloud")
-                        setTimeout(() => setSync("", "Synced ✅"), 2000)
-                    }
-                } catch (e) {}
-            }, 5000)
+        function updatePriorityText(selectElement) {
+            const priority = selectElement.value;
+            const taskCard = selectElement.closest('.task-card');
+            const priorityText = {
+                'P0': 'P0 (High)',
+                'P1': 'P1 (Medium)',
+                'P2': 'P2 (Low)'
+            };
+            
+            // Update the CSS class for color coding
+            selectElement.classList.remove('P0', 'P1', 'P2');
+            selectElement.classList.add(priority);
+            
+            // Update the priority attribute on the card for sorting
+            taskCard.dataset.priority = priority;
+            
+            // Update the text in the meta section
+            const metaDiv = taskCard.querySelector('.task-meta div:first-child span');
+            if (metaDiv) {
+                metaDiv.textContent = priorityText[priority];
+            }
+            
+            scheduleAutoSave();
         }
 
-        // ==============================================
-        // 工具函数：提取 / 写入任务数据
-        // ==============================================
-        function extractTaskData(doc) {
+        // Sort tasks by priority (P0 first, then P1, then P2) for both active and completed grids
+        function sortTasksByPriority() {
+            // Sort active tasks
+            const activeGrid = document.getElementById('active-grid');
+            const activeTasks = Array.from(activeGrid.querySelectorAll('.task-card'));
+            activeTasks.sort((a, b) => priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority]);
+            activeGrid.innerHTML = '';
+            activeTasks.forEach(task => activeGrid.appendChild(task));
+            
+            // Sort completed tasks
+            const completedGrid = document.getElementById('completed-grid');
+            const completedTasks = Array.from(completedGrid.querySelectorAll('.task-card'));
+            completedTasks.sort((a, b) => priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority]);
+            completedGrid.innerHTML = '';
+            completedTasks.forEach(task => completedGrid.appendChild(task));
+        }
+
+        // Auto-save triggered after any change
+        function scheduleAutoSave() {
+            setSyncStatus('saving', 'Saving...');
+            if (autoSaveTimer) clearTimeout(autoSaveTimer);
+            
+            autoSaveTimer = setTimeout(() => {
+                sortTasksByPriority(); // Sort before saving
+                saveToLocal();
+                
+                if (GITHUB_TOKEN) {
+                    saveToGitHub();
+                } else {
+                    setSyncStatus('', 'Saved locally');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                }
+            }, AUTO_SAVE_DELAY);
+        }
+
+        // Save to GitHub repository for cross-device sync
+        async function saveToGitHub() {
             try {
-                return {
-                    active: Array.from(doc.querySelectorAll("#active-grid .task-card")).map(c => c.outerHTML),
-                    completed: Array.from(doc.querySelectorAll("#completed-grid .task-card")).map(c => c.outerHTML),
-                    archive: Array.from(doc.querySelectorAll(".archive-date-group")).map(g => g.outerHTML)
+                const content = document.documentElement.outerHTML;
+                const base64Content = btoa(unescape(encodeURIComponent(content)));
+                
+                // Get current file SHA to update
+                const response1 = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (!response1.ok) { throw new Error(`Failed to get current file: ${response1.status}`); }
+                const currentData = await response1.json();
+                const currentSHA = currentData.sha;
+                
+                // Update file in GitHub
+                const response2 = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Auto-save: update task dashboard',
+                        content: base64Content,
+                        sha: currentSHA,
+                        branch: GITHUB_BRANCH
+                    })
+                });
+                
+                if (response2.ok) {
+                    setSyncStatus('', 'Synced to GitHub');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                } else {
+                    const errorText = await response2.text();
+                    throw new Error(`Failed to update file: ${response2.status} - ${errorText}`);
                 }
-            } catch (e) { return null }
-        }
-
-        function applyTaskData(data) {
-            if (data.active) {
-                document.querySelector("#active-grid").innerHTML = data.active.join("")
-            }
-            if (data.completed) {
-                document.querySelector("#completed-grid").innerHTML = data.completed.join("")
-            }
-            if (data.archive) {
-                document.querySelector("#archive-list").innerHTML = data.archive.join("")
+                
+            } catch (e) {
+                console.error('GitHub sync failed:', e);
+                setSyncStatus('error', 'Sync failed - saved locally only');
+                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
             }
         }
-
-        // ==============================================
-        // 初始默认任务（第一次打开时用）
-        // ==============================================
-        function initDefaultTasks() {
-            const grid = document.querySelector("#active-grid")
-            grid.innerHTML = `
-            <div class="task-card" data-status="working" data-priority="P0">
-              <div class="task-header">
-                <div class="task-avatar">🍣</div>
-                <div class="task-info">
-                  <div class="task-name" contenteditable oninput="scheduleSave()">Book sushi cake</div>
-                  <div class="task-status">
-                    <select class="priority-select P0" onchange="updatePriority(this)">
-                      <option value="P0" selected>P0</option><option value="P1">P1</option><option value="P2">P2</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="task-meta"><div><strong>Added:</strong> today</div></div>
-              <div class="task-updates"><div class="update-item"><span class="update-time">now:</span> Created</div></div>
-              <div class="task-actions">
-                <input class="action-input" placeholder="Comment">
-                <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Comment</button>
-                <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-              </div>
-            </div>`
+        
+        // Load from GitHub repository for cross-device sync
+        async function loadFromGitHub() {
+            try {
+                // Add cache buster parameter to prevent browser from caching old content
+                const cacheBuster = new Date().getTime();
+                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}?cache=${cacheBuster}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3.raw'
+                    }
+                });
+                
+                if (!response.ok) { return null; }
+                
+                const content = await response.text();
+                return content;
+            } catch (e) {
+                console.error('Failed to load from GitHub:', e);
+                setSyncStatus('error', 'Failed to load sync - using local');
+                return null;
+            }
         }
 
-        // ==============================================
-        // 界面逻辑（完整保留你原来的交互）
-        // ==============================================
-        function setSync(cls, msg) {
-            const el = document.getElementById("sync-status")
-            el.className = "sync-status " + cls
-            el.textContent = msg
+        // Rebind all event listeners after restoring content from save
+        function rebindAllEventListeners() {
+            // Remove ALL delete buttons first to completely eliminate duplicates
+            document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+            
+            // Add exactly ONE delete button to every task (no more duplicates!)
+            document.querySelectorAll('.task-card').forEach(card => {
+                const actions = card.querySelector('.task-actions');
+                if (actions) {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'action-btn delete-btn'; // Add unique class for easy selection
+                    deleteBtn.style.cssText = 'background: #ffebee; border-color: #ffcdd2; color: #c62828;';
+                    deleteBtn.innerHTML = '🗑️ Delete';
+                    deleteBtn.onclick = () => deleteTask(card);
+                    actions.appendChild(deleteBtn);
+                }
+            });
+            
+            // Rebind other action buttons
+            document.querySelectorAll('#active-grid .task-card .task-actions button:nth-child(2)').forEach(btn => {
+                const card = btn.closest('.task-card');
+                btn.onclick = function() { addComment(card); };
+            });
+            
+            document.querySelectorAll('#active-grid .task-card .task-actions button:nth-child(3)').forEach(btn => {
+                const card = btn.closest('.task-card');
+                btn.textContent = 'Archive Done';
+                btn.onclick = function() { moveToCompleted(card); };
+            });
+            
+            document.querySelectorAll('#completed-grid .task-card .task-actions button:nth-child(2)').forEach(btn => {
+                const card = btn.closest('.task-card');
+                btn.onclick = function() { addComment(card); };
+            });
+            
+            document.querySelectorAll('#completed-grid .task-card .task-actions button:nth-child(3)').forEach(btn => {
+                const card = btn.closest('.task-card');
+                btn.textContent = 'Put Back';
+                btn.onclick = function() { putBackToActive(card); };
+            });
+            
+            // Rebind archive date header clicks
+            document.querySelectorAll('.archive-date-header').forEach(header => {
+                header.onclick = function() { toggleArchiveDate(header.parentElement); };
+            });
+            
+            // Rebind archive restore buttons
+            document.querySelectorAll('.archive-restore-btn').forEach(btn => {
+                const item = btn.parentElement;
+                const date = item.parentElement.parentElement.querySelector('.archive-date-header').textContent.split(' ')[0];
+                btn.onclick = function() { restoreFromArchive(date, item.previousElementSibling, item); };
+            });
+            
+            // Rebind archived task name clicks
+            document.querySelectorAll('.archive-task-name').forEach(name => {
+                const item = name.parentElement;
+                name.onclick = function(e) { showArchivedTaskCard(item, e); };
+            });
         }
 
-        function updatePriority(sel) {
-            const p = sel.value
-            sel.classList.remove("P0","P1","P2")
-            sel.classList.add(p)
-            scheduleSave()
-        }
+        // --- END AUTO-SYNC ---
 
-        function switchTab(s) {
-            document.querySelectorAll("#active-grid .task-card").forEach(c => {
-                c.style.display = c.dataset.status === s ? "flex" : "none"
-            })
-        }
-
-        function filterTasks() {
-            const q = document.getElementById("search-input").value.toLowerCase()
-            document.querySelectorAll(".task-card").forEach(c => {
-                const t = c.querySelector(".task-name").textContent.toLowerCase()
-                c.style.display = t.includes(q) ? "flex" : "none"
-            })
-        }
-
-        function addComment(card) {
-            const i = card.querySelector(".action-input")
-            if (!i.value) return
-            const u = card.querySelector(".task-updates")
-            const d = new Date().toLocaleString()
-            u.innerHTML += `<div class="update-item"><span class="update-time">${d}:</span> ${i.value}</div>`
-            i.value = ""
-            scheduleSave()
-        }
-
-        function moveToCompleted(card) {
-            document.querySelector("#completed-grid").appendChild(card)
-            card.dataset.status = "done"
-            const btn = card.querySelector(".task-actions button:last-child")
-            btn.textContent = "Put Back"
-            btn.onclick = () => putBackToActive(card)
-            scheduleSave()
-            updateAllCounts()
-        }
-
-        function putBackToActive(card) {
-            document.querySelector("#active-grid").appendChild(card)
-            card.dataset.status = "working"
-            const btn = card.querySelector(".task-actions button:last-child")
-            btn.textContent = "Archive Done"
-            btn.onclick = () => moveToCompleted(card)
-            scheduleSave()
-            updateAllCounts()
-        }
-
-        function addNewTask() {
-            const grid = document.querySelector("#active-grid")
-            const card = document.createElement("div")
-            card.className = "task-card"
-            card.dataset.status = "working"
-            card.dataset.priority = "P1"
-            card.innerHTML = `
-              <div class="task-header">
-                <div class="task-avatar">✨</div>
-                <div class="task-info">
-                  <div class="task-name" contenteditable oninput="scheduleSave()">New Task</div>
-                  <div class="task-status">
-                    <select class="priority-select P1" onchange="updatePriority(this)">
-                      <option value="P0">P0</option><option value="P1" selected>P1</option><option value="P2">P2</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="task-meta"><div><strong>Added:</strong> today</div></div>
-              <div class="task-updates"><div class="update-item"><span class="update-time">now:</span> Created</div></div>
-              <div class="task-actions">
-                <input class="action-input" placeholder="Comment">
-                <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Comment</button>
-                <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-              </div>`
-            grid.appendChild(card)
-            scheduleSave()
-            updateAllCounts()
-        }
-
+        // Update all counts automatically (top summary, tab badges, completed count)
         function updateAllCounts() {
-            const working = document.querySelectorAll("#active-grid .task-card[data-status=working]").length
-            const idle = document.querySelectorAll("#active-grid .task-card[data-status=idle]").length
-            const done = document.querySelectorAll("#completed-grid .task-card").length
-            document.getElementById("working-count").textContent = working
-            document.getElementById("working-badge").textContent = working
-            document.getElementById("idle-count").textContent = idle
-            document.getElementById("idle-badge").textContent = idle
-            document.getElementById("completed-count").textContent = done
+            const working = document.querySelectorAll('#active-grid .task-card[data-status=\"working\"]');
+            const idle = document.querySelectorAll('#active-grid .task-card[data-status=\"idle\"]');
+            const completed = document.querySelectorAll('#completed-grid .task-card');
+            
+            // Count archived tasks from all date groups
+            let archiveCount = 0;
+            document.querySelectorAll('.archive-date-cards .archive-task-item').forEach(el => archiveCount++);
+            
+            // Calculate TODAY'S TOTAL TASKS: active added today + completed added today + archived today
+            let todayTasksCount = 0;
+            
+            // Count active tasks added today
+            document.querySelectorAll('#active-grid .task-card .task-meta div:nth-child(2)').forEach(meta => {
+                if (meta.textContent.includes(TODAY_DATE)) {
+                    todayTasksCount++;
+                }
+            });
+            
+            // Count completed tasks added today
+            document.querySelectorAll('#completed-grid .task-card .task-meta div:nth-child(2)').forEach(meta => {
+                if (meta.textContent.includes(TODAY_DATE)) {
+                    todayTasksCount++;
+                }
+            });
+            
+            // Count archived tasks for today
+            const archiveHeaders = document.querySelectorAll('.archive-date-header');
+            let todayArchiveGroup = null;
+            archiveHeaders.forEach(header => {
+                if (header.textContent.includes(TODAY_DATE)) {
+                    todayArchiveGroup = header;
+                }
+            });
+            if (todayArchiveGroup) {
+                const countBadge = todayArchiveGroup.querySelector('.archive-count-badge');
+                if (countBadge) {
+                    todayTasksCount += parseInt(countBadge.textContent);
+                }
+            }
+            
+            // Update summary counts
+            document.getElementById('working-count').textContent = working.length;
+            document.getElementById('working-badge').textContent = working.length;
+            document.getElementById('idle-count').textContent = idle.length;
+            document.getElementById('idle-badge').textContent = idle.length;
+            document.getElementById('completed-count').textContent = completed.length;
+            document.getElementById('archive-count').textContent = archiveCount;
+            
+            // Update TOTAL to be today's count only
+            document.getElementById('total-count').textContent = todayTasksCount;
         }
 
-        function rebindAll() {
-            document.querySelectorAll(".task-name[contenteditable]").forEach(el => {
-                el.oninput = scheduleSave
-            })
-            document.querySelectorAll(".context-link[contenteditable]").forEach(el => {
-                el.oninput = scheduleSave
-            })
-            document.querySelectorAll(".priority-select").forEach(el => {
-                el.onchange = () => updatePriority(el)
-            })
+        // Switch tab filtering
+        function switchTab(status) {
+            document.querySelectorAll('#active-grid .task-card').forEach(card => {
+                if (card.dataset.status === status) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            filterTasks();
+            updateAllCounts();
+        }
+
+        // Search filter for all tasks across all sections
+        function filterTasks() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+
+            // Filter active tasks
+            document.querySelectorAll('#active-grid .task-card').forEach(card => {
+                const name = card.querySelector('.task-name').textContent.toLowerCase();
+                const status = card.querySelector('.priority-select').value.toLowerCase();
+                if (!query || name.includes(query) || status.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Filter completed tasks
+            document.querySelectorAll('#completed-grid .task-card').forEach(card => {
+                const name = card.querySelector('.task-name').textContent.toLowerCase();
+                const status = card.querySelector('.priority-select').value.toLowerCase();
+                if (!query || name.includes(query) || status.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            updateAllCounts();
+        }
+
+        // Fully functional Add Comment
+        function addComment(taskCard) {
+            const input = taskCard.querySelector('.action-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleString('en-US');
+            const updates = taskCard.querySelector('.task-updates');
+            const newUpdate = document.createElement('div');
+            newUpdate.className = 'update-item';
+            newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> ${text}`;
+            updates.appendChild(newUpdate);
+            input.value = '';
+            scheduleAutoSave();
+        }
+
+        // Move from Active → Completed
+        function moveToCompleted(taskCard) {
+            const completedGrid = document.getElementById('completed-grid');
+            
+            // Clone the entire card to preserve the priority dropdown
+            const cardClone = taskCard.cloneNode(true);
+            
+            // Change status to done, but KEEP the priority dropdown with its current selection
+            cardClone.dataset.status = 'done';
+            
+            // Update button text and functionality - preserve the priority dropdown
+            const actionBtn = cardClone.querySelector('.task-actions button:nth-child(3)');
+            actionBtn.textContent = 'Put Back';
+            actionBtn.onclick = function() { putBackToActive(cardClone); };
+            
+            // Add completion date to task data for archiving
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            cardClone.dataset.completedDate = today;
+            
+            // Add a comment about the move
+            const updates = cardClone.querySelector('.task-updates');
+            const now = new Date();
+            const timeStr = now.toLocaleString('en-US');
+            const newUpdate = document.createElement('div');
+            newUpdate.className = 'update-item';
+            newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> Moved to Completed ✓</div>`;
+            updates.appendChild(newUpdate);
+            
+            // Append to completed grid
+            completedGrid.appendChild(cardClone);
+            
+            // Remove from active grid
+            taskCard.remove();
+            
+            sortTasksByPriority(); // Sort after moving
+            filterTasks();
+            updateAllCounts();
+            scheduleAutoSave();
+        }
+
+        // Move from Completed → Active (Working)
+        function putBackToActive(taskCard) {
+            const activeGrid = document.getElementById('active-grid');
+            // Change button from "Put Back" to "Archive Done"
+            const actionBtn = taskCard.querySelector('.task-actions button:nth-child(3)');
+            actionBtn.textContent = 'Archive Done';
+            actionBtn.onclick = function() { moveToCompleted(taskCard); };
+            // Update status badge back to working (keep dropdown intact with existing priority)
+            taskCard.dataset.status = 'working';
+            delete taskCard.dataset.completedDate;
+            activeGrid.appendChild(taskCard);
+            
+            sortTasksByPriority(); // Sort after moving
+            filterTasks();
+            updateAllCounts();
+            scheduleAutoSave();
+        }
+
+        // Toggle expand/collapse archive date group
+        function toggleArchiveDate(dateGroup) {
+            if (dateGroup.classList.contains('collapsed')) {
+                dateGroup.classList.remove('collapsed');
+                dateGroup.classList.add('expanded');
+            } else {
+                dateGroup.classList.remove('expanded');
+                dateGroup.classList.add('collapsed');
+            }
+        }
+
+        // Show full task card modal when clicking archived task name (POSITIONED NEXT TO CLICK)
+        function showArchivedTaskCard(item, event) {
+            // Get task name and date
+            const taskName = item.querySelector('.archive-task-name').textContent;
+            const dateGroup = item.closest('.archive-date-group');
+            const archiveDate = dateGroup.querySelector('.archive-date-header').textContent.split(' ')[0];
+            
+            const modal = document.createElement('div');
+            modal.className = 'task-modal-overlay';
+            modal.onclick = function() { document.body.removeChild(modal); };
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'task-modal-content';
+            modalContent.onclick = function(e) { e.stopPropagation(); };
+            modalContent.style.maxWidth = '600px';
+            modalContent.style.maxHeight = '70vh';
+            modalContent.style.position = 'fixed';
+            
+            // First set the modal content!
+            modalContent.innerHTML = `
+                <button style="position: sticky; top: 8px; left: 100%; width: auto; background: #f44336; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-bottom: 8px;" onclick="document.body.removeChild(this.parentElement.parentElement)">✖ Close</button>
+                
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-avatar">📋</div>
+                        <div class="task-info">
+                            <div class="task-name">${taskName}</div>
+                            <div class="task-status">
+                                <span class="status-badge done">Archived</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Status:</strong> Completed & Archived on ${archiveDate}</div>
+                        <div><strong>Added:</strong> ${archiveDate}</div>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">History:</div>
+                        <div class="update-item"><span class="update-time">${archiveDate}:</span> Task completed ✓</div>
+                        <div class="update-item"><span class="update-time">${archiveDate}:</span> Moved to archive ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="action-btn" style="width:100%; background: #e3f2fd; border-color: #bbdefb; color: #1565c0;" onclick="restoreArchivedTask('${taskName}', '${archiveDate}', item); document.body.removeChild(modal);">↩️ Restore to Completed</button>
+                    </div>
+                </div>
+            `;
+            
+            // Position modal next to the clicked task name, account for scroll offsets
+            let rect;
+            if (event && event.target && event.target.classList.contains('archive-task-name')) {
+                // For tasks with onclick handler: event.target is archive-task-name
+                console.log('=== archive-task-name ===');
+                console.log('event.target.innerHTML:', event.target.innerHTML);
+                console.log('event.target:', event.target);
+                rect = event.target.getBoundingClientRect();
+                console.log('rect.top:', rect.top);
+                console.log('window.pageYOffset:', window.pageYOffset);
+            } else if (event && item && item.querySelector('.archive-task-name')) {
+                // For other cases where event.target isn't archive-task-name
+                console.log('=== item.querySelector ===');
+                console.log('item:', item);
+                const taskNameElement = item.querySelector('.archive-task-name');
+                console.log('taskNameElement.innerHTML:', taskNameElement.innerHTML);
+                rect = taskNameElement.getBoundingClientRect();
+                console.log('rect.top:', rect.top);
+                console.log('window.pageYOffset:', window.pageYOffset);
+            } else {
+                // Fallback to centered if no event
+                modalContent.style.left = '50%';
+                modalContent.style.top = '50%';
+                modalContent.style.transform = 'translate(-50%, -50%)';
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                // return; // <-- AUTO-SYNC IS NOW ENABLED!
+            }
+            
+            const modalWidth = 300;
+            const modalHeight = 400;
+            const padding = 10;
+            
+            // Calculate position: right of task, align with top of task name. Account for scroll and body transform: scale(0.8)
+            const scale = 0.8;
+            const rectLeft = rect.left + window.pageXOffset;
+            const rectTop = rect.top + window.pageYOffset;
+            const rectRight = rect.right + window.pageXOffset;
+            
+            let left = rectRight + padding;
+            let top = rectTop;
+            
+            // Scale back positions to account for body's transform: scale(0.8)
+            left /= scale;
+            top /= scale;
+            
+            // Prevent going off right edge
+            if (left + modalWidth > (window.innerWidth + window.pageXOffset) / scale - padding) {
+                left = (rectLeft / scale) - modalWidth - padding;
+            }
+            
+            // Prevent going off bottom edge
+            if (top + modalHeight > (window.innerHeight + window.pageYOffset) / scale - padding) {
+                top = (window.innerHeight + window.pageYOffset) / scale - modalHeight - padding;
+            }
+            
+            // Prevent going off top edge
+            if (top < padding) {
+                top = padding;
+            }
+            
+            console.log('=== Final Position ===');
+            console.log('left:', left, 'px');
+            console.log('top:', top, 'px');
+            
+            modalContent.style.left = left + 'px';
+            modalContent.style.top = top + 'px';
+            modalContent.style.transform = '';
+            modalContent.style.width = '300px';
+            modalContent.style.height = '400px';
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+        
+        // Restore an archived task back to Completed section
+        function restoreArchivedTask(taskName, archiveDate, item) {
+            const completedGrid = document.getElementById('completed-grid');
+            
+            // Create new task card
+            const newCard = document.createElement('div');
+            newCard.className = 'task-card';
+            newCard.dataset.name = taskName;
+            newCard.dataset.status = 'done';
+            newCard.dataset.priority = 'P1'; // Default priority for restored tasks
+            newCard.dataset.completedDate = archiveDate;
+            
+            newCard.innerHTML = `
+                <div class="task-header">
+                    <div class="task-avatar">✨</div>
+                    <div class="task-info">
+                        <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">${taskName}</div>
+                        <div class="task-status">
+                            <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                <option value="P0">P0</option>
+                                <option value="P1" selected>P1</option>
+                                <option value="P2">P2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-meta">
+                    <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                    <div><strong>Completed date:</strong> ${archiveDate}</div>
+                    <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                </div>
+                <div class="task-updates">
+                    <div class="task-section-title">Recent updates:</div>
+                    <div class="update-item"><span class="update-time">${new Date().toLocaleString('en-US')}:</span> Restored from archive ✓</div>
+                </div>
+                <div class="task-actions">
+                    <input type="text" class="action-input" placeholder="Add a comment...">
+                    <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                    <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                </div>
+            `;
+            
+            completedGrid.appendChild(newCard);
+            
+            // Remove the task from archive
+            item.remove();
+            
+            // Update archive count badge
+            const dateGroup = item.closest('.archive-date-group');
+            const items = dateGroup.querySelectorAll('.archive-task-item');
+            const badge = dateGroup.querySelector('.archive-count-badge');
+            badge.textContent = items.length + ' task' + (items.length !== 1 ? 's' : '');
+            
+            // If archive group is now empty, remove it entirely
+            if (items.length === 0) {
+                dateGroup.remove();
+            }
+            
+            // Rebind delete button for new card
+            rebindAllEventListeners();
+            
+            // Save changes
+            sortTasksByPriority();
+            updateAllCounts();
+            scheduleAutoSave();
+        }
+
+        // Archive all completed tasks from today, grouped by date (called at midnight)
+        function archiveTodaysCompleted() {
+            const archiveList = document.getElementById('archive-list');
+            const completedGrid = document.getElementById('completed-grid');
+            const completedCards = Array.from(completedGrid.querySelectorAll('.task-card'));
+            
+            if (completedCards.length === 0) return;
+            
+            // Group completed cards by completion date
+            const grouped = {};
+            completedCards.forEach(card => {
+                const date = card.dataset.completedDate || new Date().toISOString().split('T')[0];
+                if (!grouped[date]) grouped[date] = [];
+                grouped[date].push(card);
+            });
+            
+            // Move each group to archive
+            Object.keys(grouped).sort().reverse().forEach(date => {
+                // Create date group header in archive
+                const dateGroup = document.createElement('div');
+                dateGroup.className = 'archive-date-group collapsed';
+                dateGroup.innerHTML = `<div class=\"archive-date-header\" onclick=\"toggleArchiveDate(this.parentElement)\">${date} <span class=\"archive-count-badge\">${grouped[date].length} task${grouped[date].length !== 1 ? 's' : ''}</span></div><div class=\"archive-date-cards\"></div>`;
+                
+                // Move all cards for this date into the group
+                grouped[date].forEach(card => {
+                    // We just keep the basic info in the archive list, linked to the original card
+                    const archiveItem = document.createElement('div');
+                    archiveItem.className = 'archive-task-item';
+                    archiveItem.innerHTML = `
+                        <div class=\"archive-task-name\" onclick=\"showArchivedTaskCard(this.parentElement, event)\">${card.querySelector('.task-name').textContent}</div>
+                        <button class=\"archive-restore-btn\" onclick=\"restoreFromArchive('${date}', this.parentNode.previousElementSibling, this)\">Restore</button>
+                    `;
+                    // Store the full card HTML as data so we can restore it
+                    dateGroup.querySelector('.archive-date-cards').appendChild(archiveItem);
+                    // Remove from completed grid
+                    card.remove();
+                });
+                
+                archiveList.appendChild(dateGroup);
+            });
+            
+            updateAllCounts();
+            scheduleAutoSave();
+        }
+
+        // Restore a task from archive back to completed grid
+        function restoreFromArchive(date, header, item) {
+            alert('Restore functionality is temporarily disabled, will restore soon!');
+        }
+
+        // Add a brand new blank task card to Active Tasks (Working status)
+        function addNewTask() {
+            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const timeStr = now.toLocaleString('en-US');
+            
+            // Create new blank task card HTML
+            const newTask = document.createElement('div');
+            newTask.className = 'task-card';
+            newTask.dataset.name = 'New Task';
+            newTask.dataset.status = 'working';
+            newTask.dataset.priority = 'P1'; // Default priority P1
+            
+            newTask.innerHTML = `
+                <div class=\"task-header\">\n            <div class=\"task-avatar\">✨</div>\n            <div class=\"task-info\">\n                <div class=\"task-name\" contenteditable=\"true\" oninput=\"scheduleAutoSave()\">New Task</div>\n                <div class=\"task-status\">\n                    <select class=\"priority-select P1\" onchange=\"updatePriorityText(this); scheduleAutoSave()\">\n                        <option value=\"P0\">P0</option>\n                        <option value=\"P1\" selected>P1</option>\n                        <option value=\"P2\">P2</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n        <div class=\"task-meta\">\n            <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>\n            <div><strong>Added:</strong> ${today} (today)</div>\n            <div><strong>Context / Link:</strong> <span class=\"context-link\" contenteditable=\"true\" oninput=\"scheduleAutoSave()\">(add link here)</span></div>\n        </div>\n        <div>\n            <div class=\"task-section-title\">Details:</div>\n            <ul class=\"task-section-list\">\n                <li>Add your task details here</li>\n            </ul>\n        </div>\n        <div class=\"task-updates\">\n            <div class=\"task-section-title\">Recent updates:</div>\n\n            <div class=\"update-item\"><span class=\"update-time\">${timeStr}:</span> Added to active tasks ✓</div>\n        </div>\n        <div class=\"task-actions\">\n            <input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\">\n                <button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button>\n                <button class=\"action-btn\" onclick=\"moveToCompleted(this.parentElement.parentElement)\">Archive Done</button>\n        </div>\n    `;
+            
+            // Add to active grid
+            const activeGrid = document.getElementById('active-grid');
+            activeGrid.appendChild(newTask);
+            
+            sortTasksByPriority(); // Sort after adding
+            
+            // Update counts and rebind events
+            updateAllCounts();
+            rebindAllEventListeners();
+            scheduleAutoSave();
+            
+            // Focus the task name so user can start typing immediately
+            setTimeout(() => {
+                newTask.querySelector('.task-name').focus();
+            }, 100);
+        }
+
+        // Delete a task card completely
+        function deleteTask(taskCard) {
+            if (confirm('Are you sure you want to delete this task permanently?')) {
+                taskCard.remove();
+                updateAllCounts();
+                filterTasks();
+                scheduleAutoSave();
+            }
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear old incompatible cache if needed
+            const savedVersion = localStorage.getItem('taskDashboardVersion');
+            if (!savedVersion || savedVersion !== APP_VERSION) {
+                localStorage.removeItem('taskDashboardState');
+                localStorage.setItem('taskDashboardVersion', APP_VERSION);
+            }
+            
+            // Try to load saved state
+            const loaded = loadFromLocal();
+            if (loaded) {
+                setDocumentState(loaded);
+            } else {
+                // No saved state, add delete buttons to initial static tasks
+                rebindAllEventListeners();
+            }
+            
+            sortTasksByPriority(); // Sort on initial load
+            filterTasks();
+            updateAllCounts();
+            
+            // Update last generated time
+            const now = new Date();
+            const timeStr = now.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)`;
+            
+            // Start polling for sync if configured
+            startSyncPolling();
+        });
+
+        // Poll for changes from other devices (every 5 seconds) - DISABLED to prevent overwriting local changes
+        function startSyncPolling() {
+            // Disabled by default to prevent overwriting local edits
+            // return; // <-- AUTO-SYNC IS NOW ENABLED!
+            if (!GITHUB_TOKEN) return;
+            
+            setInterval(async () => {
+                const remoteContent = await loadFromGitHub();
+                if (!remoteContent) return;
+                
+                const localState = loadFromLocal();
+                if (!localState) {
+                    // No local save, use remote
+                    document.documentElement.outerHTML = remoteContent;
+                    saveToLocal();
+                    setSyncStatus('', 'Loaded remote content');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                    // return; // <-- AUTO-SYNC IS NOW ENABLED!
+                }
+                
+                // Compare remote and local
+                const remoteState = remoteContent;
+                const localHTML = document.documentElement.outerHTML;
+                
+                if (remoteState !== localHTML) {
+                    document.documentElement.outerHTML = remoteState;
+                    saveToLocal();
+                    setSyncStatus('', 'Synced changes from other device');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                }
+            }, 5000); // Check every 5 seconds
         }
     </script>
 </body>
