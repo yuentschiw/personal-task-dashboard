@@ -1365,7 +1365,9 @@
         // Load from GitHub repository for cross-device sync
         async function loadFromGitHub() {
             try {
-                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}`, {
+                // Add cache buster parameter to prevent browser from caching old content
+                const cacheBuster = new Date().getTime();
+                const response = await fetch(`https://api.github.com/repos/yuentschiw/personal-task-dashboard/contents/${GITHUB_FILE}?cache=${cacheBuster}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `token ${GITHUB_TOKEN}`,
