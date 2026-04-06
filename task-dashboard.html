@@ -1432,9 +1432,7 @@
             // Rebind archived task name clicks
             document.querySelectorAll('.archive-task-name').forEach(name => {
                 const item = name.parentElement;
-                name.onclick = function(e) {
-                    showArchivedTaskCard(item, e);
-                };
+                name.onclick = function(e) { showArchivedTaskCard(item, e); };
             });
         }
 
@@ -1670,35 +1668,34 @@
             `;
             
             // Position modal next to click event - MUST BE AFTER setting innerHTML!
-            if (event && item) {
-                const rect = item.querySelector('.archive-task-name').getBoundingClientRect();
+            if (event) {
+                const clickX = event.clientX;
+                const clickY = event.clientY;
                 const modalWidth = 600;
-                const modalHeight = 400;
+                const modalHeight = window.innerHeight * 0.7;
                 const padding = 12;
-                let left = 500;
-                let top = 400;
-                modalContent.style.left = left + "px";
-                modalContent.style.top = top + "px";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
-                modalContent.style.transform = "";
+                
+                // Calculate position: right of click, same vertical level!
+                let left = clickX + padding + 20;
+                let top = clickY - (modalHeight / 2);
+                
+                // Prevent going off right edge
+                if (left + modalWidth > window.innerWidth - padding) {
+                    left = clickX - modalWidth - padding - 20;
+                }
+                
+                // Prevent going off bottom edge
+                if (top + modalHeight > window.innerHeight - padding) {
+                    top = window.innerHeight - modalHeight - padding;
+                }
+                
                 // Prevent going off top edge
                 if (top < padding) {
                     top = padding;
                 }
                 
-                // Apply the styles after content has been set
                 modalContent.style.left = left + 'px';
                 modalContent.style.top = top + 'px';
-                modalContent.style.transform = '';
             } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
