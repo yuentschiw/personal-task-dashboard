@@ -1697,26 +1697,26 @@
             }
             
             const modalWidth = 300;
-            const modalHeight = 350;
+            const modalHeight = 400;
             const padding = 10;
             
-            // Calculate position: right of task, align with top of task name + scroll offset
-            let left = rect.right + window.pageXOffset + padding;
-            let top = rect.top + window.pageYOffset;
+            // Calculate position: right of task, align with top of task name
+            let left = rect.right + padding;
+            let top = rect.top;
             
             // Prevent going off right edge
-            if (left + modalWidth > window.innerWidth + window.pageXOffset - padding) {
-                left = rect.left + window.pageXOffset - modalWidth - padding;
+            if (left + modalWidth > window.innerWidth - padding) {
+                left = rect.left - modalWidth - padding;
             }
             
             // Prevent going off bottom edge
-            if (top + modalHeight > window.innerHeight + window.pageYOffset - padding) {
-                top = window.innerHeight + window.pageYOffset - modalHeight - padding;
+            if (top + modalHeight > window.innerHeight - padding) {
+                top = window.innerHeight - modalHeight - padding;
             }
             
             // Prevent going off top edge
-            if (top < window.pageYOffset + padding) {
-                top = window.pageYOffset + padding;
+            if (top < padding) {
+                top = padding;
             }
             
             console.log('=== Final Position ===');
