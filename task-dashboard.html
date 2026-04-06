@@ -1698,10 +1698,12 @@
                 modalContent.style.transform = '';
                 modalContent.style.width = '300px';
                 modalContent.style.height = '200px';
+            } else {
                 // Fallback to centered if no event
                 modalContent.style.left = '50%';
                 modalContent.style.top = '50%';
                 modalContent.style.transform = 'translate(-50%, -50%)';
+            }
             }
             
             modal.appendChild(modalContent);
