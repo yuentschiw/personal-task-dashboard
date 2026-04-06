@@ -1551,7 +1551,7 @@
             if (!text) return;
 
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             const updates = taskCard.querySelector('.task-updates');
             const newUpdate = document.createElement('div');
             newUpdate.className = 'update-item';
@@ -1583,7 +1583,7 @@
             // Add a comment about the move
             const updates = cardClone.querySelector('.task-updates');
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             const newUpdate = document.createElement('div');
             newUpdate.className = 'update-item';
             newUpdate.innerHTML = `<span class=\"update-time\">${timeStr}:</span> Moved to Completed ✓</div>`;
@@ -1785,7 +1785,7 @@
                 </div>
                 <div class="task-updates">
                     <div class="task-section-title">Recent updates:</div>
-                    <div class="update-item"><span class="update-time">${new Date().toLocaleString('zh-CN')}:</span> Restored from archive ✓</div>
+                    <div class="update-item"><span class="update-time">${new Date().toLocaleString('en-US')}:</span> Restored from archive ✓</div>
                 </div>
                 <div class="task-actions">
                     <input type="text" class="action-input" placeholder="Add a comment...">
@@ -1873,7 +1873,7 @@
         function addNewTask() {
             const today = new Date().toISOString().split('T')[0];
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN');
+            const timeStr = now.toLocaleString('en-US');
             
             // Create new blank task card HTML
             const newTask = document.createElement('div');
@@ -1936,7 +1936,7 @@
             
             // Update last generated time
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const timeStr = now.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
             document.querySelector('footer').textContent = `Last updated: ${timeStr} (Asia/Shanghai)`;
             
             // Start polling for sync if configured
