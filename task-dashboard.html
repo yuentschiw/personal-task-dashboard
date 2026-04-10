@@ -532,7 +532,7 @@
         <div class="top-summary">
             <div class="summary-card total">
                 <span class="summary-label">Today's Tasks</span>
-                <span class="summary-count" id="total-count">10</span>
+                <span class="summary-count" id="total-count">2</span>
             </div>
             <div class="summary-card waiting">
                 <span class="summary-label">Waiting</span>
@@ -540,7 +540,7 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">5</span>
+                <span class="summary-count" id="working-count">8</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
@@ -567,7 +567,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">5</span>
+                    Working <span class="badge" id="working-badge">8</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -1155,7 +1155,12 @@
         // Restore document from saved state
         function setDocumentState(state) {
             if (!state || state.version !== APP_VERSION) return;
-            
+
+            // If no html fields present (e.g. stub Gist data), skip restore and keep static HTML
+            const hasHtml = state.activeTasks.some(t => t.html) ||
+                            state.completedTasks.some(t => t.html);
+            if (!hasHtml) return;
+
             // Clear existing content
             document.getElementById('active-grid').innerHTML = '';
             document.getElementById('completed-grid').innerHTML = '';
@@ -1163,6 +1168,7 @@
             
             // Restore active tasks
             state.activeTasks.forEach(task => {
+                if (!task.html) return;
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = task.html;
                 document.getElementById('active-grid').appendChild(tempDiv.firstChild);
@@ -1170,6 +1176,7 @@
             
             // Restore completed tasks
             state.completedTasks.forEach(task => {
+                if (!task.html) return;
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = task.html;
                 document.getElementById('completed-grid').appendChild(tempDiv.firstChild);
