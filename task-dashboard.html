@@ -1150,22 +1150,144 @@
             } catch (e) { return null; }
         }
 
-        // Serialize current page DOM into a clean HTML string for saving
-        function serializeCurrentHtml() {
-            // Clone the whole document
-            const clone = document.documentElement.cloneNode(true);
+        // Capture live DOM state into a serializable snapshot object
+        function captureState() {
+            const snap = { activeTasks: [], completedTasks: [], archivedDates: [] };
 
-            // Strip all .delete-btn (they get re-added on load via rebindAllEventListeners)
-            clone.querySelectorAll('.delete-btn').forEach(el => el.remove());
+            document.querySelectorAll('#active-grid .task-card').forEach(card => {
+                // Read the LIVE priority select value (not the HTML attribute)
+                const sel = card.querySelector('.priority-select');
+                snap.activeTasks.push({
+                    name:     card.querySelector('.task-name').innerHTML,
+                    status:   card.dataset.status,
+                    priority: sel ? sel.value : card.dataset.priority,
+                    details:  card.querySelector('.task-section-list') ? card.querySelector('.task-section-list').innerHTML : '',
+                    updates:  card.querySelector('.task-updates').innerHTML,
+                    link:     card.querySelector('.context-link') ? card.querySelector('.context-link').innerHTML : '',
+                    added:    (() => { const divs = card.querySelectorAll('.task-meta div'); for (const d of divs) { if (d.textContent.includes('Added:')) return d.textContent.replace('Added:','').trim(); } return ''; })(),
+                    avatar:   card.querySelector('.task-avatar') ? card.querySelector('.task-avatar').textContent.trim() : '✨',
+                });
+            });
 
-            // Update the footer timestamp
-            const footer = clone.querySelector('footer');
-            if (footer) {
-                const now = new Date();
-                footer.textContent = `Last updated: ${now.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})}, ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})} (Asia/Shanghai)`;
+            document.querySelectorAll('#completed-grid .task-card').forEach(card => {
+                const sel = card.querySelector('.priority-select');
+                snap.completedTasks.push({
+                    name:     card.querySelector('.task-name').innerHTML,
+                    status:   'done',
+                    priority: sel ? sel.value : card.dataset.priority,
+                    completedDate: card.dataset.completedDate || '',
+                    details:  card.querySelector('.task-section-list') ? card.querySelector('.task-section-list').innerHTML : '',
+                    updates:  card.querySelector('.task-updates').innerHTML,
+                    link:     card.querySelector('.context-link') ? card.querySelector('.context-link').innerHTML : '',
+                    avatar:   card.querySelector('.task-avatar') ? card.querySelector('.task-avatar').textContent.trim() : '✨',
+                });
+            });
+
+            document.querySelectorAll('.archive-date-group').forEach(group => {
+                const dateText = group.querySelector('.archive-date-header').childNodes[0].textContent.trim();
+                const tasks = [];
+                group.querySelectorAll('.archive-task-item .archive-task-name').forEach(n => tasks.push(n.textContent.trim()));
+                snap.archivedDates.push({ date: dateText, tasks });
+            });
+
+            return snap;
+        }
+
+        // Build a complete HTML file string from a snapshot
+        function buildHtmlFromSnap(snap) {
+            function makeCard(t, isCompleted) {
+                const p = t.priority || 'P1';
+                const pLabel = p === 'P0' ? 'P0 (High)' : p === 'P1' ? 'P1 (Medium)' : 'P2 (Low)';
+                const archiveBtn = isCompleted
+                    ? `<button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>`
+                    : `<button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>`;
+                const statusAttr = isCompleted ? 'done' : (t.status || 'working');
+                const completedAttr = isCompleted && t.completedDate ? ` data-completedDate="${t.completedDate}"` : '';
+                return `
+                <div class="task-card" data-name="${t.name.replace(/<[^>]+>/g,'')}" data-status="${statusAttr}" data-priority="${p}"${completedAttr}>
+                    <div class="task-header">
+                        <div class="task-avatar">${t.avatar || '✨'}</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">${t.name}</div>
+                            <div class="task-status">
+                                <select class="priority-select ${p}" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0"${p==='P0'?' selected':''}>P0</option>
+                                    <option value="P1"${p==='P1'?' selected':''}>P1</option>
+                                    <option value="P2"${p==='P2'?' selected':''}>P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>${pLabel}</span></div>
+                        <div><strong>Added:</strong> ${t.added || ''}</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">${t.link || '(add link here)'}</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">${t.details || '<li></li>'}</ul>
+                    </div>
+                    <div class="task-updates">
+                        ${t.updates || '<div class="task-section-title">Recent updates:</div>'}
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        ${archiveBtn}
+                    </div>
+                </div>`;
             }
 
-            return '<!DOCTYPE html>\n' + clone.outerHTML;
+            const activeHtml   = snap.activeTasks.map(t => makeCard(t, false)).join('\n');
+            const completedHtml= snap.completedTasks.map(t => makeCard(t, true)).join('\n');
+
+            const archiveHtml  = snap.archivedDates.map(g => `
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
+                    <div class="archive-date-cards">
+                        ${g.tasks.map(name => `
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>`).join('')}
+                    </div>
+                </div>`).join('\n');
+
+            const totalActive = snap.activeTasks.length + snap.completedTasks.length;
+            const working     = snap.activeTasks.filter(t => t.status === 'working').length;
+            const idle        = snap.activeTasks.filter(t => t.status === 'idle').length;
+            const completed   = snap.completedTasks.length;
+            const archived    = snap.archivedDates.reduce((s,g) => s + g.tasks.length, 0);
+            const now         = new Date();
+            const footerTs    = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) + ', ' +
+                                now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) + ' (Asia/Shanghai)';
+
+            // Read the current page's full HTML, then splice in updated sections
+            const parser      = new DOMParser();
+            const doc         = parser.parseFromString(document.documentElement.outerHTML, 'text/html');
+
+            // Remove all delete buttons from the template (they're added at runtime)
+            doc.querySelectorAll('.delete-btn').forEach(el => el.remove());
+
+            // Splice in live grids
+            doc.getElementById('active-grid').innerHTML     = activeHtml;
+            doc.getElementById('completed-grid').innerHTML  = completedHtml;
+            doc.getElementById('archive-list').innerHTML    = archiveHtml;
+
+            // Update counts in the static HTML
+            doc.getElementById('total-count').textContent   = totalActive;
+            doc.getElementById('working-count').textContent = working;
+            doc.getElementById('working-badge').textContent = working;
+            doc.getElementById('idle-count').textContent    = idle;
+            doc.getElementById('idle-badge').textContent    = idle;
+            doc.getElementById('completed-count').textContent = completed;
+            doc.getElementById('archive-count').textContent = archived;
+
+            // Update footer
+            const footer = doc.querySelector('footer');
+            if (footer) footer.textContent = 'Last updated: ' + footerTs;
+
+            return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
         }
 
         // Save: push full HTML to GitHub repo
@@ -1174,7 +1296,8 @@
                 const sha = await fetchGhSha();
                 if (!sha) throw new Error('Could not fetch file SHA');
 
-                const html = serializeCurrentHtml();
+                const snap = captureState();
+                const html = buildHtmlFromSnap(snap);
                 const encoded = btoa(unescape(encodeURIComponent(html)));
 
                 const resp = await fetch(
@@ -1337,56 +1460,32 @@
 
         // Update all counts automatically (top summary, tab badges, completed count)
         function updateAllCounts() {
-            const working = document.querySelectorAll('#active-grid .task-card[data-status=\"working\"]');
-            const idle = document.querySelectorAll('#active-grid .task-card[data-status=\"idle\"]');
-            const completed = document.querySelectorAll('#completed-grid .task-card');
-            
-            // Count archived tasks from all date groups
-            let archiveCount = 0;
-            document.querySelectorAll('.archive-date-cards .archive-task-item').forEach(el => archiveCount++);
-            
-            // Calculate TODAY'S TOTAL TASKS: active added today + completed added today + archived today
-            let todayTasksCount = 0;
-            
-            // Count active tasks added today
-            document.querySelectorAll('#active-grid .task-card .task-meta div:nth-child(2)').forEach(meta => {
-                if (meta.textContent.includes(TODAY_DATE)) {
-                    todayTasksCount++;
-                }
-            });
-            
-            // Count completed tasks added today
-            document.querySelectorAll('#completed-grid .task-card .task-meta div:nth-child(2)').forEach(meta => {
-                if (meta.textContent.includes(TODAY_DATE)) {
-                    todayTasksCount++;
-                }
-            });
-            
-            // Count archived tasks for today
-            const archiveHeaders = document.querySelectorAll('.archive-date-header');
-            let todayArchiveGroup = null;
-            archiveHeaders.forEach(header => {
-                if (header.textContent.includes(TODAY_DATE)) {
-                    todayArchiveGroup = header;
-                }
-            });
-            if (todayArchiveGroup) {
-                const countBadge = todayArchiveGroup.querySelector('.archive-count-badge');
-                if (countBadge) {
-                    todayTasksCount += parseInt(countBadge.textContent);
-                }
-            }
-            
-            // Update summary counts
-            document.getElementById('working-count').textContent = working.length;
-            document.getElementById('working-badge').textContent = working.length;
-            document.getElementById('idle-count').textContent = idle.length;
-            document.getElementById('idle-badge').textContent = idle.length;
-            document.getElementById('completed-count').textContent = completed.length;
-            document.getElementById('archive-count').textContent = archiveCount;
-            
-            // Update TOTAL to be today's count only
-            document.getElementById('total-count').textContent = todayTasksCount;
+            const workingCards  = document.querySelectorAll('#active-grid .task-card[data-status="working"]');
+            const idleCards     = document.querySelectorAll('#active-grid .task-card[data-status="idle"]');
+            const completedCards= document.querySelectorAll('#completed-grid .task-card');
+            const archiveItems  = document.querySelectorAll('.archive-date-cards .archive-task-item');
+
+            const working   = workingCards.length;
+            const idle      = idleCards.length;
+            const completed = completedCards.length;
+            const archived  = archiveItems.length;
+            const total     = working + idle + completed; // all active tasks (working + idle + completed)
+
+            // Update top summary bar
+            document.getElementById('total-count').textContent    = total;
+            document.getElementById('working-count').textContent  = working;
+            document.getElementById('idle-count').textContent     = idle;
+            // "Waiting" not used — set to 0
+            const waitingEl = document.getElementById('waiting-count');
+            if (waitingEl) waitingEl.textContent = 0;
+
+            // Update tab badges
+            document.getElementById('working-badge').textContent  = working;
+            document.getElementById('idle-badge').textContent     = idle;
+
+            // Update section titles
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('archive-count').textContent   = archived;
         }
 
         // Switch tab filtering
