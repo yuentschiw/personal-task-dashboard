@@ -171,7 +171,7 @@
         /* Task Grid: 3 NARROW columns */
         .task-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
         }
         .task-card.drag-over {
@@ -190,7 +190,13 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            /* Strictly fixed width — content never stretches the card */
             width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
         .task-header {
             display: flex;
@@ -211,19 +217,24 @@
         }
         .task-info {
             flex: 1;
+            min-width: 0;
             display: flex;
             justify-content: space-between;
             align-items: start;
             flex-direction: column;
             gap: 4px;
+            overflow: hidden;
         }
         .task-name {
             font-size: 1.4rem;
             font-weight: 700;
             color: #222;
-            contenteditable: true;
-            word-wrap: break-word;
             outline: none;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            width: 100%;
+            min-width: 0;
         }
         .task-status {
             align-self: flex-start;
@@ -282,16 +293,48 @@
             color: #444;
             font-size: 0.85rem;
             line-height: 1.6;
+            overflow: hidden;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
         .context-link {
-            text-decoration: underline;
             color: #1565c0;
-            contenteditable: true;
             outline: none;
+            display: block;
+            width: 100%;
+            min-width: 0;
+            /* Prevent link text from stretching the card */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .context-link[data-editing="true"] {
+            white-space: normal;
+            overflow: visible;
         }
         .context-link a {
             color: #1565c0;
             text-decoration: underline;
+            /* Truncate long link titles with ellipsis */
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+        }
+        .context-link[data-editing="true"] {
+            background: #f0f7ff;
+            border-radius: 4px;
+            padding: 2px 4px;
+            outline: 1px solid #90caf9;
+            white-space: normal;
+            overflow: visible;
+        }
+        .link-resolving {
+            color: #999;
+            font-style: italic;
+            font-size: 0.8rem;
         }
         .task-section-title {
             font-weight: 600;
@@ -821,7 +864,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-10</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://docs.xiaohongshu.com/doc/9beb30963a446d9c6c52e22c792974f2" target="_blank" rel="noopener">学习文档</a></span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -1841,6 +1884,10 @@
             filterTasks();
             updateAllCounts();
 
+            // After DOM is ready, resolve any bare URLs in context-link spans
+            bindContextLinkHandlers();
+            await resolveAllExistingLinks();
+
             setSyncStatus('', 'Auto-sync ready');
 
             // Poll Gist every 2 minutes to catch changes from other devices
@@ -1902,6 +1949,149 @@
                 });
             });
         }
+
+        // ── SMART LINK RESOLUTION ─────────────────────────────────────────
+        // When a user types/pastes a URL into a context-link span and blurs,
+        // automatically convert it into a titled hyperlink.
+        //
+        // Supported input formats:
+        //   1. https://example.com/...          → fetches title, falls back to smart URL label
+        //   2. 自定义标题 https://example.com/... → uses custom title directly
+        //   3. Already contains <a> tag          → leave as-is
+
+        // Extract a human-readable label from a URL as fallback
+        function urlToFriendlyLabel(url) {
+            try {
+                const u = new URL(url);
+                const host = u.hostname.replace(/^www\./, '');
+                // Try to get last meaningful path segment
+                const parts = u.pathname.split('/').filter(p => p && p.length > 2);
+                if (parts.length > 0) {
+                    const last = decodeURIComponent(parts[parts.length - 1])
+                        .replace(/[-_]/g, ' ')
+                        .replace(/\.[a-z]{2,4}$/i, ''); // strip extension
+                    // If it looks like a hash/UUID, just show host
+                    if (/^[a-f0-9]{16,}$/i.test(last)) return host + ' 文档';
+                    return last.length > 40 ? last.substring(0, 40) + '…' : last;
+                }
+                return host;
+            } catch (e) {
+                return url.length > 50 ? url.substring(0, 47) + '…' : url;
+            }
+        }
+
+        // Try to fetch page title via allorigins proxy (works for public URLs only)
+        async function fetchPageTitle(url) {
+            try {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(4000) });
+                if (!resp.ok) return null;
+                const data = await resp.json();
+                const match = data.contents && data.contents.match(/<title[^>]*>([^<]{1,200})<\/title>/i);
+                if (match && match[1]) {
+                    return match[1].trim().replace(/\s+/g, ' ');
+                }
+            } catch (e) { /* timeout or CORS — use fallback */ }
+            return null;
+        }
+
+        // Core handler: called on blur of a .context-link span
+        async function resolveContextLink(span) {
+            const raw = span.textContent.trim();
+
+            // Skip if empty placeholder or already has an <a> tag
+            if (!raw || raw === '(add link here)' || span.querySelector('a')) return;
+
+            // Detect URL in text
+            const urlMatch = raw.match(/https?:\/\/[^\s]+/);
+            if (!urlMatch) return; // No URL found, leave as plain text
+
+            const url = urlMatch[0].replace(/[.,;!?）)】\]>]+$/, ''); // trim trailing punctuation
+            const beforeUrl = raw.substring(0, raw.indexOf(urlMatch[0])).trim();
+
+            // If user typed "custom title URL", use custom title
+            if (beforeUrl.length > 0) {
+                span.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${beforeUrl}</a>`;
+                scheduleAutoSave();
+                return;
+            }
+
+            // Show resolving indicator
+            span.innerHTML = `<span class="link-resolving">🔗 识别链接中…</span>`;
+
+            // Try to fetch title (public URLs), use friendly fallback for internal/intranet
+            let title = await fetchPageTitle(url);
+            if (!title) {
+                title = urlToFriendlyLabel(url);
+            }
+
+            span.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${title}</a>`;
+            scheduleAutoSave();
+        }
+
+        // Bind smart link resolution to all context-link spans
+        function bindContextLinkHandlers() {
+            document.querySelectorAll('.context-link').forEach(span => {
+                // Avoid duplicate listeners
+                if (span.dataset.linkBound) return;
+                span.dataset.linkBound = 'true';
+
+                // Show editing mode on focus
+                span.addEventListener('focus', () => {
+                    span.dataset.editing = 'true';
+                    // If it contains an <a>, expand to editable URL text for editing
+                    const a = span.querySelector('a');
+                    if (a) {
+                        span.dataset.prevHref = a.href;
+                        span.dataset.prevTitle = a.textContent;
+                        span.textContent = a.href;
+                    }
+                });
+
+                // Resolve on blur
+                span.addEventListener('blur', async () => {
+                    span.dataset.editing = 'false';
+                    await resolveContextLink(span);
+                });
+
+                // Also handle paste: after paste, trigger resolution on next tick
+                span.addEventListener('paste', () => {
+                    setTimeout(() => {
+                        // Auto-blur to trigger resolution immediately after paste
+                        span.blur();
+                    }, 100);
+                });
+            });
+        }
+
+        // Hook into rebindAllEventListeners so new cards also get this
+        const _origRebind = rebindAllEventListeners;
+        rebindAllEventListeners = function() {
+            _origRebind();
+            bindContextLinkHandlers();
+        };
+
+        // Also resolve existing context-link spans that already contain raw URLs on load
+        async function resolveAllExistingLinks() {
+            const spans = document.querySelectorAll('.context-link');
+            for (const span of spans) {
+                const raw = span.textContent.trim();
+                if (raw && /^https?:\/\//.test(raw) && !span.querySelector('a')) {
+                    await resolveContextLink(span);
+                }
+            }
+        }
+
+        // Patch DOMContentLoaded to also run link setup
+        document.addEventListener('DOMContentLoaded', () => {
+            // Run after the main init completes (which sets up the DOM)
+            setTimeout(async () => {
+                bindContextLinkHandlers();
+                await resolveAllExistingLinks();
+            }, 500);
+        });
+        // ── END SMART LINK RESOLUTION ─────────────────────────────────────
+
     </script>
 </body>
 </html>
