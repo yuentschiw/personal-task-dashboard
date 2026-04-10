@@ -1121,133 +1121,100 @@
         const priorityWeight = { 'P0': 0, 'P1': 1, 'P2': 2 };
         let autoSaveTimer = null;
 
-        // Gist-based sync (works from browser, phone, any device — no secret scanning issues)
-        const GIST_ID = 'fa900c4f3eb1e1e7ab78f056d81bf38c';
-        const GIST_TOKEN = atob('Z2hwX2RETHE2YUZjeXBFVDhXM08wMTBIMllISjQ1SW4wYUg5elc=');
-        const GIST_FILE = 'task-state.json';
+        // GitHub repo-based sync: saves the entire HTML file directly to the repo.
+        // This is the source of truth — any device opening the GitHub Pages URL
+        // always gets the latest version without needing localStorage.
+        const GH_TOKEN = atob('Z2hwX2RETHE2YUZjeXBFVDhXM08wMTBIMllISjQ1SW4wYUg5elc=');
+        const GH_REPO = 'yuentschiw/personal-task-dashboard';
+        const GH_FILE = 'task-dashboard.html';
+        let ghFileSha = null; // cached SHA for update calls
         
-        // Save/Load from browser localStorage
-        function saveToLocal() {
-            const state = getDocumentState();
-            localStorage.setItem('taskDashboardState', JSON.stringify(state));
+        // ── GITHUB REPO SYNC ─────────────────────────────────────────────
+        // Source of truth: the HTML file itself, stored in the GitHub repo.
+        // On save: serialize current DOM → write full HTML to repo via API.
+        // On load: the page IS the latest version (GitHub Pages serves it directly).
+        // No localStorage dependency for cross-device sync.
+
+        // Fetch current file SHA from GitHub (needed for PUT updates)
+        async function fetchGhSha() {
+            if (ghFileSha) return ghFileSha;
+            try {
+                const resp = await fetch(
+                    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
+                    { headers: { 'Authorization': `token ${GH_TOKEN}` }, cache: 'no-store' }
+                );
+                if (!resp.ok) return null;
+                const data = await resp.json();
+                ghFileSha = data.sha;
+                return ghFileSha;
+            } catch (e) { return null; }
         }
-        
-        function loadFromLocal() {
-            const saved = localStorage.getItem('taskDashboardState');
-            if (saved) {
-                try {
-                    const state = JSON.parse(saved);
-                    if (state.version === APP_VERSION) {
-                        return state;
-                    }
-                } catch (e) {
-                    console.error('Failed to parse saved state:', e);
-                    localStorage.removeItem('taskDashboardState');
-                }
+
+        // Serialize current page DOM into a clean HTML string for saving
+        function serializeCurrentHtml() {
+            // Clone the whole document
+            const clone = document.documentElement.cloneNode(true);
+
+            // Strip all .delete-btn (they get re-added on load via rebindAllEventListeners)
+            clone.querySelectorAll('.delete-btn').forEach(el => el.remove());
+
+            // Update the footer timestamp
+            const footer = clone.querySelector('footer');
+            if (footer) {
+                const now = new Date();
+                footer.textContent = `Last updated: ${now.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})}, ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})} (Asia/Shanghai)`;
             }
-            return null;
-        }
-        
-        // Get full current document state as JSON
-        function getDocumentState() {
-            const state = {
-                version: APP_VERSION,
-                activeTasks: [],
-                completedTasks: [],
-                archivedDates: []
-            };
-            
-            // Get active tasks
-            document.querySelectorAll('#active-grid .task-card').forEach(card => {
-                state.activeTasks.push({
-                    name: card.querySelector('.task-name').textContent,
-                    status: card.dataset.status,
-                    priority: card.dataset.priority,
-                    html: card.outerHTML
-                });
-            });
-            
-            // Get completed tasks
-            document.querySelectorAll('#completed-grid .task-card').forEach(card => {
-                state.completedTasks.push({
-                    name: card.querySelector('.task-name').textContent,
-                    completedDate: card.dataset.completedDate,
-                    priority: card.dataset.priority,
-                    html: card.outerHTML
-                });
-            });
-            
-            // Get archived dates
-            document.querySelectorAll('.archive-date-group').forEach(group => {
-                const date = group.querySelector('.archive-date-header').textContent.split(' ')[0];
-                const tasks = [];
-                group.querySelectorAll('.archive-task-item').forEach(item => {
-                    tasks.push({
-                        name: item.querySelector('.archive-task-name').textContent
-                    });
-                });
-                state.archivedDates.push({
-                    date: date,
-                    tasks: tasks
-                });
-            });
-            
-            return state;
-        }
-        
-        // Restore document from saved state
-        function setDocumentState(state) {
-            if (!state || state.version !== APP_VERSION) return;
 
-            // If no html fields present (e.g. stub Gist data), skip restore and keep static HTML
-            const hasHtml = state.activeTasks.some(t => t.html) ||
-                            state.completedTasks.some(t => t.html);
-            if (!hasHtml) return;
-
-            // Clear existing content
-            document.getElementById('active-grid').innerHTML = '';
-            document.getElementById('completed-grid').innerHTML = '';
-            document.getElementById('archive-list').innerHTML = '';
-            
-            // Restore active tasks
-            state.activeTasks.forEach(task => {
-                if (!task.html) return;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = task.html;
-                document.getElementById('active-grid').appendChild(tempDiv.firstChild);
-            });
-            
-            // Restore completed tasks
-            state.completedTasks.forEach(task => {
-                if (!task.html) return;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = task.html;
-                document.getElementById('completed-grid').appendChild(tempDiv.firstChild);
-            });
-            
-            // Restore archived dates
-            state.archivedDates.forEach(dateGroup => {
-                const group = document.createElement('div');
-                group.className = 'archive-date-group collapsed';
-                group.innerHTML = `<div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${dateGroup.date} <span class="archive-count-badge">${dateGroup.tasks.length} tasks</span></div><div class="archive-date-cards"></div>`;
-                const cardsContainer = group.querySelector('.archive-date-cards');
-                
-                dateGroup.tasks.forEach(task => {
-                    const item = document.createElement('div');
-                    item.className = 'archive-task-item';
-                    item.innerHTML = `
-                        <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${task.name}</div>
-                        <button class="archive-restore-btn" onclick="restoreFromArchive('${dateGroup.date}', this.parentNode.previousElementSibling, this)">Restore</button>
-                    `;
-                    cardsContainer.appendChild(item);
-                });
-                
-                document.getElementById('archive-list').appendChild(group);
-            });
-            
-            // Rebind all event listeners
-            rebindAllEventListeners();
+            return '<!DOCTYPE html>\n' + clone.outerHTML;
         }
+
+        // Save: push full HTML to GitHub repo
+        async function saveToGithub() {
+            try {
+                const sha = await fetchGhSha();
+                if (!sha) throw new Error('Could not fetch file SHA');
+
+                const html = serializeCurrentHtml();
+                const encoded = btoa(unescape(encodeURIComponent(html)));
+
+                const resp = await fetch(
+                    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${GH_TOKEN}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Auto-save ${new Date().toISOString()}`,
+                            content: encoded,
+                            sha: sha
+                        })
+                    }
+                );
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    ghFileSha = data.content.sha; // update cached SHA
+                    setSyncStatus('', '☁️ Saved to GitHub');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                } else {
+                    const err = await resp.json();
+                    // SHA conflict — refetch and retry once
+                    if (resp.status === 409 || resp.status === 422) {
+                        ghFileSha = null;
+                        setTimeout(saveToGithub, 1000);
+                    } else {
+                        throw new Error(err.message || resp.status);
+                    }
+                }
+            } catch (e) {
+                console.error('GitHub save failed:', e);
+                setSyncStatus('error', '❌ Save failed');
+                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 4000);
+            }
+        }
+        // ── END GITHUB REPO SYNC ──────────────────────────────────────────
         
         function setSyncStatus(type, message) {
             const statusEl = document.getElementById('sync-status');
@@ -1297,60 +1264,13 @@
             completedTasks.forEach(task => completedGrid.appendChild(task));
         }
 
-        // Auto-save triggered after any change
+        // Auto-save triggered after any change — debounced
         function scheduleAutoSave() {
-            setSyncStatus('saving', 'Saving...');
+            setSyncStatus('saving', '💾 Saving...');
             if (autoSaveTimer) clearTimeout(autoSaveTimer);
             autoSaveTimer = setTimeout(() => {
-                saveToLocal();
-                saveToGist();
+                saveToGithub();
             }, AUTO_SAVE_DELAY);
-        }
-
-        // Save task state JSON to Gist (works from any device/browser)
-        async function saveToGist() {
-            try {
-                const state = getDocumentState();
-                const content = JSON.stringify(state, null, 2);
-                const resp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `token ${GIST_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ files: { [GIST_FILE]: { content } } })
-                });
-                if (resp.ok) {
-                    setSyncStatus('', '☁️ Synced');
-                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
-                } else {
-                    throw new Error(`${resp.status}`);
-                }
-            } catch (e) {
-                console.error('Gist sync failed:', e);
-                setSyncStatus('error', 'Sync failed - local only');
-                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
-            }
-        }
-
-        // Load task state from Gist (cross-device)
-        async function loadFromGist() {
-            try {
-                const resp = await fetch(`https://api.github.com/gists/${GIST_ID}?t=${Date.now()}`, {
-                    headers: { 'Authorization': `token ${GIST_TOKEN}` },
-                    cache: 'no-store'
-                });
-                if (!resp.ok) return null;
-                const data = await resp.json();
-                const raw = data.files[GIST_FILE]?.content;
-                if (!raw) return null;
-                const state = JSON.parse(raw);
-                if (state.version === APP_VERSION) return state;
-                return null;
-            } catch (e) {
-                console.error('Gist load failed:', e);
-                return null;
-            }
         }
 
         // Rebind all event listeners after restoring content from save
@@ -1859,55 +1779,23 @@
 
         // Initialize everything on page load
         document.addEventListener('DOMContentLoaded', async () => {
-            // Clear old incompatible cache
-            const savedVersion = localStorage.getItem('taskDashboardVersion');
-            if (!savedVersion || savedVersion !== APP_VERSION) {
-                localStorage.removeItem('taskDashboardState');
-                localStorage.setItem('taskDashboardVersion', APP_VERSION);
-            }
+            // The page itself is always the latest version (served from GitHub Pages).
+            // No need to load from Gist or localStorage — just initialize the DOM as-is.
+            setSyncStatus('', 'Ready');
 
-            setSyncStatus('saving', 'Loading from cloud...');
-
-            // Try Gist first (cross-device source of truth), fallback to local
-            let loaded = await loadFromGist();
-            if (!loaded) {
-                loaded = loadFromLocal();
-            }
-
-            if (loaded) {
-                setDocumentState(loaded);
-            } else {
-                rebindAllEventListeners();
-            }
-
+            rebindAllEventListeners();
             initDragAndDrop();
             filterTasks();
             updateAllCounts();
 
-            // After DOM is ready, resolve any bare URLs in context-link spans
+            // Resolve any bare URLs in context-link spans
             bindContextLinkHandlers();
             await resolveAllExistingLinks();
 
-            setSyncStatus('', 'Auto-sync ready');
+            // Pre-fetch SHA so first save is fast
+            await fetchGhSha();
 
-            // Poll Gist every 2 minutes to catch changes from other devices
-            setInterval(async () => {
-                const remote = await loadFromGist();
-                if (!remote) return;
-                const local = loadFromLocal();
-                // Simple check: if remote has different task count, reload
-                const remoteActive = remote.activeTasks?.length;
-                const localActive = local?.activeTasks?.length;
-                if (remoteActive !== localActive) {
-                    setDocumentState(remote);
-                    saveToLocal();
-                    initDragAndDrop();
-                    filterTasks();
-                    updateAllCounts();
-                    setSyncStatus('', '🔄 Synced from another device');
-                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 3000);
-                }
-            }, 120000); // every 2 min
+            setSyncStatus('', 'Auto-sync ready');
         });
 
         // ── DRAG & DROP reordering for Active Tasks ──────────────────────
@@ -2082,14 +1970,6 @@
             }
         }
 
-        // Patch DOMContentLoaded to also run link setup
-        document.addEventListener('DOMContentLoaded', () => {
-            // Run after the main init completes (which sets up the DOM)
-            setTimeout(async () => {
-                bindContextLinkHandlers();
-                await resolveAllExistingLinks();
-            }, 500);
-        });
         // ── END SMART LINK RESOLUTION ─────────────────────────────────────
 
     </script>
