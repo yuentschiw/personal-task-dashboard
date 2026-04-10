@@ -1115,39 +1115,63 @@
     <script>
         // --- AUTO-SAVE & AUTO-SYNC CONFIGURATION ---
         // VERSION 2.4 - Gist-based cross-device sync + drag & drop reordering
-        const APP_VERSION = '2.4.0';
+        const APP_VERSION = '2.5.0';
         const AUTO_SAVE_DELAY = 1500;
         const TODAY_DATE = new Date().toISOString().split('T')[0];
         const priorityWeight = { 'P0': 0, 'P1': 1, 'P2': 2 };
         let autoSaveTimer = null;
 
-        // GitHub repo-based sync: saves the entire HTML file directly to the repo.
-        // This is the source of truth — any device opening the GitHub Pages URL
-        // always gets the latest version without needing localStorage.
-        const GH_TOKEN = atob('Z2hwX2RETHE2YUZjeXBFVDhXM08wMTBIMllISjQ1SW4wYUg5elc=');
-        const GH_REPO = 'yuentschiw/personal-task-dashboard';
-        const GH_FILE = 'task-dashboard.html';
-        let ghFileSha = null; // cached SHA for update calls
-        
-        // ── GITHUB REPO SYNC ─────────────────────────────────────────────
-        // Source of truth: the HTML file itself, stored in the GitHub repo.
-        // On save: serialize current DOM → write full HTML to repo via API.
-        // On load: the page IS the latest version (GitHub Pages serves it directly).
-        // No localStorage dependency for cross-device sync.
+        // ── JSONBIN SYNC ──────────────────────────────────────────────────
+        // Source of truth: JSONBin cloud storage.
+        // Safe to expose key — it only controls this one bin, not your account.
+        // On save: captureState() → PUT to JSONBin.
+        // On load: GET from JSONBin → restore DOM.
+        const BIN_ID  = '69d898a1856a6821891a1535';
+        const BIN_KEY = '$2a$10$ZprY/cMDxkU1VHSX5dEiJ.bppSYR8JXoxx2smTlJwPjOvtYdmh1qy';
+        const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        // Fetch current file SHA from GitHub (needed for PUT updates)
-        async function fetchGhSha() {
-            if (ghFileSha) return ghFileSha;
+        // Load state from JSONBin
+        async function loadFromBin() {
             try {
-                const resp = await fetch(
-                    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
-                    { headers: { 'Authorization': `token ${GH_TOKEN}` }, cache: 'no-store' }
-                );
+                const resp = await fetch(BIN_URL + '/latest', {
+                    headers: { 'X-Master-Key': BIN_KEY },
+                    cache: 'no-store'
+                });
                 if (!resp.ok) return null;
                 const data = await resp.json();
-                ghFileSha = data.sha;
-                return ghFileSha;
-            } catch (e) { return null; }
+                const snap = data.record;
+                // If it's just the init stub, return null
+                if (!snap || snap.initialized === true && !snap.activeTasks) return null;
+                return snap;
+            } catch (e) {
+                console.error('JSONBin load failed:', e);
+                return null;
+            }
+        }
+
+        // Save state to JSONBin
+        async function saveToBin() {
+            try {
+                const snap = captureState();
+                const resp = await fetch(BIN_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': BIN_KEY
+                    },
+                    body: JSON.stringify(snap)
+                });
+                if (resp.ok) {
+                    setSyncStatus('', '☁️ Saved');
+                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
+                } else {
+                    throw new Error(resp.status);
+                }
+            } catch (e) {
+                console.error('JSONBin save failed:', e);
+                setSyncStatus('error', '❌ Save failed');
+                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 4000);
+            }
         }
 
         // Capture live DOM state into a serializable snapshot object
@@ -1290,54 +1314,7 @@
             return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
         }
 
-        // Save: push full HTML to GitHub repo
-        async function saveToGithub() {
-            try {
-                const sha = await fetchGhSha();
-                if (!sha) throw new Error('Could not fetch file SHA');
-
-                const snap = captureState();
-                const html = buildHtmlFromSnap(snap);
-                const encoded = btoa(unescape(encodeURIComponent(html)));
-
-                const resp = await fetch(
-                    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${GH_TOKEN}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Auto-save ${new Date().toISOString()}`,
-                            content: encoded,
-                            sha: sha
-                        })
-                    }
-                );
-
-                if (resp.ok) {
-                    const data = await resp.json();
-                    ghFileSha = data.content.sha; // update cached SHA
-                    setSyncStatus('', '☁️ Saved to GitHub');
-                    setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 2000);
-                } else {
-                    const err = await resp.json();
-                    // SHA conflict — refetch and retry once
-                    if (resp.status === 409 || resp.status === 422) {
-                        ghFileSha = null;
-                        setTimeout(saveToGithub, 1000);
-                    } else {
-                        throw new Error(err.message || resp.status);
-                    }
-                }
-            } catch (e) {
-                console.error('GitHub save failed:', e);
-                setSyncStatus('error', '❌ Save failed');
-                setTimeout(() => setSyncStatus('', 'Auto-sync ready'), 4000);
-            }
-        }
-        // ── END GITHUB REPO SYNC ──────────────────────────────────────────
+        // ── END JSONBIN SYNC ──────────────────────────────────────────────
         
         function setSyncStatus(type, message) {
             const statusEl = document.getElementById('sync-status');
@@ -1392,7 +1369,7 @@
             setSyncStatus('saving', '💾 Saving...');
             if (autoSaveTimer) clearTimeout(autoSaveTimer);
             autoSaveTimer = setTimeout(() => {
-                saveToGithub();
+                saveToBin();
             }, AUTO_SAVE_DELAY);
         }
 
@@ -1876,11 +1853,82 @@
             }
         }
 
+        // Restore DOM from a captured snapshot
+        function restoreFromSnap(snap) {
+            if (!snap || !snap.activeTasks) return false;
+
+            function makeCard(t, isCompleted) {
+                const p = t.priority || 'P1';
+                const pLabel = p === 'P0' ? 'P0 (High)' : p === 'P1' ? 'P1 (Medium)' : 'P2 (Low)';
+                const archiveBtn = isCompleted
+                    ? `<button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>`
+                    : `<button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>`;
+                const statusAttr = isCompleted ? 'done' : (t.status || 'working');
+                const completedAttr = isCompleted && t.completedDate ? ` data-completedDate="${t.completedDate}"` : '';
+                const safeName = t.name || '';
+                const plainName = safeName.replace(/<[^>]+>/g, '');
+                return `<div class="task-card" data-name="${plainName}" data-status="${statusAttr}" data-priority="${p}"${completedAttr}>
+                    <div class="task-header">
+                        <div class="task-avatar">${t.avatar || '✨'}</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">${safeName}</div>
+                            <div class="task-status">
+                                <select class="priority-select ${p}" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0"${p==='P0'?' selected':''}>P0</option>
+                                    <option value="P1"${p==='P1'?' selected':''}>P1</option>
+                                    <option value="P2"${p==='P2'?' selected':''}>P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>${pLabel}</span></div>
+                        <div><strong>Added:</strong> ${t.added || ''}</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">${t.link || '(add link here)'}</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">${t.details || '<li></li>'}</ul>
+                    </div>
+                    <div class="task-updates">
+                        ${t.updates || '<div class="task-section-title">Recent updates:</div>'}
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        ${archiveBtn}
+                    </div>
+                </div>`;
+            }
+
+            document.getElementById('active-grid').innerHTML =
+                snap.activeTasks.map(t => makeCard(t, false)).join('');
+            document.getElementById('completed-grid').innerHTML =
+                snap.completedTasks.map(t => makeCard(t, true)).join('');
+            document.getElementById('archive-list').innerHTML =
+                (snap.archivedDates || []).map(g => `
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
+                    <div class="archive-date-cards">
+                        ${g.tasks.map(name => `<div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>`).join('')}
+                    </div>
+                </div>`).join('');
+
+            return true;
+        }
+
         // Initialize everything on page load
         document.addEventListener('DOMContentLoaded', async () => {
-            // The page itself is always the latest version (served from GitHub Pages).
-            // No need to load from Gist or localStorage — just initialize the DOM as-is.
-            setSyncStatus('', 'Ready');
+            setSyncStatus('saving', '⏳ Loading...');
+
+            // Load latest state from JSONBin
+            const snap = await loadFromBin();
+            if (snap) {
+                restoreFromSnap(snap);
+            }
 
             rebindAllEventListeners();
             initDragAndDrop();
@@ -1890,9 +1938,6 @@
             // Resolve any bare URLs in context-link spans
             bindContextLinkHandlers();
             await resolveAllExistingLinks();
-
-            // Pre-fetch SHA so first save is fast
-            await fetchGhSha();
 
             setSyncStatus('', 'Auto-sync ready');
         });
