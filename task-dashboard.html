@@ -575,7 +575,7 @@
         <div class="top-summary">
             <div class="summary-card total">
                 <span class="summary-label">Today's Tasks</span>
-                <span class="summary-count" id="total-count">2</span>
+                <span class="summary-count" id="total-count">9</span>
             </div>
             <div class="summary-card waiting">
                 <span class="summary-label">Waiting</span>
@@ -583,7 +583,7 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">8</span>
+                <span class="summary-count" id="working-count">6</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
@@ -610,7 +610,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">8</span>
+                    Working <span class="badge" id="working-badge">7</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -620,83 +620,7 @@
             <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
             <div class="task-grid" id="active-grid">
                 <!-- P0 Priority (highest first, as requested) -->
-                <!-- 1. (Kept from yesterday) Book sushi cake -->
-                <div class="task-card" data-name="Book sushi cake" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">🍣</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Book sushi cake</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-04</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Need to book for upcoming event</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- 2. (New April 5) Plan Vladivostok May Day travel itinerary -->
-                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">✈️</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf">Vladivostok travel plan doc</a></span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Create 4-day travel itinerary for May 1-4</li>
-                            <li>With parents + Roy Li, 4 people total</li>
-                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- 3. (Kept from yesterday) Decide AI educational service purchase -->
+                <!-- Decide AI educational service purchase -->
                 <div class="task-card" data-name="Decide whether to purchase any AI educational service" data-status="working" data-priority="P1">
                     <div class="task-header">
                         <div class="task-avatar">🤔</div>
@@ -938,7 +862,7 @@
                     </div>
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
-                        <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">by next Saturday (2026-04-11)</span></div>
+                        <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">⚠️ TODAY 2026-04-11 — deadline reached!</span></div>
                         <div><strong>Added:</strong> 2026-04-04</div>
                         <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
                     </div>
@@ -965,20 +889,95 @@
         <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">0</span> total)</span>
+                <span class="emoji">✅</span> Completed Tasks <span style="font-size: 1.2rem; color:#666">(<span id="completed-count">2</span> total)</span>
             </div>
             <p class="section-desc">All done here — press "Put Back" to move it back to active tasks.</p>
 
             <!-- 3 narrow columns -->
             <div class="task-grid" id="completed-grid">
-                <!-- Empty - all tasks archived to 2026-04-09 -->
+                <!-- Auto-moved by Raika status check 2026-04-11 09:00 -->
+                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="done" data-priority="P0" data-completedDate="2026-04-05">
+                    <div class="task-header">
+                        <div class="task-avatar">✈️</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf">Vladivostok travel plan doc</a></span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Create 4-day travel itinerary for May 1-4</li>
+                            <li>With parents + Roy Li, 4 people total</li>
+                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
+                        <div class="update-item"><span class="update-time">09:00 AM 2026-04-11:</span> Auto-moved to Completed by Raika status check ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
+                <!-- Duplicate removed from active — already archived 2026-04-09; moved to Completed by Raika weekly maintenance 2026-04-11 -->
+                <div class="task-card" data-name="Book sushi cake" data-status="done" data-priority="P0" data-completedDate="2026-04-09">
+                    <div class="task-header">
+                        <div class="task-avatar">🍣</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Book sushi cake</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-04</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Need to book for upcoming event</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">09:00 AM 2026-04-11:</span> ⚠️ Duplicate detected by Raika weekly maintenance — task was already archived 2026-04-09. Moved to Completed.</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="putBackToActive(this.parentElement.parentElement)">Put Back</button>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">24</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">26</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
@@ -1109,7 +1108,7 @@
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
         <footer>
-            Last updated: 11 April 2026, 00:00 AM (Asia/Shanghai) — Midnight archive run ✓ (0 tasks archived)
+            Last updated: 11 April 2026, 09:01 AM (Asia/Shanghai) — Raika weekly maintenance: duplicate removed (Book sushi cake), counts corrected (archive 26, completed 2, total 9), Jeju deadline flagged ⚠️
         </footer>
     </div>
     <script>
