@@ -610,7 +610,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">5</span>
+                    Working <span class="badge" id="working-badge">7</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -727,6 +727,80 @@
                     <div class="task-updates">
                         <div class="task-section-title">Recent updates:</div>
                         <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- P0 Today: Bake 2 breads -->
+                <div class="task-card" data-name="Bake 2 breads" data-status="working" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🍞</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Bake 2 breads</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-11</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Bake 2 breads today</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">15:50 PM 2026-04-11:</span> Added to active tasks ✓</div>
+                    </div>
+                    <div class="task-actions">
+                        <input type="text" class="action-input" placeholder="Add a comment...">
+                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                    </div>
+                </div>
+
+                <!-- P0 Today: Exercise -->
+                <div class="task-card" data-name="Exercise" data-status="working" data-priority="P0">
+                    <div class="task-header">
+                        <div class="task-avatar">🏃</div>
+                        <div class="task-info">
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Exercise</div>
+                            <div class="task-status">
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-11</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    </div>
+                    <div>
+                        <div class="task-section-title">Details:</div>
+                        <ul class="task-section-list">
+                            <li>Complete today's exercise routine</li>
+                        </ul>
+                    </div>
+                    <div class="task-updates">
+                        <div class="task-section-title">Recent updates:</div>
+                        <div class="update-item"><span class="update-time">15:50 PM 2026-04-11:</span> Added to active tasks ✓</div>
                     </div>
                     <div class="task-actions">
                         <input type="text" class="action-input" placeholder="Add a comment...">
