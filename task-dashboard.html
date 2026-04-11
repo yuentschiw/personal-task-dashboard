@@ -1109,21 +1109,9 @@
 
         // Load state from JSONBin
         async function loadFromBin() {
-            try {
-                const resp = await fetch(BIN_URL + '/latest', {
-                    headers: { 'X-Master-Key': BIN_KEY },
-                    cache: 'no-store'
-                });
-                if (!resp.ok) return null;
-                const data = await resp.json();
-                const snap = data.record;
-                // If it's just the init stub, return null
-                if (!snap || snap.initialized === true && !snap.activeTasks) return null;
-                return snap;
-            } catch (e) {
-                console.error('JSONBin load failed:', e);
-                return null;
-            }
+            // Disabled: JSONBin sync unreliable from this environment.
+            // HTML is the source of truth; saveToBin still pushes changes out.
+            return null;
         }
 
         // Save state to JSONBin
