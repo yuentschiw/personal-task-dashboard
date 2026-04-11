@@ -610,7 +610,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">7</span>
+                    Working <span class="badge" id="working-badge">5</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">1</span>
@@ -619,36 +619,38 @@
 
             <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
             <div class="task-grid" id="active-grid">
-                <!-- P0 Priority (highest first, as requested) -->
-                <!-- Decide AI educational service purchase -->
-                <div class="task-card" data-name="Decide whether to purchase any AI educational service" data-status="working" data-priority="P1">
+                <!-- P0: 学习文档 moved to top -->
+                <!-- P0: Plan Vladivostok -->
+                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working" data-priority="P0">
                     <div class="task-header">
-                        <div class="task-avatar">🤔</div>
+                        <div class="task-avatar">✈️</div>
                         <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Decide AI educational service purchase</div>
+                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
                             <div class="task-status">
-                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
+                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                    <option value="P0" selected>P0</option>
+                                    <option value="P1">P1</option>
                                     <option value="P2">P2</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
-                        <div><strong>Added:</strong> 2026-04-04</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
+                        <div><strong>Added:</strong> 2026-04-05</div>
+                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf" target="_blank" rel="noopener">Vladivostok travel plan doc</a></span></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
                         <ul class="task-section-list">
-                            <li>Evaluate options and make purchase decision</li>
+                            <li>Create 4-day travel itinerary for May 1-4</li>
+                            <li>With parents + Roy Li, 4 people total</li>
+                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
                         </ul>
                     </div>
                     <div class="task-updates">
                         <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
+                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
                     </div>
                     <div class="task-actions">
                         <input type="text" class="action-input" placeholder="Add a comment...">
@@ -657,7 +659,7 @@
                     </div>
                 </div>
 
-                <!-- 4. (New April 5) Learn Anthropic Claude harness concept -->
+                <!-- P1: Learn Anthropic Claude harness concept -->
                 <div class="task-card" data-name="Learn Anthropic Claude harness concept" data-status="working" data-priority="P1">
                     <div class="task-header">
                         <div class="task-avatar">📚</div>
@@ -695,44 +697,7 @@
                     </div>
                 </div>
 
-                <!-- 5. (New April 5) Do quarterly review draw board -->
-                <div class="task-card" data-name="Do quarterly review draw board" data-status="working" data-priority="P1">
-                    <div class="task-header">
-                        <div class="task-avatar">📊</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Do quarterly review draw board</div>
-                            <div class="task-status">
-                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Create quarterly review drawing board</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- 6. (New April 5) Fix workflow schedule -->
+                <!-- P1: Fix workflow schedule -->
                 <div class="task-card" data-name="Fix workflow schedule" data-status="working" data-priority="P1">
                     <div class="task-header">
                         <div class="task-avatar">🔧</div>
