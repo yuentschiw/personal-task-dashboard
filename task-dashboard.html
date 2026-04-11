@@ -934,17 +934,39 @@
 
             <!-- 3 narrow columns -->
             <div class="task-grid" id="completed-grid">
-                <!-- Empty — archived to 2026-04-10 -->
+                <!-- Empty — archived to 2026-04-11 -->
             </div>
         </section>
 
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">28</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">32</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
+                <!-- 2026-04-11 -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-11 <span class="archive-count-badge">4 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Exercise</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Bake 2 breads</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Learn Anthropic Claude harness concept</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix workflow schedule</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
                 <!-- 2026-04-10 -->
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-10 <span class="archive-count-badge">2 tasks</span></div>
