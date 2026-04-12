@@ -982,10 +982,40 @@
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">32</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">38</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
+                <!-- 2026-04-13 -->
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-13 <span class="archive-count-badge">6 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Plan Vladivostok May Day travel itinerary</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">修复语音识别</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">健身</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">探店 - 望京汤</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">研究小红书多 Agent 协作机制 + 写 REDoc 文档</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">做面包</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
                 <!-- 2026-04-11 -->
                 <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-11 <span class="archive-count-badge">4 tasks</span></div>
@@ -1149,7 +1179,7 @@
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
         <footer>
-            Last updated: 11 April 2026, 09:01 AM (Asia/Shanghai) — Raika weekly maintenance: duplicate removed (Book sushi cake), counts corrected (archive 26, completed 2, total 9), Jeju deadline flagged ⚠️
+            Last updated: 13 April 2026, 00:00 AM (Asia/Shanghai) — Raika midnight archive: 6 completed tasks archived to 2026-04-13 (✈️ Vladivostok plan, 🎙️ 语音识别, 💪 健身, 🍜 探店望京汤, 🤖 多Agent文档, 🍞 做面包). Archive total: 38.
         </footer>
     </div>
     <script>
