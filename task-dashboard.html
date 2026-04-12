@@ -322,6 +322,8 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             vertical-align: bottom;
+            cursor: pointer;
+            pointer-events: auto;
         }
         .context-link[data-editing="true"] {
             background: #f0f7ff;
@@ -2067,8 +2069,24 @@
                 if (span.dataset.linkBound) return;
                 span.dataset.linkBound = 'true';
 
-                // Show editing mode on focus
+                // Allow clicks on <a> tags inside contenteditable to open links normally
+                span.addEventListener('click', (e) => {
+                    const a = e.target.closest('a');
+                    if (a && a.href) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        window.open(a.href, '_blank', 'noopener');
+                    }
+                });
+
+                // Show editing mode on focus (only when clicking on non-link area)
                 span.addEventListener('focus', () => {
+                    // If click was on a link, don't enter edit mode
+                    if (span.dataset.skipEdit === 'true') {
+                        span.dataset.skipEdit = 'false';
+                        span.blur();
+                        return;
+                    }
                     span.dataset.editing = 'true';
                     // If it contains an <a>, expand to editable URL text for editing
                     const a = span.querySelector('a');
