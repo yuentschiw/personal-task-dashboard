@@ -2016,6 +2016,7 @@
                     if (dragSrc && dragSrc !== card) {
                         // Insert dragSrc before the target card
                         grid.insertBefore(dragSrc, card);
+                        saveToBin();
                     }
                     card.classList.remove('drag-over');
                 });
