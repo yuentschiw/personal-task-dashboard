@@ -300,38 +300,77 @@
         .context-link {
             color: #1565c0;
             outline: none;
-            display: block;
+            display: flex;
+            align-items: center;
             width: 100%;
             min-width: 0;
-            /* Prevent link text from stretching the card */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .context-link[data-editing="true"] {
-            white-space: normal;
-            overflow: visible;
+            gap: 4px;
         }
         .context-link a {
             color: #1565c0;
             text-decoration: underline;
-            /* Truncate long link titles with ellipsis */
+            cursor: pointer;
             display: inline-block;
-            max-width: 100%;
+            max-width: calc(100% - 28px);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             vertical-align: bottom;
-            cursor: pointer;
-            pointer-events: auto;
         }
-        .context-link[data-editing="true"] {
-            background: #f0f7ff;
+        .context-link a:hover {
+            color: #0d47a1;
+        }
+        .context-link-placeholder {
+            color: #999;
+            font-style: italic;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .context-link-edit-btn {
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 1px 3px;
+            border-radius: 3px;
+            line-height: 1;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        .context-link:hover .context-link-edit-btn {
+            opacity: 1;
+        }
+        .context-link-input-row {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            width: 100%;
+        }
+        .context-link-input-row.visible {
+            display: flex;
+        }
+        .context-link-input {
+            flex: 1;
+            font-size: 0.82rem;
+            border: 1px solid #90caf9;
             border-radius: 4px;
-            padding: 2px 4px;
-            outline: 1px solid #90caf9;
-            white-space: normal;
-            overflow: visible;
+            padding: 2px 6px;
+            background: #f0f7ff;
+            outline: none;
+        }
+        .context-link-save-btn {
+            flex-shrink: 0;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 0.78rem;
         }
         .link-resolving {
             color: #999;
@@ -640,7 +679,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-05</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf" target="_blank" rel="noopener">Vladivostok travel plan doc</a></span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf" target="_blank" rel="noopener">Vladivostok travel plan doc</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -679,7 +718,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
                         <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(need help downloading article)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(need help downloading article)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -717,7 +756,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
                         <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -755,7 +794,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-11</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -792,7 +831,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-11</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -829,7 +868,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-10</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()"><a href="https://docs.xiaohongshu.com/doc/9beb30963a446d9c6c52e22c792974f2" target="_blank" rel="noopener">学习文档</a></span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><a href="https://docs.xiaohongshu.com/doc/9beb30963a446d9c6c52e22c792974f2" target="_blank" rel="noopener">学习文档</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -866,7 +905,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
                         <div><strong>Added:</strong> 2026-04-10</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -905,7 +944,7 @@
                         <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
                         <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">⚠️ TODAY 2026-04-11 — deadline reached!</span></div>
                         <div><strong>Added:</strong> 2026-04-04</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -1188,7 +1227,7 @@
                     priority: sel ? sel.value : card.dataset.priority,
                     details:  card.querySelector('.task-section-list') ? card.querySelector('.task-section-list').innerHTML : '',
                     updates:  card.querySelector('.task-updates').innerHTML,
-                    link:     card.querySelector('.context-link') ? card.querySelector('.context-link').innerHTML : '',
+                    link:     card.querySelector('.context-link') ? captureLink(card.querySelector('.context-link')) : '',
                     added:    (() => { const divs = card.querySelectorAll('.task-meta div'); for (const d of divs) { if (d.textContent.includes('Added:')) return d.textContent.replace('Added:','').trim(); } return ''; })(),
                     avatar:   card.querySelector('.task-avatar') ? card.querySelector('.task-avatar').textContent.trim() : '✨',
                 });
@@ -1203,7 +1242,7 @@
                     completedDate: card.dataset.completedDate || '',
                     details:  card.querySelector('.task-section-list') ? card.querySelector('.task-section-list').innerHTML : '',
                     updates:  card.querySelector('.task-updates').innerHTML,
-                    link:     card.querySelector('.context-link') ? card.querySelector('.context-link').innerHTML : '',
+                    link:     card.querySelector('.context-link') ? captureLink(card.querySelector('.context-link')) : '',
                     avatar:   card.querySelector('.task-avatar') ? card.querySelector('.task-avatar').textContent.trim() : '✨',
                 });
             });
@@ -1246,7 +1285,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>${pLabel}</span></div>
                         <div><strong>Added:</strong> ${t.added || ''}</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">${t.link || '(add link here)'}</span></div>
+                        <div><strong>Context / Link:</strong> ${renderContextLink(t.link)}</div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -1723,7 +1762,7 @@
                 <div class="task-meta">
                     <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
                     <div><strong>Completed date:</strong> ${archiveDate}</div>
-                    <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">(add link here)</span></div>
+                    <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
                 </div>
                 <div class="task-updates">
                     <div class="task-section-title">Recent updates:</div>
@@ -1885,7 +1924,7 @@
                     <div class="task-meta">
                         <div><strong>Priority:</strong> <span>${pLabel}</span></div>
                         <div><strong>Added:</strong> ${t.added || ''}</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link" contenteditable="true" oninput="scheduleAutoSave()">${t.link || '(add link here)'}</span></div>
+                        <div><strong>Context / Link:</strong> ${renderContextLink(t.link)}</div>
                     </div>
                     <div>
                         <div class="task-section-title">Details:</div>
@@ -1984,154 +2023,134 @@
         }
 
         // ── SMART LINK RESOLUTION ─────────────────────────────────────────
-        // When a user types/pastes a URL into a context-link span and blurs,
-        // automatically convert it into a titled hyperlink.
-        //
-        // Supported input formats:
-        //   1. https://example.com/...          → fetches title, falls back to smart URL label
-        //   2. 自定义标题 https://example.com/... → uses custom title directly
-        //   3. Already contains <a> tag          → leave as-is
+        // Capture clean link HTML from a .context-link span (strips edit buttons)
+        function captureLink(span) {
+            const a = span.querySelector('a');
+            if (a) return a.outerHTML;
+            const placeholder = span.querySelector('.context-link-placeholder');
+            if (placeholder) {
+                const t = placeholder.textContent.trim();
+                return (t === '(add link here)') ? '' : t;
+            }
+            return '';
+        }
 
-        // Extract a human-readable label from a URL as fallback
+        // ── CONTEXT LINK HELPERS ─────────────────────────────────────────
+
+        // Render a context-link container from stored innerHTML (t.link).
+        // t.link may be:
+        //   - empty / "(add link here)"   → show ＋ button
+        //   - raw HTML with <a href>      → show link + ✏️
+        //   - plain text                  → show as placeholder
+        function renderContextLink(linkHtml) {
+            const editBtn = '<button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button>';
+            const addBtn  = '<button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button>';
+            const inputRow = '<div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div>';
+
+            if (!linkHtml || linkHtml === '(add link here)' || linkHtml === '(need help downloading article)') {
+                return `<span class="context-link"><span class="context-link-placeholder">(add link here)</span>${addBtn}</span>${inputRow}`;
+            }
+            // If it already contains an <a> tag (stored HTML), render it directly with edit btn
+            if (linkHtml.includes('<a ')) {
+                // Strip any old edit/input buttons that might have been captured
+                const cleaned = linkHtml.replace(/<button[^>]*context-link[^<]*<\/button>/g, '').trim();
+                return `<span class="context-link">${cleaned}${editBtn}</span>${inputRow}`;
+            }
+            // Plain text
+            return `<span class="context-link"><span class="context-link-placeholder">${linkHtml}</span>${editBtn}</span>${inputRow}`;
+        }
+
+        // ── CONTEXT LINK EDIT (non-contenteditable approach) ─────────────
+        // Links are plain <a> tags — NOT inside contenteditable.
+        // Edit/add via a dedicated input row that slides open.
+
         function urlToFriendlyLabel(url) {
             try {
                 const u = new URL(url);
                 const host = u.hostname.replace(/^www\./, '');
-                // Try to get last meaningful path segment
                 const parts = u.pathname.split('/').filter(p => p && p.length > 2);
                 if (parts.length > 0) {
                     const last = decodeURIComponent(parts[parts.length - 1])
-                        .replace(/[-_]/g, ' ')
-                        .replace(/\.[a-z]{2,4}$/i, ''); // strip extension
-                    // If it looks like a hash/UUID, just show host
+                        .replace(/[-_]/g, ' ').replace(/\.[a-z]{2,4}$/i, '');
                     if (/^[a-f0-9]{16,}$/i.test(last)) return host + ' 文档';
                     return last.length > 40 ? last.substring(0, 40) + '…' : last;
                 }
                 return host;
-            } catch (e) {
-                return url.length > 50 ? url.substring(0, 47) + '…' : url;
-            }
+            } catch (e) { return url.length > 50 ? url.substring(0, 47) + '…' : url; }
         }
 
-        // Try to fetch page title via allorigins proxy (works for public URLs only)
-        async function fetchPageTitle(url) {
-            try {
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-                const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(4000) });
-                if (!resp.ok) return null;
-                const data = await resp.json();
-                const match = data.contents && data.contents.match(/<title[^>]*>([^<]{1,200})<\/title>/i);
-                if (match && match[1]) {
-                    return match[1].trim().replace(/\s+/g, ' ');
-                }
-            } catch (e) { /* timeout or CORS — use fallback */ }
-            return null;
+        function editContextLink(btn) {
+            const linkSpan = btn.closest('.context-link');
+            const inputRow = linkSpan.nextElementSibling;
+            if (!inputRow || !inputRow.classList.contains('context-link-input-row')) return;
+            // Pre-fill with existing href if any
+            const existingA = linkSpan.querySelector('a');
+            const input = inputRow.querySelector('.context-link-input');
+            input.value = existingA ? existingA.href : '';
+            inputRow.classList.add('visible');
+            input.focus();
         }
 
-        // Core handler: called on blur of a .context-link span
-        async function resolveContextLink(span) {
-            const raw = span.textContent.trim();
+        function cancelContextLink(btn) {
+            const inputRow = btn.closest('.context-link-input-row');
+            inputRow.classList.remove('visible');
+        }
 
-            // Skip if empty placeholder or already has an <a> tag
-            if (!raw || raw === '(add link here)' || span.querySelector('a')) return;
+        async function saveContextLink(btn) {
+            const inputRow = btn.closest('.context-link-input-row');
+            const input = inputRow.querySelector('.context-link-input');
+            const raw = input.value.trim();
+            const linkSpan = inputRow.previousElementSibling;
 
-            // Detect URL in text
-            const urlMatch = raw.match(/https?:\/\/[^\s]+/);
-            if (!urlMatch) return; // No URL found, leave as plain text
-
-            const url = urlMatch[0].replace(/[.,;!?）)】\]>]+$/, ''); // trim trailing punctuation
-            const beforeUrl = raw.substring(0, raw.indexOf(urlMatch[0])).trim();
-
-            // If user typed "custom title URL", use custom title
-            if (beforeUrl.length > 0) {
-                span.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${beforeUrl}</a>`;
+            if (!raw) {
+                // Clear link
+                linkSpan.innerHTML = '<span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button>';
+                inputRow.classList.remove('visible');
                 scheduleAutoSave();
                 return;
             }
 
-            // Show resolving indicator
-            span.innerHTML = `<span class="link-resolving">🔗 识别链接中…</span>`;
-
-            // Try to fetch title (public URLs), use friendly fallback for internal/intranet
-            let title = await fetchPageTitle(url);
-            if (!title) {
-                title = urlToFriendlyLabel(url);
+            // Parse "custom title URL" or bare URL
+            const urlMatch = raw.match(/https?:\/\/[^\s]+/);
+            if (!urlMatch) {
+                // plain text, store as placeholder text
+                linkSpan.innerHTML = `<span class="context-link-placeholder">${raw}</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑" style="opacity:1">✏️</button>`;
+                inputRow.classList.remove('visible');
+                scheduleAutoSave();
+                return;
             }
 
-            span.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${title}</a>`;
+            const url = urlMatch[0].replace(/[.,;!?）)】\]>]+$/, '');
+            const beforeUrl = raw.substring(0, raw.indexOf(urlMatch[0])).trim();
+            let title = beforeUrl || urlToFriendlyLabel(url);
+
+            linkSpan.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button>`;
+            inputRow.classList.remove('visible');
             scheduleAutoSave();
         }
 
-        // Bind smart link resolution to all context-link spans
+        // Read link innerHTML for save/restore (used by captureState)
+        // context-link span innerHTML is already the source of truth — no changes needed to captureState.
+
         function bindContextLinkHandlers() {
-            document.querySelectorAll('.context-link').forEach(span => {
-                // Avoid duplicate listeners
-                if (span.dataset.linkBound) return;
-                span.dataset.linkBound = 'true';
-
-                // Allow clicks on <a> tags inside contenteditable to open links normally
-                span.addEventListener('click', (e) => {
-                    const a = e.target.closest('a');
-                    if (a && a.href) {
+            // No-op: links are now plain <a> tags, no special binding needed.
+            // Enter key in input row triggers save
+            document.querySelectorAll('.context-link-input').forEach(input => {
+                if (input.dataset.bound) return;
+                input.dataset.bound = 'true';
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
                         e.preventDefault();
-                        e.stopPropagation();
-                        window.open(a.href, '_blank', 'noopener');
+                        const saveBtn = input.nextElementSibling;
+                        saveContextLink(saveBtn);
+                    } else if (e.key === 'Escape') {
+                        cancelContextLink(input.parentElement.querySelector('.context-link-save-btn + button'));
                     }
-                });
-
-                // Show editing mode on focus (only when clicking on non-link area)
-                span.addEventListener('focus', () => {
-                    // If click was on a link, don't enter edit mode
-                    if (span.dataset.skipEdit === 'true') {
-                        span.dataset.skipEdit = 'false';
-                        span.blur();
-                        return;
-                    }
-                    span.dataset.editing = 'true';
-                    // If it contains an <a>, expand to editable URL text for editing
-                    const a = span.querySelector('a');
-                    if (a) {
-                        span.dataset.prevHref = a.href;
-                        span.dataset.prevTitle = a.textContent;
-                        span.textContent = a.href;
-                    }
-                });
-
-                // Resolve on blur
-                span.addEventListener('blur', async () => {
-                    span.dataset.editing = 'false';
-                    await resolveContextLink(span);
-                });
-
-                // Also handle paste: after paste, trigger resolution on next tick
-                span.addEventListener('paste', () => {
-                    setTimeout(() => {
-                        // Auto-blur to trigger resolution immediately after paste
-                        span.blur();
-                    }, 100);
                 });
             });
         }
 
-        // Hook into rebindAllEventListeners so new cards also get this
-        const _origRebind = rebindAllEventListeners;
-        rebindAllEventListeners = function() {
-            _origRebind();
-            bindContextLinkHandlers();
-        };
-
-        // Also resolve existing context-link spans that already contain raw URLs on load
-        async function resolveAllExistingLinks() {
-            const spans = document.querySelectorAll('.context-link');
-            for (const span of spans) {
-                const raw = span.textContent.trim();
-                if (raw && /^https?:\/\//.test(raw) && !span.querySelector('a')) {
-                    await resolveContextLink(span);
-                }
-            }
-        }
-
-        // ── END SMART LINK RESOLUTION ─────────────────────────────────────
+        // ── END CONTEXT LINK EDIT ─────────────────────────────────────────
 
     </script>
 </body>
