@@ -38,58 +38,37 @@ The JSONBin key embedded in the HTML is scoped to a single bin — it cannot acc
 
 ## Quick Start
 
-### 1. Create a JSONBin
-
-1. Sign up at [jsonbin.io](https://jsonbin.io)
-2. Create a new **private** bin with this initial value:
-   ```json
-   {"activeTasks":[],"completedTasks":[],"archivedDates":[]}
-   ```
-3. Copy your **Bin ID** and **Master Key** (from the bin settings)
-
-### 2. Set up the dashboard
-
-1. Fork or clone this repo
-2. Open `assets/task-dashboard.html` — find these two lines near the top of the `<script>` section:
-   ```js
-   const BIN_ID  = 'REPLACE_BIN_ID';
-   const BIN_KEY = 'REPLACE_BIN_KEY';
-   ```
-   Replace with your actual Bin ID and Master Key.
-
-3. Customise your dashboard (see [Customisation](#customisation) below)
-
-4. Enable GitHub Pages on your repo (Settings → Pages → Branch: `main`, folder: `/ (root)`)
-
-5. Push your `task-dashboard.html` — your dashboard is live at:
-   `https://<your-github-username>.github.io/<repo-name>/task-dashboard.html`
-
-### 3. Configure your agent
-
-Create `dashboard-config.json` in your agent workspace (this file stays **off** GitHub):
-
-```json
-{
-  "github_token": "ghp_your_token_here",
-  "repo_owner": "your-github-username",
-  "repo_name": "your-repo-name",
-  "file_path": "task-dashboard.html",
-  "dashboard_url": "https://your-github-username.github.io/your-repo-name/task-dashboard.html"
-}
-```
-
-Generate a GitHub token at Settings → Developer settings → Personal access tokens → Fine-grained, with `Contents: Read and write` on your repo.
-
-### 4. Install the skill
+### 1. Install the skill
 
 ```bash
 # OpenClaw
 clawhub install personal-task-dashboard
-
-# Or manually — place this folder in your skills directory
 ```
 
-Tell your agent: **"add today's tasks to dashboard"** — and you're done.
+### 2. Tell your agent to set it up
+
+Just say: **"help me set up a dashboard"** or **"新建 dashboard"**
+
+Your agent will walk you through two things you need to get manually (no way around this — both require account creation in a browser):
+
+**JSONBin Master Key** — for cross-device data sync:
+1. Sign up free at [jsonbin.io](https://jsonbin.io)
+2. Go to your profile → **API Keys**
+3. Copy the **Master Key** (`$2a$10$...`)
+
+**GitHub Token** — for hosting on GitHub Pages:
+1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) → Generate new token (classic)
+2. Tick **repo** scope, set expiry as you like
+3. Copy the token (`ghp_...`) and your GitHub username
+
+Paste both to your agent. Everything else is automatic:
+- Creates the JSONBin bin
+- Creates a GitHub repo
+- Injects your credentials into the HTML
+- Pushes to GitHub Pages
+- Returns your live dashboard URL
+
+**That's it.** The whole setup takes about 2 minutes.
 
 ## Customisation
 
