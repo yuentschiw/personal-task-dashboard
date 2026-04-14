@@ -39,58 +39,37 @@ GitHub Pages 是静态托管，无法存储数据。JSONBin 提供了一个极�
 
 ## 快速开始
 
-### 第一步：创建 JSONBin
-
-1. 注册 [jsonbin.io](https://jsonbin.io)
-2. 创建一个**私有** Bin，初始值填：
-   ```json
-   {"activeTasks":[],"completedTasks":[],"archivedDates":[]}
-   ```
-3. 复制 **Bin ID** 和 **Master Key**（在 Bin 设置里）
-
-### 第二步：配置看板
-
-1. Fork 或 clone 这个仓库
-2. 打开 `assets/task-dashboard.html`，找到 `<script>` 开头的这两行：
-   ```js
-   const BIN_ID  = 'REPLACE_BIN_ID';
-   const BIN_KEY = 'REPLACE_BIN_KEY';
-   ```
-   替换成你自己的 Bin ID 和 Master Key。
-
-3. 按需自定义看板（见下方[自定义](#自定义)说明）
-
-4. 在仓库里开启 GitHub Pages（Settings → Pages → Branch: `main`，文件夹：`/ (root)`）
-
-5. 推送 `task-dashboard.html`，你的看板就上线了：
-   `https://<你的GitHub用户名>.github.io/<仓库名>/task-dashboard.html`
-
-### 第三步：配置 AI 助手
-
-在 AI 助手的工作目录创建 `dashboard-config.json`（这个文件**不要推送到 GitHub**）：
-
-```json
-{
-  "github_token": "ghp_你的token",
-  "repo_owner": "你的GitHub用户名",
-  "repo_name": "仓库名",
-  "file_path": "task-dashboard.html",
-  "dashboard_url": "https://你的GitHub用户名.github.io/仓库名/task-dashboard.html"
-}
-```
-
-GitHub Token 在这里生成：Settings → Developer settings → Personal access tokens → Fine-grained，勾选 `Contents: Read and write`。
-
-### 第四步：安装 Skill
+### 第一步：安装 Skill
 
 ```bash
 # OpenClaw
 clawhub install personal-task-dashboard
-
-# 手动安装——把这个文件夹放到你的 skills 目录里
 ```
 
-然后告诉 AI 助手：**"今天的任务加进 dashboard"**，就完成了。
+### 第二步：让 AI 助手帮你一键建好
+
+直接说：**"帮我新建一个 dashboard"** 或 **"help me set up a dashboard"**
+
+AI 助手会引导你准备两样东西（这两个需要你自己在浏览器里操作，没有办法绕过）：
+
+**JSONBin Master Key** — 用于跨设备数据同步：
+1. 免费注册 [jsonbin.io](https://jsonbin.io)
+2. 登录后点右上角头像 → **API Keys**
+3. 复制 **Master Key**（`$2a$10$...` 开头）
+
+**GitHub Token** — 用于托管 GitHub Pages：
+1. 打开 [github.com/settings/tokens](https://github.com/settings/tokens) → Generate new token (classic)
+2. 勾选 **repo** 权限，过期时间随意
+3. 复制 token（`ghp_...`），以及你的 GitHub 用户名
+
+把这两样发给 AI 助手，剩下的全自动完成：
+- 自动创建 JSONBin bin
+- 自动创建 GitHub 仓库
+- 把你的 token 注入 HTML
+- 推送到 GitHub Pages
+- 返回你的看板地址
+
+**完成。** 整个过程大约 2 分钟。
 
 ## 自定义
 
