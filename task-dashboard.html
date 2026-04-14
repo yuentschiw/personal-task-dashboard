@@ -1358,8 +1358,20 @@
                 </div>`;
             }
 
-            const activeHtml   = snap.activeTasks.map(t => makeCard(t, false)).join('\n');
-            const completedHtml= snap.completedTasks.map(t => makeCard(t, true)).join('\n');
+            // Sort before rendering: P0 → P1 → P2, then by added date (oldest first) within same priority
+            const pw = { 'P0': 0, 'P1': 1, 'P2': 2 };
+            const sortedActive = [...snap.activeTasks].sort((a, b) => {
+                const d = (pw[a.priority||'P1']||1) - (pw[b.priority||'P1']||1);
+                if (d !== 0) return d;
+                return (a.added||'').localeCompare(b.added||'');
+            });
+            const sortedCompleted = [...snap.completedTasks].sort((a, b) => {
+                const d = (pw[a.priority||'P1']||1) - (pw[b.priority||'P1']||1);
+                if (d !== 0) return d;
+                return (a.added||'').localeCompare(b.added||'');
+            });
+            const activeHtml   = sortedActive.map(t => makeCard(t, false)).join('\n');
+            const completedHtml= sortedCompleted.map(t => makeCard(t, true)).join('\n');
 
             const archiveHtml  = snap.archivedDates.map(g => `
                 <div class="archive-date-group collapsed">
@@ -1443,19 +1455,39 @@
             scheduleAutoSave();
         }
 
-        // Sort tasks by priority (P0 first, then P1, then P2) for both active and completed grids
+        // Sort tasks by priority (P0 first, then P1, then P2), then by added date (oldest first) within same priority
+        function getCardAddedDate(card) {
+            const divs = card.querySelectorAll('.task-meta div');
+            for (const d of divs) {
+                if (d.textContent.includes('Added:')) return d.textContent.replace('Added:', '').trim();
+            }
+            return '';
+        }
+
         function sortTasksByPriority() {
             // Sort active tasks
             const activeGrid = document.getElementById('active-grid');
             const activeTasks = Array.from(activeGrid.querySelectorAll('.task-card'));
-            activeTasks.sort((a, b) => priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority]);
+            activeTasks.sort((a, b) => {
+                const pw = priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority];
+                if (pw !== 0) return pw;
+                const da = getCardAddedDate(a) || '';
+                const db = getCardAddedDate(b) || '';
+                return da.localeCompare(db);
+            });
             activeGrid.innerHTML = '';
             activeTasks.forEach(task => activeGrid.appendChild(task));
             
             // Sort completed tasks
             const completedGrid = document.getElementById('completed-grid');
             const completedTasks = Array.from(completedGrid.querySelectorAll('.task-card'));
-            completedTasks.sort((a, b) => priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority]);
+            completedTasks.sort((a, b) => {
+                const pw = priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority];
+                if (pw !== 0) return pw;
+                const da = getCardAddedDate(a) || '';
+                const db = getCardAddedDate(b) || '';
+                return da.localeCompare(db);
+            });
             completedGrid.innerHTML = '';
             completedTasks.forEach(task => completedGrid.appendChild(task));
         }
