@@ -77,8 +77,8 @@ Open `assets/task-dashboard.html` and find the `<!-- CUSTOMISE -->` section near
 | What | Where in HTML | Example |
 |------|--------------|---------|
 | Page title (browser tab) | `<title>` tag | `<title>🌸 My Workspace</title>` |
-| Dashboard heading | `<h1>` inside `#header` | `<h1>🌸 YQ's Workstation</h1>` |
-| Subtitle text | `.subtitle` div | `Daily Focus` |
+| Dashboard heading | `<h1>` inside `#header` | `<h1>🌸 My Workstation</h1>` |
+| Subtitle text | `.subtitle` div | `渠道策略中台 · Daily Focus` |
 | Background colour | `body { background-color: ... }` | `#faf9f5` → any hex |
 | Card accent colour | `.task-card` border styles | adjust `border-left` colour |
 | Scale (zoom level) | `body { transform: scale(...) }` | `0.8` → `1.0` for full size |
