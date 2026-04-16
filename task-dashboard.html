@@ -982,12 +982,26 @@
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">47</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">49</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
-                <!-- 2026-04-16 -->
+                <!-- 2026-04-17 -->
                 <div class="archive-date-group">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-17 <span class="archive-count-badge">2 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">两个采访</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">装机器人</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-04-16 -->
+                <div class="archive-date-group collapsed">
                     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-16 <span class="archive-count-badge">10 tasks</span></div>
                     <div class="archive-date-cards">
                         <div class="archive-task-item">
