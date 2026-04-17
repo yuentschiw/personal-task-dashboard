@@ -434,17 +434,54 @@
             flex-direction: column;
             gap: 8px;
         }
+        /* Month-level group */
+        .archive-month-group {
+            background: #f5f2eb;
+            border: 2px solid #e0dac8;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .archive-month-header {
+            font-weight: 700;
+            color: #444;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 0;
+        }
+        .archive-month-header::after {
+            content: "▶";
+            color: #999;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .archive-month-group.collapsed .archive-month-body {
+            display: none;
+        }
+        .archive-month-group.expanded .archive-month-header::after {
+            transform: rotate(90deg);
+        }
+        .archive-month-body {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        /* Date-level group */
         .archive-date-group {
             background: #fff;
             border: 1px solid #e8e4d6;
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 12px;
         }
         .archive-date-header {
             font-weight: 700;
             color: #222;
-            font-size: 1.1rem;
+            font-size: 1.0rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -986,279 +1023,7 @@
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
-                <!-- 2026-04-17 -->
-                <div class="archive-date-group">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-17 <span class="archive-count-badge">2 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">两个采访</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">装机器人</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-16 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-16 <span class="archive-count-badge">10 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">更新dashboard笔记</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">skillset研究出下一步</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">确定渠道经理工作流</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">确定黄油合作做啥</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">研究如何统计工作时间</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">内推</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">跟四七问Hi上多Agent working</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">收集信息：五家代理</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">更新github skill</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Roy看板</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-14 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-14 <span class="archive-count-badge">5 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">订机票酒店</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Day1学习文档</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">研究skillset的东西</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">渠道 Skillset 大框架</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">查合作规范</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-13 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-13 <span class="archive-count-badge">6 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Plan Vladivostok May Day travel itinerary</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">修复语音识别</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">健身</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">探店 - 望京汤</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">研究小红书多 Agent 协作机制 + 写 REDoc 文档</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">做面包</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-11 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-11 <span class="archive-count-badge">4 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Exercise</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Bake 2 breads</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Learn Anthropic Claude harness concept</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix workflow schedule</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-10 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-10 <span class="archive-count-badge">2 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Do quarterly review draw board</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Decide AI educational service purchase</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-09 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-09 <span class="archive-count-badge">4 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Book sushi cake</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Go for lunch</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Exercise today</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Make rose pretzel bread</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-05 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-05 <span class="archive-count-badge">3 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Go to gym</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Make 2 breads</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Bread-making video editing</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-04 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-04 <span class="archive-count-badge">8 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Digest</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Correct active task count</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix priority dropdown migration</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix GitHub push</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter (April 5)</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Digest (April 5)</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Final archive & count correction</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-04-03 -->
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-03 <span class="archive-count-badge">9 tasks</span></div>
-                    <div class="archive-date-cards">
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix Newsletter Rules</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Fix AI Builders Digest</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Coffee Chat with Lu Wang</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">51min Audio Transcription</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Google AI Agent 7-Day Learning Plan</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Weekly Maintenance Check</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Daily AI Newsletter Automation</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Daily Digest</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Cute Task Dashboard</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>
-                    </div>
-                </div>
-            
+                <!-- Archive content is loaded dynamically from JSONBin on page load -->
             </div>
         </section>
 
@@ -1434,17 +1199,7 @@
             const activeHtml   = sortedActive.map(t => makeCard(t, false)).join('\n');
             const completedHtml= sortedCompleted.map(t => makeCard(t, true)).join('\n');
 
-            const archiveHtml  = snap.archivedDates.map(g => `
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
-                    <div class="archive-date-cards">
-                        ${g.tasks.map(name => `
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>`).join('')}
-                    </div>
-                </div>`).join('\n');
+            const archiveHtml  = buildArchiveHtml(snap.archivedDates || []);
 
             const totalActive = snap.activeTasks.length + snap.completedTasks.length;
             const working     = snap.activeTasks.filter(t => t.status === 'working').length;
@@ -1513,6 +1268,8 @@
                 metaDiv.textContent = priorityText[priority];
             }
             
+            // BUG FIX: Re-sort after priority change so card moves to correct position
+            sortTasksByPriority();
             scheduleAutoSave();
         }
 
@@ -1603,6 +1360,10 @@
                 btn.onclick = function() { putBackToActive(card); };
             });
             
+            // Rebind archive month header clicks
+            document.querySelectorAll('.archive-month-header').forEach(header => {
+                header.onclick = function() { toggleArchiveMonth(header.parentElement); };
+            });
             // Rebind archive date header clicks
             document.querySelectorAll('.archive-date-header').forEach(header => {
                 header.onclick = function() { toggleArchiveDate(header.parentElement); };
@@ -1780,6 +1541,66 @@
                 dateGroup.classList.remove('expanded');
                 dateGroup.classList.add('collapsed');
             }
+        }
+
+        // Toggle expand/collapse archive month group
+        function toggleArchiveMonth(monthGroup) {
+            if (monthGroup.classList.contains('collapsed')) {
+                monthGroup.classList.remove('collapsed');
+                monthGroup.classList.add('expanded');
+            } else {
+                monthGroup.classList.remove('expanded');
+                monthGroup.classList.add('collapsed');
+            }
+        }
+
+        // Helper: build month-grouped archive HTML from an array of {date, tasks[]} objects
+        function buildArchiveHtml(archivedDates) {
+            // Group by year-month
+            const months = {};
+            const monthOrder = [];
+            (archivedDates || []).forEach(g => {
+                const parts = g.date.split('-');
+                const ym = parts[0] + '-' + parts[1]; // e.g. "2026-04"
+                if (!months[ym]) {
+                    months[ym] = [];
+                    monthOrder.push(ym);
+                }
+                months[ym].push(g);
+            });
+
+            const MONTH_ZH = ['','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+
+            return monthOrder.map((ym, idx) => {
+                const [year, month] = ym.split('-');
+                const monthLabel = MONTH_ZH[parseInt(month, 10)] || month + '月';
+                const displayLabel = year + ' ' + monthLabel;
+                const groups = months[ym];
+                const totalTasks = groups.reduce((s, g) => s + g.tasks.length, 0);
+                // First month expanded, rest collapsed
+                const monthClass = idx === 0 ? 'expanded' : 'collapsed';
+
+                const dateGroupsHtml = groups.map((g, di) => {
+                    // First date in first month expanded
+                    const dateClass = (idx === 0 && di === 0) ? 'expanded' : 'collapsed';
+                    const tasksHtml = g.tasks.map(name => `
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>`).join('');
+                    return `
+                    <div class="archive-date-group ${dateClass}">
+                        <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
+                        <div class="archive-date-cards">${tasksHtml}</div>
+                    </div>`;
+                }).join('');
+
+                return `
+                <div class="archive-month-group ${monthClass}">
+                    <div class="archive-month-header" onclick="toggleArchiveMonth(this.parentElement)">${displayLabel} <span class="archive-count-badge">${totalTasks} tasks</span></div>
+                    <div class="archive-month-body">${dateGroupsHtml}</div>
+                </div>`;
+            }).join('');
         }
 
         // Show full task card modal when clicking archived task name (POSITIONED NEXT TO CLICK)
@@ -2012,18 +1833,75 @@
             newTask.dataset.status = 'working';
             newTask.dataset.priority = 'P1'; // Default priority P1
             
+            // BUG FIX: Use proper context-link structure (not contenteditable span)
+            // BUG FIX: Inline event handlers use string templates properly
             newTask.innerHTML = `
-                <div class=\"task-header\">\n            <div class=\"task-avatar\">✨</div>\n            <div class=\"task-info\">\n                <div class=\"task-name\" contenteditable=\"true\" oninput=\"scheduleAutoSave()\">New Task</div>\n                <div class=\"task-status\">\n                    <select class=\"priority-select P1\" onchange=\"updatePriorityText(this); scheduleAutoSave()\">\n                        <option value=\"P0\">P0</option>\n                        <option value=\"P1\" selected>P1</option>\n                        <option value=\"P2\">P2</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n        <div class=\"task-meta\">\n            <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>\n            <div><strong>Added:</strong> ${today} (today)</div>\n            <div><strong>Context / Link:</strong> <span class=\"context-link\" contenteditable=\"true\" oninput=\"scheduleAutoSave()\">(add link here)</span></div>\n        </div>\n        <div>\n            <div class=\"task-section-title\">Details:</div>\n            <ul class=\"task-section-list\">\n                <li>Add your task details here</li>\n            </ul>\n        </div>\n        <div class=\"task-updates\">\n            <div class=\"task-section-title\">Recent updates:</div>\n\n            <div class=\"update-item\"><span class=\"update-time\">${timeStr}:</span> Added to active tasks ✓</div>\n        </div>\n        <div class=\"task-actions\">\n            <input type=\"text\" class=\"action-input\" placeholder=\"Add a comment...\">\n                <button class=\"action-btn\" onclick=\"addComment(this.parentElement.parentElement)\">Add Comment</button>\n                <button class=\"action-btn\" onclick=\"moveToCompleted(this.parentElement.parentElement)\">Archive Done</button>\n        </div>\n    `;
+                <div class="task-header">
+                    <div class="task-avatar">✨</div>
+                    <div class="task-info">
+                        <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">New Task</div>
+                        <div class="task-status">
+                            <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
+                                <option value="P0">P0</option>
+                                <option value="P1" selected>P1</option>
+                                <option value="P2">P2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-meta">
+                    <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
+                    <div><strong>Added:</strong> ${today}</div>
+                    <div><strong>Context / Link:</strong>
+                        <span class="context-link">
+                            <span class="context-link-placeholder">(add link here)</span>
+                            <button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button>
+                        </span>
+                        <div class="context-link-input-row">
+                            <input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL...">
+                            <button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button>
+                            <button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="task-section-title">Details:</div>
+                    <ul class="task-section-list">
+                        <li contenteditable="true">Add your task details here</li>
+                    </ul>
+                </div>
+                <div class="task-updates">
+                    <div class="task-section-title">Recent updates:</div>
+                    <div class="update-item"><span class="update-time">${timeStr}:</span> Added to active tasks ✓</div>
+                </div>
+                <div class="task-actions">
+                    <input type="text" class="action-input" placeholder="Add a comment...">
+                    <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
+                    <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
+                </div>
+            `;
             
             // Add to active grid
             const activeGrid = document.getElementById('active-grid');
             activeGrid.appendChild(newTask);
             
-            sortTasksByPriority(); // Sort after adding
+            // BUG FIX: Re-init drag & drop for the newly added card specifically
+            initDragAndDropForCard(newTask, activeGrid);
+            
+            sortTasksByPriority(); // Sort after adding (respects priority)
             
             // Update counts and rebind events
             updateAllCounts();
             rebindAllEventListeners();
+            // Bind context link keyboard handlers for new card
+            newTask.querySelectorAll('.context-link-input').forEach(input => {
+                if (input.dataset.bound) return;
+                input.dataset.bound = 'true';
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); saveContextLink(input.nextElementSibling); }
+                    else if (e.key === 'Escape') { cancelContextLink(input.parentElement.querySelector('.context-link-save-btn + button')); }
+                });
+            });
             scheduleAutoSave();
             
             // Focus the task name so user can start typing immediately
@@ -2094,17 +1972,7 @@
                 snap.activeTasks.map(t => makeCard(t, false)).join('');
             document.getElementById('completed-grid').innerHTML =
                 snap.completedTasks.map(t => makeCard(t, true)).join('');
-            document.getElementById('archive-list').innerHTML =
-                (snap.archivedDates || []).map(g => `
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
-                    <div class="archive-date-cards">
-                        ${g.tasks.map(name => `<div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>`).join('')}
-                    </div>
-                </div>`).join('');
+            document.getElementById('archive-list').innerHTML = buildArchiveHtml(snap.archivedDates || []);
 
             return true;
         }
@@ -2131,43 +1999,46 @@
         });
 
         // ── DRAG & DROP reordering for Active Tasks ──────────────────────
+        // Shared dragSrc reference for all cards in a grid
+        let _dragSrc = null;
+
+        function initDragAndDropForCard(card, grid) {
+            card.setAttribute('draggable', 'true');
+            card.style.cursor = 'grab';
+
+            card.addEventListener('dragstart', e => {
+                _dragSrc = card;
+                e.dataTransfer.effectAllowed = 'move';
+                card.style.opacity = '0.5';
+            });
+            card.addEventListener('dragend', () => {
+                card.style.opacity = '1';
+                grid.querySelectorAll('.task-card').forEach(c => c.classList.remove('drag-over'));
+                scheduleAutoSave();
+            });
+            card.addEventListener('dragover', e => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                card.classList.add('drag-over');
+            });
+            card.addEventListener('dragleave', () => {
+                card.classList.remove('drag-over');
+            });
+            card.addEventListener('drop', e => {
+                e.preventDefault();
+                if (_dragSrc && _dragSrc !== card) {
+                    grid.insertBefore(_dragSrc, card);
+                    saveToBin();
+                }
+                card.classList.remove('drag-over');
+            });
+        }
+
         function initDragAndDrop() {
             const grid = document.getElementById('active-grid');
             if (!grid) return;
-
-            let dragSrc = null;
-
             grid.querySelectorAll('.task-card').forEach(card => {
-                card.setAttribute('draggable', 'true');
-                card.style.cursor = 'grab';
-
-                card.addEventListener('dragstart', e => {
-                    dragSrc = card;
-                    e.dataTransfer.effectAllowed = 'move';
-                    card.style.opacity = '0.5';
-                });
-                card.addEventListener('dragend', () => {
-                    card.style.opacity = '1';
-                    grid.querySelectorAll('.task-card').forEach(c => c.classList.remove('drag-over'));
-                    scheduleAutoSave();
-                });
-                card.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    e.dataTransfer.dropEffect = 'move';
-                    card.classList.add('drag-over');
-                });
-                card.addEventListener('dragleave', () => {
-                    card.classList.remove('drag-over');
-                });
-                card.addEventListener('drop', e => {
-                    e.preventDefault();
-                    if (dragSrc && dragSrc !== card) {
-                        // Insert dragSrc before the target card
-                        grid.insertBefore(dragSrc, card);
-                        saveToBin();
-                    }
-                    card.classList.remove('drag-over');
-                });
+                initDragAndDropForCard(card, grid);
             });
         }
 
