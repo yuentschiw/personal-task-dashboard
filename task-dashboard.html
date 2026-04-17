@@ -1282,30 +1282,29 @@
             return '';
         }
 
+        // Track which tab is currently active
+        let _activeTab = 'working';
+
         function sortTasksByPriority() {
-            // Sort active tasks
+            const sortFn = (a, b) => {
+                const pw = priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority];
+                if (pw !== 0) return pw;
+                return (getCardAddedDate(a) || '').localeCompare(getCardAddedDate(b) || '');
+            };
+
+            // Sort active tasks — keep working and idle in their status groups,
+            // each group sorted P0 → P1 → P2, then by added date
             const activeGrid = document.getElementById('active-grid');
-            const activeTasks = Array.from(activeGrid.querySelectorAll('.task-card'));
-            activeTasks.sort((a, b) => {
-                const pw = priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority];
-                if (pw !== 0) return pw;
-                const da = getCardAddedDate(a) || '';
-                const db = getCardAddedDate(b) || '';
-                return da.localeCompare(db);
-            });
+            const allActive = Array.from(activeGrid.querySelectorAll('.task-card'));
+            const working = allActive.filter(c => c.dataset.status === 'working').sort(sortFn);
+            const idle    = allActive.filter(c => c.dataset.status === 'idle').sort(sortFn);
+            // DOM order: working group first, then idle (tab filtering handles visibility)
             activeGrid.innerHTML = '';
-            activeTasks.forEach(task => activeGrid.appendChild(task));
-            
-            // Sort completed tasks
+            [...working, ...idle].forEach(task => activeGrid.appendChild(task));
+
+            // Sort completed tasks (single group, no tabs)
             const completedGrid = document.getElementById('completed-grid');
-            const completedTasks = Array.from(completedGrid.querySelectorAll('.task-card'));
-            completedTasks.sort((a, b) => {
-                const pw = priorityWeight[a.dataset.priority] - priorityWeight[b.dataset.priority];
-                if (pw !== 0) return pw;
-                const da = getCardAddedDate(a) || '';
-                const db = getCardAddedDate(b) || '';
-                return da.localeCompare(db);
-            });
+            const completedTasks = Array.from(completedGrid.querySelectorAll('.task-card')).sort(sortFn);
             completedGrid.innerHTML = '';
             completedTasks.forEach(task => completedGrid.appendChild(task));
         }
@@ -1417,13 +1416,26 @@
 
         // Switch tab filtering
         function switchTab(status) {
+            _activeTab = status;
+
+            // Sort before showing so within-tab order is always P0 → P1 → P2
+            sortTasksByPriority();
+
             document.querySelectorAll('#active-grid .task-card').forEach(card => {
-                if (card.dataset.status === status) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = card.dataset.status === status ? 'flex' : 'none';
             });
+
+            // Highlight active tab button
+            document.querySelectorAll('.tabs .tab').forEach(tab => {
+                tab.style.outline = '';
+                tab.style.boxShadow = '';
+            });
+            const activeTabEl = document.querySelector(`.tabs .tab.${status}`);
+            if (activeTabEl) {
+                activeTabEl.style.outline = '2px solid #1565c0';
+                activeTabEl.style.boxShadow = '0 0 0 2px #bbdefb';
+            }
+
             filterTasks();
             updateAllCounts();
         }
@@ -1989,8 +2001,9 @@
 
             rebindAllEventListeners();
             initDragAndDrop();
-            filterTasks();
-            updateAllCounts();
+
+            // Default: show Working tab, sorted P0 → P1 → P2
+            switchTab('working');
 
             // Resolve any bare URLs in context-link spans
             bindContextLinkHandlers();
