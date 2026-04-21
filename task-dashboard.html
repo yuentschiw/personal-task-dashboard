@@ -1019,10 +1019,23 @@
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">56</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">58</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
             <div class="archive-list" id="archive-list">
+                <div class="archive-date-group collapsed">
+                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-21 <span class="archive-count-badge">2 tasks</span></div>
+                    <div class="archive-date-cards">
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">做好看板</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                        <div class="archive-task-item">
+                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">跟卡缪开会梳理 todo</div>
+                            <button class="archive-restore-btn">Restore</button>
+                        </div>
+                    </div>
+                </div>
                 <!-- Archive content is loaded dynamically from JSONBin on page load -->
             </div>
         </section>
