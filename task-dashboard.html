@@ -1,723 +1,137 @@
-      
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 YQ's Workstation</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #faf9f5;
-            padding: 24px;
-            line-height: 1.6;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            transform: scale(0.8);
-            transform-origin: top center;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #222;
-            margin-bottom: 12px;
-            font-size: 2.0rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        h1 .emoji {
-            font-size: 2.0rem;
-        }
-        .subtitle {
-            color: #555;
-            margin-bottom: 32px;
-            font-size: 1.0rem;
-        }
-        /* Top Summary Bar */
-        .top-summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        .summary-card {
-            background: #ffffff;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .summary-card.total {
-            border-color: #e8e4d6;
-        }
-        .summary-card.waiting {
-            background: #fce4ec;
-            border-color: #f8bbd0;
-        }
-        .summary-card.working {
-            background: #e3f2fd;
-            border-color: #bbdefb;
-        }
-        .summary-card.idle {
-            background: #fffde7;
-            border-color: #fff59d;
-        }
-        .summary-label {
-            font-weight: 600;
-            color: #333;
-            font-size: 1.1rem;
-        }
-        .summary-count {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #000;
-        }
-        /* Search Bar */
-        .search-bar {
-            background: #ffffff;
-            border: 2px solid #e8e4d6;
-            border-radius: 12px;
-            padding: 8px;
-            margin-bottom: 24px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .search-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 1.1rem;
-            padding: 8px 12px;
-            background: transparent;
-        }
-        .search-tag {
-            background: #90caf9;
-            color: #0d47a1;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        /* Section: stacked vertically: Active → Completed → Archived as requested */
-        .section {
-            background: #fcfaf5;
-            border: 2px solid #e8e4d6;
-            border-radius: 15px;
-            padding: 16px;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-        .section-title {
-            font-size: 2.0rem;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-title .emoji {
-            font-size: 2.0rem;
-        }
-        .section-desc {
-            color: #666;
-            margin-bottom: 16px;
-            font-size: 1.1rem;
-        }
-        /* Tabs */
-        .tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .tab {
-            text-align: center;
-            padding: 8px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .tab.working {
-            background: #e3f2fd;
-            border: 2px solid #bbdefb;
-        }
-        .tab.idle {
-            background: #fffde7;
-            border: 2px solid #fff59d;
-        }
-        .tab span.badge {
-            float: right;
-            background: #fff;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            text-align: center;
-            font-weight: 700;
-            line-height: 28px;
-            margin-right: 4px;
-        }
-        /* Task Grid: 3 NARROW columns */
-        .task-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-        }
-        .task-card.drag-over {
-            border: 2px dashed #90caf9;
-            background: #e3f2fd;
-            transform: scale(1.01);
-        }
-        .task-card[draggable="true"] {
-            user-select: none;
-        }
-        .task-card {
-            background: #f8faf8;
-            border: 2px solid #e0e6dd;
-            border-radius: 15px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            /* Strictly fixed width — content never stretches the card */
-            width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            overflow: hidden;
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-        .task-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .task-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #fff;
-            border: 3px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        .task-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            flex-direction: column;
-            gap: 4px;
-            overflow: hidden;
-        }
-        .task-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #222;
-            outline: none;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-            width: 100%;
-            min-width: 0;
-        }
-        .task-status {
-            align-self: flex-start;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .status-badge.working {
-            background: #e3f2fd;
-            color: #1565c0;
-        }
-        .status-badge.done {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        .status-badge.P0 {
-            background: #ffebee;
-            color: #c62828;
-        }
-        .status-badge.P1 {
-            background: #fff3e0;
-            color: #ef6c00;
-        }
-        .status-badge.P2 {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        
-        /* Priority dropdown selector - matches badge style */
-        .priority-select {
-            border: none;
-            cursor: pointer;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding-right: 20px;
-            position: relative;
-            font-weight: 600;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            padding: 2px 10px;
-        }
-        .priority-select.P0 { background: #ffebee; color: #c62828; }
-        .priority-select.P1 { background: #fff3e0; color: #ef6c00; }
-        .priority-select.P2 { background: #e8f5e9; color: #2e7d32; }
-        
-        .priority-select::-ms-expand {
-            display: none;
-        }
-        
-        .task-meta {
-            color: #444;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            overflow: hidden;
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-        .context-link {
-            color: #1565c0;
-            outline: none;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            min-width: 0;
-            gap: 4px;
-        }
-        .context-link a {
-            color: #1565c0;
-            text-decoration: underline;
-            cursor: pointer;
-            display: inline-block;
-            max-width: calc(100% - 28px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            vertical-align: bottom;
-        }
-        .context-link a:hover {
-            color: #0d47a1;
-        }
-        .context-link-placeholder {
-            color: #999;
-            font-style: italic;
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .context-link-edit-btn {
-            flex-shrink: 0;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.75rem;
-            color: #999;
-            padding: 1px 3px;
-            border-radius: 3px;
-            line-height: 1;
-            opacity: 0;
-            transition: opacity 0.15s;
-        }
-        .context-link:hover .context-link-edit-btn {
-            opacity: 1;
-        }
-        .context-link-input-row {
-            display: none;
-            align-items: center;
-            gap: 4px;
-            width: 100%;
-        }
-        .context-link-input-row.visible {
-            display: flex;
-        }
-        .context-link-input {
-            flex: 1;
-            font-size: 0.82rem;
-            border: 1px solid #90caf9;
-            border-radius: 4px;
-            padding: 2px 6px;
-            background: #f0f7ff;
-            outline: none;
-        }
-        .context-link-save-btn {
-            flex-shrink: 0;
-            background: #1565c0;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 2px 8px;
-            cursor: pointer;
-            font-size: 0.78rem;
-        }
-        .link-resolving {
-            color: #999;
-            font-style: italic;
-            font-size: 0.8rem;
-        }
-        .task-section-title {
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 3px;
-            font-size: 0.85rem;
-        }
-        .task-section-list {
-            padding-left: 16px;
-            color: #444;
-            font-size: 0.8rem;
-        }
-        .task-updates {
-            background: #ffffff;
-            border: 2px solid #e8e4d6;
-            border-radius: 15px;
-            padding: 10px;
-            max-height: 180px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        .update-item {
-            font-size: 0.8rem;
-            margin-bottom: 6px;
-            color: #444;
-        }
-        .update-time {
-            font-weight: 600;
-            color: #b95a39;
-        }
-        .task-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .action-input {
-            flex: 1;
-            border: 2px solid #e8e4d6;
-            border-radius: 12px;
-            padding: 8px;
-            min-height: 48px;
-            font-size: 0.8rem;
-        }
-        .action-btn {
-            border: 2px solid #d8d2c0;
-            background: #fff;
-            padding: 8px 16px;
-            border-radius: 16px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .archive-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        /* Month-level group */
-        .archive-month-group {
-            background: #f5f2eb;
-            border: 2px solid #e0dac8;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-        .archive-month-header {
-            font-weight: 700;
-            color: #444;
-            font-size: 1.1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            margin-bottom: 0;
-        }
-        .archive-month-header::after {
-            content: "▶";
-            color: #999;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-        }
-        .archive-month-group.collapsed .archive-month-body {
-            display: none;
-        }
-        .archive-month-group.expanded .archive-month-header::after {
-            transform: rotate(90deg);
-        }
-        .archive-month-body {
-            margin-top: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        /* Date-level group */
-        .archive-date-group {
-            background: #fff;
-            border: 1px solid #e8e4d6;
-            border-radius: 8px;
-            padding: 12px;
-        }
-        .archive-date-header {
-            font-weight: 700;
-            color: #222;
-            font-size: 1.0rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            margin-bottom: 8px;
-        }
-        .archive-date-header::after {
-            content: "▶";
-            color: #999;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-        }
-        .archive-date-group.collapsed .archive-date-cards {
-            display: none;
-        }
-        .archive-date-group.expanded .archive-date-header::after {
-            transform: rotate(90deg);
-        }
-        .archive-count-badge {
-            background: #f0f0eb;
-            color: #555;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .archive-date-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .archive-task-item {
-            background: #f8faf8;
-            border: 1px solid #e0e6dd;
-            border-radius: 6px;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .archive-task-name {
-            font-weight: 600;
-            color: #1565c0;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        .archive-restore-btn {
-            border: 2px solid #d8d2c0;
-            background: #fff;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        footer {
-            text-align: right;
-            margin-top: 16px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Auto-sync status indicator */
-        .sync-status {
-            position: fixed;
-            top: 12px;
-            right: 12px;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        .sync-status.saving {
-            background: #fff3e0;
-            color: #ef6c00;
-        }
-        .sync-status.error {
-            background: #ffebee;
-            color: #c62828;
-        }
-        
-        /* MOBILE RESPONSIVE STYLES - for screens under 768px (phones) */
-        @media (max-width: 768px) {
-            .container {
-                max-width: 100%;
-                padding: 0 12px;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-            }
-            h1 .emoji {
-                font-size: 1.6rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .section-title .emoji {
-                font-size: 1.5rem;
-            }
-            
-            /* Stack summary bar vertically on mobile */
-            .top-summary {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            
-            /* Task grid becomes single column on mobile for ALL sections */
-            .task-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
-            }
-            
-            .section {
-                padding: 12px;
-            }
-            
-            /* Make archived task modal full-width on mobile */
-            .archive-modal-content {
-                max-width: 95vw;
-                margin-left: 2.5vw;
-            }
-            
-            .task-actions {
-                flex-direction: column;
-            }
-            
-            .action-btn {
-                width: 100%;
-            }
-        }
-        
-        /* Archived task modal CSS — static in stylesheet so it loads immediately */
-        .task-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .task-modal-content {
-            background: #f5f1ea;
-            overflow-y: auto;
-            padding: 16px;
-            border-radius: 12px;
-            box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .task-modal-content .task-card {
-            width: auto !important;
-            margin-bottom: 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1><span class="emoji">🌸</span> YQ's Workstation</h1>
-        <p class="subtitle">🌸 Cute little task station for Saika to keep track of all work. Everything in one place.</p>
-
-        <!-- Top Summary Bar -->
-        <div class="top-summary">
-            <div class="summary-card total">
-                <span class="summary-label">Today's Tasks</span>
-                <span class="summary-count" id="total-count">9</span>
-            </div>
-            <div class="summary-card waiting">
-                <span class="summary-label">Waiting</span>
-                <span class="summary-count" id="waiting-count">0</span>
-            </div>
-            <div class="summary-card working">
-                <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">6</span>
-            </div>
-            <div class="summary-card idle">
-                <span class="summary-label">Idle</span>
-                <span class="summary-count" id="idle-count">1</span>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <input type="text" id="search-input" class="search-input" placeholder="Search tasks by name, status, or keyword..." oninput="filterTasks()">
-            <div class="search-tag">local</div>
-        </div>
-
-        <!-- VERTICAL STACKING AS REQUESTED: 1. Active (top) → 2. Completed → 3. Archived (bottom) -->
-        <!-- 1. Active Tasks (first in the stack) -->
-        <section class="section">
-            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                <span><span class="emoji">🎯</span> Active Tasks</span>
-                <button class="action-btn" style="font-size: 0.95rem; padding: 8px 16px; background: #e3f2fd; border-color: #bbdefb; color: #1565c0;" onclick="addNewTask()">➕ Add New Task</button>
-            </div>
-            
-            <p class="section-desc">Current open work you're actively working on or keeping an eye on.</p>
-
-            <!-- Tabs: Working + Idle with auto-updating badges -->
-            <div class="tabs">
-                <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">7</span>
-                </div>
-                <div class="tab idle" onclick="switchTab('idle')">
-                    Idle <span class="badge" id="idle-badge">1</span>
-                </div>
-            </div>
-
-            <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
-            <div class="task-grid" id="active-grid">
-                <!-- P0: 学习文档 moved to top -->
-                <!-- P0: Plan Vladivostok -->
-                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">✈️</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf" target="_blank" rel="noopener">Vladivostok travel plan doc</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
+<div id="archived-tasks-container">
+<div class="archive-date">
+  <h3>2026-04-22</h3>
+  <ul>
+    <li>跟进 Partner lobi</li>
+    <li>问昆仑、须良、玲玲周四11:00能否开会</li>
+    <li>调研代理商不用AI助手的原因</li>
+    <li>确定项目评估框架</li>
+    <li>过指标</li>
+    <li>打分</li>
+    <li>约姜花产品会</li>
+    <li>约线下会再过指标</li>
+    <li>确定社保</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-21</h3>
+  <ul>
+    <li>做好看板</li>
+    <li>跟卡缪开会梳理 todo</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-19</h3>
+  <ul>
+    <li>剪辑 Vlog</li>
+    <li>取消订位</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-17</h3>
+  <ul>
+    <li>两个采访</li>
+    <li>装机器人</li>
+    <li>采访春夏姐</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-16</h3>
+  <ul>
+    <li>更新dashboard笔记</li>
+    <li>skillset研究出下一步</li>
+    <li>确定渠道经理工作流</li>
+    <li>确定黄油合作做啥</li>
+    <li>研究如何统计工作时间</li>
+    <li>内推</li>
+    <li>跟四七问Hi上多Agent working</li>
+    <li>收集信息：五家代理</li>
+    <li>更新github skill</li>
+    <li>Roy看板</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-14</h3>
+  <ul>
+    <li>订机票酒店</li>
+    <li>Day1学习文档</li>
+    <li>研究skillset的东西</li>
+    <li>渠道 Skillset 大框架</li>
+    <li>查合作规范</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-13</h3>
+  <ul>
+    <li>Plan Vladivostok May Day travel itinerary</li>
+    <li>修复语音识别</li>
+    <li>健身</li>
+    <li>探店 - 望京汤</li>
+    <li>研究小红书多 Agent 协作机制 + 写 REDoc 文档</li>
+    <li>做面包</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-11</h3>
+  <ul>
+    <li>Exercise</li>
+    <li>Bake 2 breads</li>
+    <li>Learn Anthropic Claude harness concept</li>
+    <li>Fix workflow schedule</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-10</h3>
+  <ul>
+    <li>Do quarterly review draw board</li>
+    <li>Decide AI educational service purchase</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-09</h3>
+  <ul>
+    <li>Book sushi cake</li>
+    <li>Go for lunch</li>
+    <li>Exercise today</li>
+    <li>Make rose pretzel bread</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-05</h3>
+  <ul>
+    <li>Go to gym</li>
+    <li>Make 2 breads</li>
+    <li>Bread-making video editing</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-04</h3>
+  <ul>
+    <li>Daily AI Newsletter</li>
+    <li>AI Builders Digest</li>
+    <li>Correct active task count</li>
+    <li>Fix priority dropdown migration</li>
+    <li>Fix GitHub push</li>
+    <li>Daily AI Newsletter (April 5)</li>
+    <li>AI Builders Digest (April 5)</li>
+    <li>Final archive & count correction</li>
+  </ul>
+</div>
+<div class="archive-date">
+  <h3>2026-04-03</h3>
+  <ul>
+    <li>Fix Newsletter Rules</li>
+    <li>Fix AI Builders Digest</li>
+    <li>Coffee Chat with Lu Wang</li>
+    <li>51min Audio Transcription</li>
+    <li>Google AI Agent 7-Day Learning Plan</li>
+    <li>Weekly Maintenance Check</li>
+    <li>Daily AI Newsletter Automation</li>
+    <li>AI Builders Daily Digest</li>
+    <li>Cute Task Dashboard</li>
+  </ul>
+</div>
+</div>
                     <div>
                         <div class="task-section-title">Details:</div>
                         <ul class="task-section-list">
