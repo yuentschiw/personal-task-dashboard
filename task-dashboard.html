@@ -1079,17 +1079,36 @@
             const activeHtml   = sortedActive.map(t => makeCard(t, false)).join('\n');
             const completedHtml= sortedCompleted.map(t => makeCard(t, true)).join('\n');
 
-            const archiveHtml  = snap.archivedDates.map(g => `
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
-                    <div class="archive-date-cards">
-                        ${g.tasks.map(name => `
-                        <div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>`).join('')}
-                    </div>
-                </div>`).join('\n');
+            const archiveHtml = (() => {
+                const monthMap = {};
+                (snap.archivedDates || []).forEach(g => {
+                    const [y, m] = g.date.split('-');
+                    const key = `${y}-${m}`;
+                    if (!monthMap[key]) monthMap[key] = [];
+                    monthMap[key].push(g);
+                });
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
+                    const [y, m] = key.split('-');
+                    const label = `${monthLabels[m] || m} ${y}`;
+                    const groups = monthMap[key];
+                    const totalTasks = groups.reduce((s,g)=>s+g.tasks.length,0);
+                    const daysHtml = groups.map(g => `
+                        <div class="archive-date-group collapsed" style="margin-left:16px;margin-bottom:4px;">
+                            <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)" style="font-size:0.85rem;padding:6px 12px;">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
+                            <div class="archive-date-cards">
+                                ${g.tasks.map(name => `<div class="archive-task-item">
+                                    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
+                                    <button class="archive-restore-btn">Restore</button>
+                                </div>`).join('')}
+                            </div>
+                        </div>`).join('');
+                    return `<div class="archive-date-group collapsed">
+                        <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${label} <span class="archive-count-badge">${totalTasks} task${totalTasks!==1?'s':''}</span></div>
+                        <div class="archive-date-cards">${daysHtml}</div>
+                    </div>`;
+                }).join('\n');
+            })();
 
             const totalActive = snap.activeTasks.length + snap.completedTasks.length;
             const working     = snap.activeTasks.filter(t => t.status === 'working').length;
@@ -1739,17 +1758,36 @@
                 snap.activeTasks.map(t => makeCard(t, false)).join('');
             document.getElementById('completed-grid').innerHTML =
                 snap.completedTasks.map(t => makeCard(t, true)).join('');
-            document.getElementById('archive-list').innerHTML =
-                (snap.archivedDates || []).map(g => `
-                <div class="archive-date-group collapsed">
-                    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
-                    <div class="archive-date-cards">
-                        ${g.tasks.map(name => `<div class="archive-task-item">
-                            <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
-                            <button class="archive-restore-btn">Restore</button>
-                        </div>`).join('')}
-                    </div>
-                </div>`).join('');
+            document.getElementById('archive-list').innerHTML = (() => {
+                const monthMap = {};
+                (snap.archivedDates || []).forEach(g => {
+                    const [y, m] = g.date.split('-');
+                    const key = `${y}-${m}`;
+                    if (!monthMap[key]) monthMap[key] = [];
+                    monthMap[key].push(g);
+                });
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
+                    const [y, m] = key.split('-');
+                    const label = `${monthLabels[m] || m} ${y}`;
+                    const groups = monthMap[key];
+                    const totalTasks = groups.reduce((s,g)=>s+g.tasks.length,0);
+                    const daysHtml = groups.map(g => `
+                        <div class="archive-date-group collapsed" style="margin-left:16px;margin-bottom:4px;">
+                            <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)" style="font-size:0.85rem;padding:6px 12px;">${g.date} <span class="archive-count-badge">${g.tasks.length} task${g.tasks.length!==1?'s':''}</span></div>
+                            <div class="archive-date-cards">
+                                ${g.tasks.map(name => `<div class="archive-task-item">
+                                    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">${name}</div>
+                                    <button class="archive-restore-btn">Restore</button>
+                                </div>`).join('')}
+                            </div>
+                        </div>`).join('');
+                    return `<div class="archive-date-group collapsed">
+                        <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">${label} <span class="archive-count-badge">${totalTasks} task${totalTasks!==1?'s':''}</span></div>
+                        <div class="archive-date-cards">${daysHtml}</div>
+                    </div>`;
+                }).join('\n');
+            })();
 
             return true;
         }
