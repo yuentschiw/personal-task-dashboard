@@ -624,7 +624,7 @@
         <div class="top-summary">
             <div class="summary-card total">
                 <span class="summary-label">Today's Tasks</span>
-                <span class="summary-count" id="total-count">9</span>
+                <span class="summary-count" id="total-count">0</span>
             </div>
             <div class="summary-card waiting">
                 <span class="summary-label">Waiting</span>
@@ -632,11 +632,11 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">6</span>
+                <span class="summary-count" id="working-count">0</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
-                <span class="summary-count" id="idle-count">1</span>
+                <span class="summary-count" id="idle-count">0</span>
             </div>
         </div>
 
@@ -659,320 +659,18 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">7</span>
+                    Working <span class="badge" id="working-badge">0</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
-                    Idle <span class="badge" id="idle-badge">1</span>
+                    Idle <span class="badge" id="idle-badge">0</span>
                 </div>
             </div>
 
             <!-- 3 NARROW columns that fit perfectly inside the section container with NO overflow -->
             <div class="task-grid" id="active-grid">
-                <!-- P0: 学习文档 moved to top -->
-                <!-- P0: Plan Vladivostok -->
-                <div class="task-card" data-name="Plan Vladivostok May Day travel itinerary" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">✈️</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Plan Vladivostok May Day travel itinerary</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><a href="https://wjp1mae2g2v4.jp.larksuite.com/docx/ZrAZdNpcgouOoKxEpKvjNWgbpOf" target="_blank" rel="noopener">Vladivostok travel plan doc</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Create 4-day travel itinerary for May 1-4</li>
-                            <li>With parents + Roy Li, 4 people total</li>
-                            <li>Need healthy good food + nice accommodation (prefer Airbnb)</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">10:10 AM 2026-04-05:</span> Plan completed and written to Feishu doc ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P1: Learn Anthropic Claude harness concept -->
-                <div class="task-card" data-name="Learn Anthropic Claude harness concept" data-status="working" data-priority="P1">
-                    <div class="task-header">
-                        <div class="task-avatar">📚</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Learn Anthropic Claude harness concept</div>
-                            <div class="task-status">
-                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(need help downloading article)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Study and understand the Anthropic Claude harness concept</li>
-                            <li>Need to download the article first</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P1: Fix workflow schedule -->
-                <div class="task-card" data-name="Fix workflow schedule" data-status="working" data-priority="P1">
-                    <div class="task-header">
-                        <div class="task-avatar">🔧</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Fix workflow schedule</div>
-                            <div class="task-status">
-                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P1 (Medium)</span></div>
-                        <div><strong>Added:</strong> 2026-04-05 (today)</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Fix and adjust the automated workflow schedule</li>
-                            <li>Tune timing for daily tasks</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">08:15 AM 2026-04-05:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P0 Today: Bake 2 breads -->
-                <div class="task-card" data-name="Bake 2 breads" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">🍞</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Bake 2 breads</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-11</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Bake 2 breads today</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">15:50 PM 2026-04-11:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P0 Today: Exercise -->
-                <div class="task-card" data-name="Exercise" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">🏃</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Exercise</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span>P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-11</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Complete today's exercise routine</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">15:50 PM 2026-04-11:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P0 Today: 学习文档 -->
-                <div class="task-card" data-name="学习文档" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">📚</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">学习文档</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-10</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><a href="https://docs.xiaohongshu.com/doc/9beb30963a446d9c6c52e22c792974f2" target="_blank" rel="noopener">学习文档</a><button class="context-link-edit-btn" onclick="editContextLink(this)" title="编辑链接">✏️</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>学习相关文档，Raika 协助</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">10:30 AM 2026-04-10:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- P0 Today: 研究skillset -->
-                <div class="task-card" data-name="研究skillset的东西" data-status="working" data-priority="P0">
-                    <div class="task-header">
-                        <div class="task-avatar">🔬</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">研究skillset的东西</div>
-                            <div class="task-status">
-                                <select class="priority-select P0" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0" selected>P0</option>
-                                    <option value="P1">P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P0 (High)</span></div>
-                        <div><strong>Added:</strong> 2026-04-10</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>研究 skillset 相关内容，Raika 协助</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">10:30 AM 2026-04-10:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
-
-                <!-- Idle (stays from yesterday: Jeju island travel plan) -->
-                <!-- 9. (Idle, kept from yesterday) Jeju island travel plan -->
-                <div class="task-card" data-name="Jeju island travel plan" data-status="idle" data-priority="P1">
-                    <div class="task-header">
-                        <div class="task-avatar">🏝️</div>
-                        <div class="task-info">
-                            <div class="task-name" contenteditable="true" oninput="scheduleAutoSave()">Jeju island travel plan</div>
-                            <div class="task-status">
-                                <select class="priority-select P1" onchange="updatePriorityText(this); scheduleAutoSave()">
-                                    <option value="P0">P0</option>
-                                    <option value="P1" selected>P1</option>
-                                    <option value="P2">P2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div><strong>Priority:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">P1 (Medium)</span></div>
-                        <div><strong>Deadline:</strong> <span contenteditable="true" oninput="scheduleAutoSave()">⚠️ TODAY 2026-04-11 — deadline reached!</span></div>
-                        <div><strong>Added:</strong> 2026-04-04</div>
-                        <div><strong>Context / Link:</strong> <span class="context-link"><span class="context-link-placeholder">(add link here)</span><button class="context-link-edit-btn" onclick="editContextLink(this)" title="添加链接" style="opacity:1">＋</button></span><div class="context-link-input-row"><input class="context-link-input" type="text" placeholder="粘贴链接或输入 标题 URL..."><button class="context-link-save-btn" onclick="saveContextLink(this)">保存</button><button class="context-link-save-btn" style="background:#999" onclick="cancelContextLink(this)">取消</button></div></div>
-                    </div>
-                    <div>
-                        <div class="task-section-title">Details:</div>
-                        <ul class="task-section-list">
-                            <li>Complete plan preparation before trip</li>
-                            <li>Deadline: next Saturday</li>
-                        </ul>
-                    </div>
-                    <div class="task-updates">
-                        <div class="task-section-title">Recent updates:</div>
-                        <div class="update-item"><span class="update-time">14:26 PM 2026-04-04:</span> Added to active tasks ✓</div>
-                    </div>
-                    <div class="task-actions">
-                        <input type="text" class="action-input" placeholder="Add a comment...">
-                        <button class="action-btn" onclick="addComment(this.parentElement.parentElement)">Add Comment</button>
-                        <button class="action-btn" onclick="moveToCompleted(this.parentElement.parentElement)">Archive Done</button>
-                    </div>
-                </div>
+                <!-- tasks loaded dynamically from JSONBin -->
             </div>
-        </section>
+            </section>
 
         <!-- 2. Completed Tasks (second, below Active) WITH TOTAL COUNT -->
         <section class="section">
