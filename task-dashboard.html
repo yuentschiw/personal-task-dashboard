@@ -1184,13 +1184,29 @@
 
             const archiveHtml = (() => {
                 const monthMap = {};
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                // Normalize date to YYYY-MM key, handling both "YYYY-MM-DD" and legacy "Month YYYY" formats
+                function dateToMonthKey(dateStr) {
+                    const parts = dateStr.split('-');
+                    if (parts.length >= 2 && parts[0].length === 4) {
+                        // Standard format: YYYY-MM or YYYY-MM-DD
+                        return `${parts[0]}-${parts[1]}`;
+                    }
+                    // Legacy format: "April 2026" etc.
+                    const monthNums = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
+                    const legacyMatch = dateStr.match(/^(\w+)\s+(\d{4})$/);
+                    if (legacyMatch) {
+                        const [, monthName, year] = legacyMatch;
+                        const mNum = monthNums[monthName] || '01';
+                        return `${year}-${mNum}`;
+                    }
+                    return dateStr; // fallback
+                }
                 (snap.archivedDates || []).forEach(g => {
-                    const [y, m] = g.date.split('-');
-                    const key = `${y}-${m}`;
+                    const key = dateToMonthKey(g.date);
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
-                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
