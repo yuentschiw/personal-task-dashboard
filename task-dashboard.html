@@ -691,6 +691,7 @@
                 <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">75</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
+            <div id="archive-list">
 <!-- 2026-04-28 -->
 <div class="archive-date-group collapsed">
     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-28 <span class="archive-count-badge">4 tasks</span></div>
@@ -1027,6 +1028,7 @@
 </div>
     </div>
 </div>
+                    </div>
         </section>
 
         <!-- Sync Status Indicator -->
@@ -1203,13 +1205,20 @@
 
             const archiveHtml = (() => {
                 const monthMap = {};
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                const monthNums = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
+                function dateToMonthKey(dateStr) {
+                    const parts = dateStr.split('-');
+                    if (parts.length >= 2 && parts[0].length === 4) return `${parts[0]}-${parts[1]}`;
+                    const m = dateStr.match(/^(\w+)\s+(\d{4})$/);
+                    if (m) return `${m[2]}-${monthNums[m[1]] || '01'}`;
+                    return dateStr;
+                }
                 (snap.archivedDates || []).forEach(g => {
-                    const [y, m] = g.date.split('-');
-                    const key = `${y}-${m}`;
+                    const key = dateToMonthKey(g.date);
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
-                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
@@ -1882,13 +1891,20 @@
                 snap.completedTasks.map(t => makeCard(t, true)).join('');
             document.getElementById('archive-list').innerHTML = (() => {
                 const monthMap = {};
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                const monthNums2 = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
+                function dateToMonthKey2(dateStr) {
+                    const parts = dateStr.split('-');
+                    if (parts.length >= 2 && parts[0].length === 4) return `${parts[0]}-${parts[1]}`;
+                    const m2 = dateStr.match(/^(\w+)\s+(\d{4})$/);
+                    if (m2) return `${m2[2]}-${monthNums2[m2[1]] || '01'}`;
+                    return dateStr;
+                }
                 (snap.archivedDates || []).forEach(g => {
-                    const [y, m] = g.date.split('-');
-                    const key = `${y}-${m}`;
+                    const key = dateToMonthKey2(g.date);
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
-                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
