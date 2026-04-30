@@ -688,10 +688,41 @@
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">75</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">79</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
-            <div id="archive-list">
+<div id="archive-list">
+<!-- 2026-04-30 -->
+<div class="archive-date-group collapsed">
+    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-30 <span class="archive-count-badge">8 tasks</span></div>
+    <div class="archive-date-cards">
+<div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">网页tracking skill</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">卡缪同步skillset进度</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">改网页追踪extension</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">让apm帮忙看看</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">试试skill，改建区域TTT</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Figure out TTT skill</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">skillhub要hive表</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">刷种草学题库</div>
+    <button class="archive-restore-btn">Restore</button>
+</div>
+    </div>
+</div>
 <!-- 2026-04-28 -->
 <div class="archive-date-group collapsed">
     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-28 <span class="archive-count-badge">4 tasks</span></div>
@@ -1028,14 +1059,14 @@
 </div>
     </div>
 </div>
-                    </div>
+</div><!-- end archive-list -->
         </section>
 
         <!-- Sync Status Indicator -->
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
         <footer>
-            Last updated: 28 April 2026, 00:00 AM (Asia/Shanghai) — Midnight archive (2026-04-28): archived 4 completed tasks. Active: 3, Archived: 75.
+            Last updated: 29 April 2026, 00:00 AM (Asia/Shanghai) — Midnight archive (2026-04-29): no completed tasks to archive. Active: 8, Archived: 142.
         </footer>
     </div>
     <script>
@@ -1206,16 +1237,18 @@
             const archiveHtml = (() => {
                 const monthMap = {};
                 const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
-                const monthNums = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
-                function dateToMonthKey(dateStr) {
-                    const parts = dateStr.split('-');
-                    if (parts.length >= 2 && parts[0].length === 4) return `${parts[0]}-${parts[1]}`;
-                    const m = dateStr.match(/^(\w+)\s+(\d{4})$/);
-                    if (m) return `${m[2]}-${monthNums[m[1]] || '01'}`;
-                    return dateStr;
-                }
                 (snap.archivedDates || []).forEach(g => {
-                    const key = dateToMonthKey(g.date);
+                    // Handle both "2026-04-29" and "April 2026" date formats
+                    let key;
+                    if (/^\d{4}-\d{2}/.test(g.date)) {
+                        const [y, m] = g.date.split('-');
+                        key = `${y}-${m}`;
+                    } else {
+                        // "April 2026" → "2026-04"
+                        const parts = g.date.split(' ');
+                        const monthNum = Object.entries(monthLabels).find(([,v]) => v === parts[0]);
+                        key = monthNum ? `${parts[1]}-${monthNum[0]}` : g.date;
+                    }
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
@@ -1273,7 +1306,7 @@
 
             // Update footer
             const footer = doc.querySelector('footer');
-            if (footer) footer.textContent = 'Last updated: ' + footerTs;
+            if (footer) footer.textContent = 'Last updated: 29 April 2026, 00:00 AM (Asia/Shanghai) — Midnight archive (2026-04-29): no completed tasks to archive. Active: 8, Archived: 142.
 
             return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
         }
@@ -1891,20 +1924,21 @@
                 snap.completedTasks.map(t => makeCard(t, true)).join('');
             document.getElementById('archive-list').innerHTML = (() => {
                 const monthMap = {};
-                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
-                const monthNums2 = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
-                function dateToMonthKey2(dateStr) {
-                    const parts = dateStr.split('-');
-                    if (parts.length >= 2 && parts[0].length === 4) return `${parts[0]}-${parts[1]}`;
-                    const m2 = dateStr.match(/^(\w+)\s+(\d{4})$/);
-                    if (m2) return `${m2[2]}-${monthNums2[m2[1]] || '01'}`;
-                    return dateStr;
-                }
+                const monthLabels2 = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 (snap.archivedDates || []).forEach(g => {
-                    const key = dateToMonthKey2(g.date);
+                    let key;
+                    if (/^\d{4}-\d{2}/.test(g.date)) {
+                        const [y, m] = g.date.split('-');
+                        key = `${y}-${m}`;
+                    } else {
+                        const parts = g.date.split(' ');
+                        const monthNum = Object.entries(monthLabels2).find(([,v]) => v === parts[0]);
+                        key = monthNum ? `${parts[1]}-${monthNum[0]}` : g.date;
+                    }
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
+                const monthLabels = monthLabels2;
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
