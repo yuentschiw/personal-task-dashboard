@@ -1059,7 +1059,7 @@
 </div>
     </div>
 </div>
-</div><!-- end archive-list -->
+</div><!-- /archive-list -->
         </section>
 
         <!-- Sync Status Indicator -->
@@ -1236,22 +1236,18 @@
 
             const archiveHtml = (() => {
                 const monthMap = {};
-                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                const _ml = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
                 (snap.archivedDates || []).forEach(g => {
-                    // Handle both "2026-04-29" and "April 2026" date formats
                     let key;
                     if (/^\d{4}-\d{2}/.test(g.date)) {
-                        const [y, m] = g.date.split('-');
-                        key = `${y}-${m}`;
+                        key = g.date.slice(0,7);
                     } else {
-                        // "April 2026" → "2026-04"
-                        const parts = g.date.split(' ');
-                        const monthNum = Object.entries(monthLabels).find(([,v]) => v === parts[0]);
-                        key = monthNum ? `${parts[1]}-${monthNum[0]}` : g.date;
+                        const p = g.date.split(' '); key = p[1]+'-'+(_ml[p[0]]||'01');
                     }
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
@@ -1924,21 +1920,18 @@
                 snap.completedTasks.map(t => makeCard(t, true)).join('');
             document.getElementById('archive-list').innerHTML = (() => {
                 const monthMap = {};
-                const monthLabels2 = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
+                const _ml2 = {'January':'01','February':'02','March':'03','April':'04','May':'05','June':'06','July':'07','August':'08','September':'09','October':'10','November':'11','December':'12'};
                 (snap.archivedDates || []).forEach(g => {
                     let key;
                     if (/^\d{4}-\d{2}/.test(g.date)) {
-                        const [y, m] = g.date.split('-');
-                        key = `${y}-${m}`;
+                        key = g.date.slice(0,7);
                     } else {
-                        const parts = g.date.split(' ');
-                        const monthNum = Object.entries(monthLabels2).find(([,v]) => v === parts[0]);
-                        key = monthNum ? `${parts[1]}-${monthNum[0]}` : g.date;
+                        const p = g.date.split(' '); key = p[1]+'-'+(_ml2[p[0]]||'01');
                     }
                     if (!monthMap[key]) monthMap[key] = [];
                     monthMap[key].push(g);
                 });
-                const monthLabels = monthLabels2;
+                const monthLabels = { '01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December' };
                 return Object.keys(monthMap).sort((a,b)=>b.localeCompare(a)).map(key => {
                     const [y, m] = key.split('-');
                     const label = `${monthLabels[m] || m} ${y}`;
