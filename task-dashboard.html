@@ -688,10 +688,20 @@
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">80</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">81</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
 <div id="archive-list">
+<!-- 2026-05-06 -->
+<div class="archive-date-group collapsed">
+    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-05-06 <span class="archive-count-badge">1 task</span></div>
+    <div class="archive-date-cards">
+<div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">思考一下如何做项目管理</div>
+    <button class="archive-restore-btn">Restore</button>
+</div>
+    </div>
+</div>
 <!-- 2026-04-29 -->
 <div class="archive-date-group collapsed">
     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-04-29 <span class="archive-count-badge">9 tasks</span></div>
@@ -998,7 +1008,7 @@
     <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">AI Builders Digest (April 5)</div>
     <button class="archive-restore-btn">Restore</button>
 </div><div class="archive-task-item">
-    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Final archive & count correction</div>
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">Final archive &amp; count correction</div>
     <button class="archive-restore-btn">Restore</button>
 </div>
     </div>
@@ -1038,12 +1048,12 @@
     </div>
 </div>
 
-        </section>
+</section>
 
         <!-- Sync Status Indicator -->
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
-        <footer>Last updated: 4 May 2026, 12:02 AM (Asia/Shanghai) — Midnight archive (2026-05-04): no completed tasks to archive. Active: 4, Archived: 80.</footer>
+        <footer>Last updated: 9 May 2026, 12:00 AM (Asia/Shanghai) — Midnight archive (2026-05-09): no completed tasks to archive. Active: 10, Archived: 55.</footer>
     </div>
     <script>
         // --- AUTO-SAVE & AUTO-SYNC CONFIGURATION ---
