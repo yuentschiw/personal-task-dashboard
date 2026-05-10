@@ -624,7 +624,7 @@
         <div class="top-summary">
             <div class="summary-card total">
                 <span class="summary-label">Today's Tasks</span>
-                <span class="summary-count" id="total-count">4</span>
+                <span class="summary-count" id="total-count">8</span>
             </div>
             <div class="summary-card waiting">
                 <span class="summary-label">Waiting</span>
@@ -632,7 +632,7 @@
             </div>
             <div class="summary-card working">
                 <span class="summary-label">Working</span>
-                <span class="summary-count" id="working-count">4</span>
+                <span class="summary-count" id="working-count">8</span>
             </div>
             <div class="summary-card idle">
                 <span class="summary-label">Idle</span>
@@ -659,7 +659,7 @@
             <!-- Tabs: Working + Idle with auto-updating badges -->
             <div class="tabs">
                 <div class="tab working" onclick="switchTab('working')">
-                    Working <span class="badge" id="working-badge">4</span>
+                    Working <span class="badge" id="working-badge">8</span>
                 </div>
                 <div class="tab idle" onclick="switchTab('idle')">
                     Idle <span class="badge" id="idle-badge">0</span>
@@ -681,17 +681,30 @@
 
             <!-- 3 narrow columns -->
             <div class="task-grid" id="completed-grid">
-                <!-- Empty — archived to 2026-04-14 -->
+                <!-- Empty -->
             </div>
         </section>
 
         <!-- 3. Archived Tasks (THIRD at BOTTOM of vertical stack, after completed) -->
         <section class="section">
             <div class="section-title">
-                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">81</span> total)</span>
+                <span class="emoji">📦</span> Archived Tasks <span style="font-size: 1.2rem; color:#666">(<span id="archive-count">892</span> total)</span>
             </div>
             <p class="section-desc">Completed tasks are archived here — still searchable and available any time.</p>
 <div id="archive-list">
+<!-- 2026-05-10 -->
+<div class="archive-date-group collapsed">
+    <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-05-10 <span class="archive-count-badge">2 tasks</span></div>
+    <div class="archive-date-cards">
+<div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">交易服务商调研问卷</div>
+    <button class="archive-restore-btn">Restore</button>
+</div><div class="archive-task-item">
+    <div class="archive-task-name" onclick="showArchivedTaskCard(this.parentElement, event)">思考一下如何做项目管理</div>
+    <button class="archive-restore-btn">Restore</button>
+</div>
+    </div>
+</div>
 <!-- 2026-05-06 -->
 <div class="archive-date-group collapsed">
     <div class="archive-date-header" onclick="toggleArchiveDate(this.parentElement)">2026-05-06 <span class="archive-count-badge">1 task</span></div>
@@ -1053,7 +1066,7 @@
         <!-- Sync Status Indicator -->
         <div class="sync-status" id="sync-status">Auto-sync ready</div>
 
-        <footer>Last updated: 9 May 2026, 12:00 AM (Asia/Shanghai) — Midnight archive (2026-05-09): no completed tasks to archive. Active: 10, Archived: 55.</footer>
+        <footer>Last updated: 11 May 2026, 00:00 AM (Asia/Shanghai) — Midnight archive: no completed tasks to archive. Active: 6, Archived: 892.</footer>
     </div>
     <script>
         // --- AUTO-SAVE & AUTO-SYNC CONFIGURATION ---
